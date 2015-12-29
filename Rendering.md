@@ -7,7 +7,8 @@ In general, Spine’s systems are built to take advantage of the way modern game
 
 It does this by interfacing with frameworks and engines “in 3D terms”; in terms of meshes and vertices, and texture mapping and UVs. So every image part is either defined by a polygon comprised of several triangles, or a rectangle made up of two triangles. This is not unusual even if the engine is mainly for 2D graphics.
 
-[pic]
+![](http://i.imgur.com/XMsoUww.jpg)
+
 The basic idea is this:
 You have mesh made of triangles. This is shaped based on the Spine skeleton/model.
 You have texture data. This comes from the atlas texture.
@@ -15,14 +16,15 @@ And you have shader programs or blending instructions.
 
 You give all that to the game engine, the game engine gives it to the GPU, and then it renders. The textures are mapped to the mesh, and rendered based on the shader and blend mode.
 
-[pic]
+![](http://i.imgur.com/URrFWUW.jpg)
+
 Spine-Unity rendering uses Unity’s `MeshRenderer` and `MeshFilter` components, and Material assets. These are the same components that Unity uses to render 3D models.
 
 The `SkeletonRenderer class` (base class of `SkeletonAnimation`) builds the mesh in its `LateUpdate` method. It generates arrays for vertices, vertex colors, triangle indexes and UVs, and puts all that inside a `UnityEngine.Mesh` object.
 The `Mesh` goes into the `MeshFilter` component, which is used by the `MeshRenderer`.
 The `MeshRenderer` renders the mesh at the appropriate point in [Unity’s game loop](http://docs.unity3d.com/Manual/ExecutionOrder.html).
 
-MeshFilter+MeshRenderer have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); mesh and materials don't need to be passed to them every frame for it to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the updates at runtime (by disabling SkeletonAnimation or SkeletonRenderer) will not destroy the visible mesh. 
+MeshFilter and MeshRenderer have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); that is, mesh and materials don't need to be passed to them every frame for the visibility to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the upadtes at runtime (by disabling SkeletonAnimation or SkeletonRenderer) will not destroy the visible mesh. 
 
 #### Materials
 Spine-Unity also uses Materials to store information about what texture, shader and material properties should be used. The Materials are assigned through the AtlasAsset.
@@ -30,7 +32,8 @@ Spine-Unity also uses Materials to store information about what texture, shader 
 The materials array of the MeshRenderer is managed by the SkeletonRenderer every frame depending on what AtlasAssets it needs to use. Modifying that array directly does not work like a typical Unity setup.
 
 ### Sprite Texture Rendering/Z Ordering
-[pic]
+![](http://i.imgur.com/xqDt3Sn.jpg)
+
 Spine typically* uses alpha-blending to render your Spine model parts.
 
 When you draw, paint and export parts for your Spine project, you export them as PNG files which encode pixels as RGBA. Red, Green, Blue and Alpha. In the file, each pixel in the alpha channel can have a value from 0 to 255, just like the RGB channels, representing 256 levels of transparency/opacity for each pixel.
@@ -82,7 +85,8 @@ In Unity, 1 unit is 1 meter. This is defined by Unity’s default physics values
 
 For convenience, when you import your Spine data into Unity, the scale is set at a default of 0.01 to match Unity’s sprites.
 
-[pic]
+![](http://i.imgur.com/4YHiEUF.png)
+
 If you want to set your skeleton’s base scale to something higher or lower, you can change this value in your SkeletonDataAsset’s inspector. This value is a multiplier used when your SkeletonData is loaded. Changing this value at runtime will not do anything after the SkeletonData has already been loaded.
 
 If you want to dynamically change/animate your skeleton’s scale (like a balloon) in gameplay, you can do that by just changing your GameObject’s Transform’s scale.
