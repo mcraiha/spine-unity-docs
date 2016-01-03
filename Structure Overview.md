@@ -70,7 +70,7 @@ skeletonAnimation.state.AddAnimation(0, “run”, true, 0f);
 
 `SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a SkeletonDataAsset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
 
-For more information on SkeletonAnimation, see the [Animation documentation](https://github.com/pharan/spine-unity-docs).
+For more information on SkeletonAnimation, see the [Animation documentation](https://github.com/pharan/spine-unity-docs/blob/master/Animation.md).
 
 
 ## Spine-C# ##

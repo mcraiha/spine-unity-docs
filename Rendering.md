@@ -57,7 +57,7 @@ Between meshes, Spine-Unity uses many of Unity’s render order systems to deter
 
 For the most part, you won’t need to and shouldn’t touch Material.renderQueue and the shader’s queue tag.
 
-The **Sorting Layer** and **Sorting Order** properties found in SkeletonRenderer/SkeletonAnimation’s Inspector actually modifies the `MeshRenderer`’s sorting layer and sorting order properties. Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized normally.
+The **Sorting Layer** and **Sorting Order** properties found in `SkeletonRenderer`/`SkeletonAnimation`’s Inspector actually modifies the `MeshRenderer`’s sorting layer and sorting order properties. Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized normally.
 
 *You can opt to use a different shader to get different kinds of blending, by changing the shader on the Material. Handling and working around the resulting blending behavior will likewise be up to you.
 
@@ -70,7 +70,7 @@ The answer to this question may change in the future.
 
 But for now, you can use the Spine-Unity SkeletonUtility function called "Submesh Renderers". Its use will be covered separately.
 
-But basically, what it does is allow your SkeletonRenderer’s mesh to be split by a slot (things above it and things below it). Those resulting pieces will then be rendered by their own MeshRenderers in their own GameObjects. Because they become separate renderers, you can set their sorting order individually.
+But basically, what it does is allow your `SkeletonRenderer`’s mesh to be split by a slot (things above it and things below it). Those resulting pieces will then be rendered by their own MeshRenderers in their own `GameObject`s. Because they become separate renderers, you can set their sorting order individually.
 
 #### I lowered the alpha to fade out my skeleton. Why are the overlaps showing?
 This is how realtime mesh rendering works anywhere. The opacity is applied right when the triangles are drawn, not after.
@@ -79,7 +79,7 @@ There are probably many solutions to this. Some workarounds too.
 You’ll find many good examples of workarounds from studying how various 2D games do it. Go out and play some of your favorites!
 
 #### How does Spine-Unity determine how big my model will be?
-The Spine editor uses a 1 pixel:1 unit scale. Meaning, that if you just include an image into your skeleton without any rotation or scaling, 1 pixel in that image will be 1 unit tall and 1 unit wide in Spine.
+Spine editor uses a 1 pixel:1 unit scale. Meaning, that if you just include an image into your skeleton without any rotation or scaling, 1 pixel in that image will be 1 unit tall and 1 unit wide in Spine.
 
 In Unity, 1 unit is 1 meter. This is defined by Unity’s default physics values and constraints (both 2D and 3D). It’s generally not a good idea to use the 1 pixel : 1 unit ratio because of this. Instead, Unity’s own sprites default to scaling down by 1/100; meaning 100 pixels in your image will be 1 Unity unit long.
 
@@ -87,21 +87,18 @@ For convenience, when you import your Spine data into Unity, the scale is set at
 
 ![](http://i.imgur.com/4YHiEUF.png)
 
-If you want to set your skeleton’s base scale to something higher or lower, you can change this value in your SkeletonDataAsset’s inspector. This value is a multiplier used when your SkeletonData is loaded. Changing this value at runtime will not do anything after the SkeletonData has already been loaded.
+If you want to set your skeleton’s base scale to something higher or lower, you can change this value in your Skeleton Data Asset’s inspector. This value is a multiplier used when your `SkeletonData` is loaded. Changing this value at runtime will not do anything after the `SkeletonData` has already been loaded.
 
-If you want to dynamically change/animate your skeleton’s scale (like a balloon) in gameplay, you can do that by just changing your GameObject’s Transform’s scale.
+If you want to dynamically change/animate your skeleton’s visual scale (like a balloon) in gameplay, you can do that by just changing `gameObject.transform.localScale`.
 
 #### Flipping Horizontally or Vertically
-Accessing Skeleton.FlipX and Skeleton.FlipY can allow you to flip the skeleton horizontally or vertically.
-It’s usually a good idea to make all your skeletons face one direction so that your flipping logic can be consistent throughout your code. But if not, you can always add an extra bool to your controller and [negate your intended flip value with boolean logic](http://stackoverflow.com/questions/13983198/negate-a-boolean-based-on-another-boolean).
+Accessing `Skeleton.FlipX` and `Skeleton.FlipY` can allow you to flip the skeleton horizontally or vertically.
+It’s usually a good idea to make all your skeletons face one direction so that your flipping logic can be consistent throughout your code. But if not, you can always add an extra `bool` to your controller and [negate your intended flip value with boolean logic](http://stackoverflow.com/questions/13983198/negate-a-boolean-based-on-another-boolean).
 
 You may have learned to flip your 2D sprites in Unity setting a negative scale on the Transform, or rotating it along the y-axis by 180 degrees.
 Both of these work for purely visual purposes. But they have their own side effects:
 
  - Nonuniform scale can cause a mesh to bypass Unity’s batching system. This means it will have its own (set of) draw calls for each instance. So it’s okay for your main character. It can be detrimental if you have nonuniform scale for dozens of skeletons.
  - Rotating causes normals to rotate with the mesh. For lighting 2D sprites, this means they’ll point in the wrong direction.
- - Rotating X or Y may also cause Unity’s 2D colliders to behave unpredictably.
- - Negative scale can cause attached physics colliders and some script logic to behave with unexpected results.
-
-
-> Written with [StackEdit](https://stackedit.io/).
+ - Rotating X or Y may also cause Unity’s 2D Colliders to behave unpredictably.
+ - Negative scale can cause attached physics Colliders and some script logic to behave with unexpected results.

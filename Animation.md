@@ -14,7 +14,7 @@ Normally, `Spine.AnimationState` manages keeping track of time, updating the ske
 
 But `Spine.AnimationState` is a C# class. To make it usable in Unity, the `Spine.AnimationState` object is wrapped in a `MonoBehaviour` called `SkeletonAnimation`. You will find that `SkeletonAnimation` has a member field called `state`, a reference to the `Spine.AnimationState` object.  
 
-`SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a SkeletonDataAsset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
+`SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a Skeleton Data Asset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
 
 ## How to use SkeletonAnimation
 
@@ -111,13 +111,13 @@ Spine.AnimationState raises events:
 **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an **infinite recursion** of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
 
-To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](https://github.com/pharan/spine-unity-docs).
+To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](https://github.com/pharan/spine-unity-docs/blob/master/Events.md).
 
 ----------
 
 ### Advanced Animation Control
-Tracks and TrackEntry are just part of Spine.AnimationState, and AnimationState is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
-However, Spine-Unity and Spine-C# can function even without AnimationState. For example, SkeletonAnimator uses `UnityEngine.Animator` instead of `Spine.AnimationState` and uses Mecanim to manage numbers and data for mixing, layering and queueing.
+Tracks and TrackEntry are just part of `Spine.AnimationState`, and `AnimationState` is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
+However, Spine-Unity and Spine-C# can function even without `AnimationState`. For example, `SkeletonAnimator` uses `UnityEngine.Animator` instead of `Spine.AnimationState` and uses Mecanim to manage numbers and data for mixing, layering and queueing.
 
 If you wanted to do bookkeeping of your animations a different way, whether to be optimized based on how you plan to use it, or to handle special cases just the way you want them, you can build a different system.
 
