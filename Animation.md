@@ -3,7 +3,11 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains mostly intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs) document.
 
+----------
+
+![](http://i.imgur.com/7qOlCn8.png)
 # Animations and Controlling Animation
+
 
 ## SkeletonAnimation
 Normally, `Spine.AnimationState` manages keeping track of time, updating the skeleton, queueing, layering and mixing/crossfading animation. If you're used to "Mecanim" as having State Machines, `Spine.AnimationState` is a simpler, non-programmable kind, but flexible enough to serve as the base for most animation logic.
@@ -12,22 +16,22 @@ But `Spine.AnimationState` is a C# class. To make it usable in Unity, the `Spine
 
 `SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a SkeletonDataAsset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
 
-## How do you use SkeletonAnimation?
+## How to use SkeletonAnimation
 
-##### FOR BEGINNERS
-“Out of the box”, an instantiated GameObject with a SkeletonAnimation component on it is ready to go. Changing the Animation dropdown in the Inspector allows you to set the initial animation for that SkeletonAnimation object which starts playing immediately when the scene starts. Looping can be enabled and disabled, and the Time Scale can be changed.
+### FOR BEGINNERS
+“Out of the box”, an instantiated `GameObject` with a `SkeletonAnimation` component on it is ready to go. Changing the Animation dropdown in the Inspector allows you to set the initial animation for that SkeletonAnimation object which starts playing immediately when the scene starts.
 
-These Inspector properties map to `.AnimationName`, `.loop` and `.timeScale`.
+Looping can be enabled and disabled, and the Time Scale can be changed. These Inspector properties map to `.AnimationName`, `.loop` and `.timeScale`.
 
-For beginner code, you can use skeletonAnimation.AnimationName property to change the playing animation with its name. It will start playing and loop if the skeletonAnimation.loop was set to true at the time it was changed.
+For beginner code, you can use `skeletonAnimation.AnimationName` property to change the playing animation with its name. It will start playing and loop if the `skeletonAnimation.loop` was set to true at the time it was changed.
 
-##### FOR TYPICAL USE
+### FOR TYPICAL USE
 The class that actually controls the animation of the skeleton is **Spine.AnimationState**.
-`SkeletonAnimation` is built around `AnimationState`. It stores a reference to its instance in `.state`. This is instantiated on `Awake`.
+`SkeletonAnimation` is built around `AnimationState`. It stores a reference to its instance of `Spine.AnimationState` in `SkeletonAnimation.state`. This is instantiated on `Awake` so make sure to only access it on `Start` or any time after.
 
-`AnimationState` is Spine’s common-case implementation of a Spine Animation State Machine. It is lower-level in a sense that it only manages updating, queueing, layering and mixing/crossfading animations. (It is not a "State Machine" in the Mecanim sense).
+`AnimationState` is Spine’s common-case implementation of a Spine Animation State Machine. It is lower-level in a sense that it only manages updating, queuing, layering and mixing/crossfading animations. (It is not a "State Machine" in the Mecanim sense).
 
-In code, you can play animations through `AnimationState` methods.
+In code, you can play animations through `AnimationState` methods:
 ```csharp
 // Plays the animation named “stand” once on Track 0.
 skeletonAnimation.state.SetAnimation(0, “stand”, false);
@@ -36,7 +40,10 @@ skeletonAnimation.state.SetAnimation(0, “stand”, false);
 skeletonAnimation.state.AddAnimation(0, “run”, true, 0f);
 ```
 
-##### TRACKS
+Mixing/crossfading options can be found on your `SkeletonDataAsset`'s inspector. There you'll find a field for "Default Mix" which is the default duration of a mix between two animations on the same track. You may also define specific mix durations for specific pairs of animations there.
+
+
+#### TRACKS
 Tracks are animation layers, for playing more than one Spine animation at once.
 
 This is useful for when, for example, you have an animation for a character's body running, but also have an animation for the arm shooting a gun.
@@ -51,7 +58,7 @@ skeletonAnimation.state.SetAnimation(0, "run", true);
 skeletonAnimation.state.SetAnimation(1, "shoot", false);
 ```
 
-##### TRACKENTRY
+#### TRACKENTRY
 When you call `SetAnimation` or` AddAnimation`, it returns a `TrackEntry` object.
 
 This object represents the instance of an animation playback for the animation you just played or queued. It holds information about what animation it is, its elapsed time, its own timescale and several other properties.
@@ -78,7 +85,7 @@ You can subscribe to events just for that specific animation playback instance.
 
 A `Spine.Animation` object corresponds to an individual "animation clip" animated in Spine. If a run animation called "run" was animated in Spine, you'll get a `Spine.Animation` object named "run".
 
-Each `Spine.Animation` is a collection of `Timeline` objects. Each `Timeline` object is a collection of keys, which defines how a certain animateable value (scale, rotation, position, color, attachment, mesh vertices, IK, events, draw order) changes over time. Each `Timeline` has its own target: a `Bone` for scale, rotation and position; a `slot` for attachments and colors; a `MeshAttachment` for free-form deformation/mesh vertices, and the appropriate parts of the skeleton for *draw order* and *events*.
+Each `Spine.Animation` is a collection of `Timeline` objects. Each `Timeline` object is a collection of keys, which defines how a certain animatable value (scale, rotation, position, color, attachment, mesh vertices, IK, events, draw order) changes over time. Each `Timeline` has its own target: a `Bone` for scale, rotation and position; a `slot` for attachments and colors; a `MeshAttachment` for free-form deformation/mesh vertices, and the appropriate parts of the skeleton for *draw order* and *events*.
 
 In Spine runtimes, a `Spine.Animation` is applied to a skeleton with `Animation.Apply(...)`. This poses the `Skeleton`'s various parts only according to that Animation's `Timeline`s and keys. If a `Timeline` isn't there, the animatable value won't change. If a `Timeline` is there, it will overwrite whatever value is there with a new value.
 
@@ -101,9 +108,12 @@ Spine.AnimationState raises events:
  - `Complete` when an animation completes its full duration,
  - `Event` when a user-defined event is detected.
 
-**WARNING:** NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an **infinite recursion** of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
+**WARNING:**
+> NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an **infinite recursion** of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
 
 To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](https://github.com/pharan/spine-unity-docs).
+
+----------
 
 ### Advanced Animation Control
 Tracks and TrackEntry are just part of Spine.AnimationState, and AnimationState is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
