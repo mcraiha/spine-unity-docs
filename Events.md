@@ -6,13 +6,15 @@ The information here may change over time as the implementations within Spine-Un
 ![](http://i.imgur.com/x9sd6yd.png)
 ## Coding for Spine Events & AnimationState callbacks
 
-**Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
+**Spine.AnimationState** provides functionality for animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
 
-> **For the novice programmer**: "Callbacks"/"Events" mean you can tell the system to inform you when *something* specific happens. It lets you know when that *something* happens by calling a method you gave it prior. The structure and syntax for this varies from language to language. See the sample code at the bottom for examples of C# syntax.
+> **For the novice programmer**: [Callbacks](https://en.wikipedia.org/wiki/Callback_%28computer_programming%29) mean you can tell the system to inform you when *something* specific happens by giving it a method to call when that something happens. [Events](https://en.wikipedia.org/wiki/Event_%28computing%29) are the meaningful points in program execution— in this case, that you can subscribe to/handle with your own code by providing a function/method for the event system to call.
+> 
+> The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
 ![](http://i.imgur.com/kzv0qRA.png)
 
-Spine.AnimationState raises events:
+Spine.AnimationState raises the following events:
  - **Start** is raised when an animation starts playing,
 	 - This applies to right when you call `SetAnimation`.
 	 - I can also be raised when a queued animation starts playing.
@@ -33,13 +35,12 @@ At the junction where an animation completes playback, and a queued animation wi
 
 **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an infinite recursion of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
-******* List AnimationState Events here.
 
 ----------
 
 ### Sample Code
 
-Here is a sample MonoBehaviour that subscribes to AnimationState's callbacks. Read the comments to see what's going on.
+Here is a sample `MonoBehaviour` that subscribes to `AnimationState`'s events. Read the comments to see what's going on.
 ```csharp
 using UnityEngine;
 using System.Collections;
