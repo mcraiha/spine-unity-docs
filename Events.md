@@ -8,7 +8,7 @@ The information here may change over time as the implementations within Spine-Un
 
 **Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
 
->For the novice programmer, "callbacks"/"events" mean you can tell the system to inform you when *something* specific happens. It lets you know when that *something* happens by calling a method you gave it prior. The structure and syntax for this varies from language to language. See the sample code at the bottom for examples of C# syntax.
+> **For the novice programmer**: "Callbacks"/"Events" mean you can tell the system to inform you when *something* specific happens. It lets you know when that *something* happens by calling a method you gave it prior. The structure and syntax for this varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
 ![](http://i.imgur.com/kzv0qRA.png)
 
@@ -34,8 +34,11 @@ At the junction where an animation completes playback, and a queued animation wi
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an infinite recursion of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
 ******* List AnimationState Events here.
 
+----------
 
-Here is a sample MonoBehaviour that subscribes to AnimationState's callbacks.
+### Sample Code
+
+Here is a sample MonoBehaviour that subscribes to AnimationState's callbacks. Read the comments to see what's going on.
 ```csharp
 using UnityEngine;
 using System.Collections;
@@ -53,12 +56,12 @@ public class MySpineControllerThing : MonoBehaviour {
 		// This is how you subscribe via a declared method. It needs the correct signature.
 		skeletonAnimation.state.Event += HandleEvent;
 		
-		// This is how you subscribe via an anonymous delegate.
+		// You can also use an anonymous delegate.
 		skeletonAnimation.state.Start += delegate (Spine.AnimationState state, int trackIndex) {
 			Debug.Log(string.Format("track {0} started a new animation.", trackIndex));
 		};
 
-		// This is how you subscribe via an anonymous delegate if you don't need its parameters.
+		// ... or choose to ignore its parameters.
 		skeletonAnimation.state.End += delegate {
 			Debug.Log("An animation ended!");
 		};
