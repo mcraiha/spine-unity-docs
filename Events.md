@@ -46,6 +46,8 @@ using System.Collections;
 // Add this to the same GameObject as your SkeletonAnimation
 public class MySpineControllerThing : MonoBehaviour {
 
+	// The [SpineEvent] attribute makes the inspector for this MonoBehaviour
+	// draw the field as a dropdown list of existing event names in your SkeletonData.
 	[SpineEvent] public string footstepEventName = "footstep"; 
 
 	void Start () {
