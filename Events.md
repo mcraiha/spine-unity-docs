@@ -23,8 +23,9 @@ Spine.AnimationState raises events:
  - **Complete** is raised an animation completes its full duration,
 	 - This is raised when a non-looping animation finishes playing, whether or not a next animation is queued.
 	 - This is also raised every time a looping animation finishes an loop.
- - **Event** is raised a user-defined event is detected.
-	 - These are events you keyed in animations in Spine editor.
+ - **Event** is raised whenever *ANY* user-defined event is detected.
+	 - These are events you keyed in animations in Spine editor. They are purple keys. A purple icon can also be found in the Tree view.
+	 - To distinguish between different events, you need to check the `Spine.Event e` parameter for its `Name`. (or `Data` reference).
 	 - This is useful for when you have to play sounds according to points the animation like footsteps. It can also be used to synchronize or signal non-Spine systems according to Spine animations, such as Unity particle systems or spawning separate effects, or even game logic such as timing when to fire bullets (if you really want to).
 
 
@@ -54,16 +55,16 @@ public class MySpineControllerThing : MonoBehaviour {
 		var skeletonAnimation = GetComponent<SkeletonAnimation>();
 		if (skeletonAnimation == null) return;	// told you to add this to SkeletonAnimation's GameObject.
 
-		// This is how you subscribe via a declared method. It needs the correct signature.
+		// This is how you subscribe via a declared method. The method needs the correct signature.
 		skeletonAnimation.state.Event += HandleEvent;
 		
-		// You can also use an anonymous delegate.
 		skeletonAnimation.state.Start += delegate (Spine.AnimationState state, int trackIndex) {
+			// You can also use an anonymous delegate.
 			Debug.Log(string.Format("track {0} started a new animation.", trackIndex));
 		};
 
-		// ... or choose to ignore its parameters.
 		skeletonAnimation.state.End += delegate {
+			// ... or choose to ignore its parameters.
 			Debug.Log("An animation ended!");
 		};
 	}
