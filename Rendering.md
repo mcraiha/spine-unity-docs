@@ -24,12 +24,12 @@ The `SkeletonRenderer class` (base class of `SkeletonAnimation`) builds the mesh
 The `Mesh` goes into the `MeshFilter` component, which is used by the `MeshRenderer`.
 The `MeshRenderer` renders the mesh at the appropriate point in [Unity’s game loop](http://docs.unity3d.com/Manual/ExecutionOrder.html).
 
-MeshFilter and MeshRenderer have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); that is, mesh and materials don't need to be passed to them every frame for the visibility to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the upadtes at runtime (by disabling SkeletonAnimation or SkeletonRenderer) will not destroy the visible mesh. 
+`MeshFilter` and `MeshRenderer` have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); that is, mesh and materials don't need to be passed to them every frame for the visibility to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the updates at runtime (by disabling `SkeletonAnimation` or `SkeletonRenderer`) will not destroy the visible mesh. 
 
 #### Materials
-Spine-Unity also uses Materials to store information about what texture, shader and material properties should be used. The Materials are assigned through the AtlasAsset.
+Spine-Unity also uses Materials to store information about what texture, shader and material properties should be used. The Materials are assigned through the `AtlasAsset`.
 
-The materials array of the MeshRenderer is managed by the SkeletonRenderer every frame depending on what AtlasAssets it needs to use. Modifying that array directly does not work like a typical Unity setup.
+The materials array of the `MeshRenderer` is managed by the `SkeletonRenderer` every frame depending on what `AtlasAssets` it needs to use. Modifying that array directly does not work like a typical Unity setup.
 
 ### Sprite Texture Rendering/Z Ordering
 ![](http://i.imgur.com/xqDt3Sn.jpg)
@@ -38,9 +38,9 @@ Spine typically* uses alpha-blending to render your Spine model parts.
 
 When you draw, paint and export parts for your Spine project, you export them as PNG files which encode pixels as RGBA. Red, Green, Blue and Alpha. In the file, each pixel in the alpha channel can have a value from 0 to 255, just like the RGB channels, representing 256 levels of transparency/opacity for each pixel.
 
-This transparency/semitransparency, defined by the alpha channel, presents classical problems for depth/render order. These problems have many imperfect solutions and cause many of the weird 3D artifacts we see today even in our AAA games.
+This transparency/semi-transparency, defined by the alpha channel, presents classical problems for depth/render order. These problems have many imperfect solutions and cause many of the weird 3D artifacts we see today even in our AAA games.
 
-But in very standard fashion, ie. just like in most 2D alpha-blended sprite rendering cases including Unity’s own Sprite/SpriteRenderer system, Spine-Unity uses a shader that does not use the 3D Z-buffer nor alpha testing to determine what should be rendered in front and behind.
+But in very standard fashion, ie. just like in most 2D alpha-blended sprite rendering cases including Unity’s own `Sprite`/`SpriteRenderer` system, Spine-Unity uses a shader that does not use the 3D Z-buffer nor alpha testing to determine what should be rendered in front and behind.
 
 Within one mesh, it just renders things in the order defined by the order of the triangles of the mesh, drawing one thing on top of another. This order is what Spine uses to control Slot Draw Order.
 
@@ -68,7 +68,7 @@ In Unity, meshes are rendered as a whole. So how do you get one to render behind
 
 The answer to this question may change in the future.
 
-But for now, you can use the Spine-Unity SkeletonUtility function called SubmeshRenderer. Its use will be covered separately.
+But for now, you can use the Spine-Unity SkeletonUtility function called "Submesh Renderers". Its use will be covered separately.
 
 But basically, what it does is allow your SkeletonRenderer’s mesh to be split by a slot (things above it and things below it). Those resulting pieces will then be rendered by their own MeshRenderers in their own GameObjects. Because they become separate renderers, you can set their sorting order individually.
 
