@@ -45,8 +45,7 @@ using System.Collections;
 
 // Add this to the same GameObject as your SkeletonAnimation
 public class MySpineControllerThing : MonoBehaviour {
-	
-	public AudioSource footstepAudioSource;
+
 	[SpineEvent] public string footstepEventName = "footstep"; 
 
 	void Start () {
@@ -70,12 +69,7 @@ public class MySpineControllerThing : MonoBehaviour {
 	void HandleEvent (Spine.AnimationState state, int trackIndex, Spine.Event e) {
 		// Play some sound if the event named "footstep" fired.
 		if (e.Data.Name == footstepEventName) {			
-
-			if (footstepAudioSource != null) {
-				footstepAudioSource.Stop();
-				footstepAudioSource.Play();
-			}
-
+			Debug.Log("Play a footstep sound!");
 		}
 	}
 }
