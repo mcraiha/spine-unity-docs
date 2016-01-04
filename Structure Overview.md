@@ -1,6 +1,6 @@
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs) document.  
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document.  
 
 ## How is Spine-Unity Put together?
 A functioning Spine-Unity setup consists of:

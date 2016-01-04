@@ -5,7 +5,7 @@ Most of these documents are still works in progress.
 ----------
 
 ## For Beginners
-- Getting Started (coming soon)
+- [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md)
 
 ## Intermediate Users
 - [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/Structure%20Overview.md)

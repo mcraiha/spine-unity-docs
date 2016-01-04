@@ -1,7 +1,7 @@
 
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains mostly intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs) document.
+This contains mostly intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document.
 
 ----------
 

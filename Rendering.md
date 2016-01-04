@@ -1,6 +1,7 @@
 
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document. 
 
 # How does rendering work?
 In general, Spine’s systems are built to take advantage of the way modern game engines use 3D graphics. This is especially true for its advanced features like FFD (Free-form Deformation) and Weights.
