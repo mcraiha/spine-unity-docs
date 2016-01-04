@@ -50,17 +50,20 @@ Between meshes, Spine-Unity uses many of Unity’s render order systems to deter
 - Mesh data is passed to Unity as a whole.
 - It is rendered by the GPU triangle-by-triangle.
 - Whole meshes are rendered in an order determined by many factors:
-   - Distance from the camera. (Camera determines what kind of distance, planar or absolute.)
-   - Renderer Sorting Layer/Sorting Order. (All UnityEngine.Renderers have these sorting properties.)
+   - Distance from the camera. (Camera determines [what kind of distance; planar or perspective](http://docs.unity3d.com/ScriptReference/Camera-transparencySortMode.html).)
+   - Renderer Sorting Layer/Sorting Order. ([All UnityEngine.Renderers have these sorting properties](https://unity3d.com/learn/tutorials/modules/beginner/2d/sorting-layers).)
    - Shader’s ShaderLab Queue Tag (defaults to the “Transparent” queue like other sprites)
    - Material.renderQueue. (does nothing until you set it. It just overrides the shaderlab queue tag).
-   - Camera order. (For multi-camera setups.)
+   - [Camera depth](http://docs.unity3d.com/ScriptReference/Camera-depth.html). (For multi-camera setups.)
 
 For the most part, you won’t need to and shouldn’t touch Material.renderQueue and the shader’s queue tag.
 
-The **Sorting Layer** and **Sorting Order** properties found in `SkeletonRenderer`/`SkeletonAnimation`’s Inspector actually modifies the `MeshRenderer`’s sorting layer and sorting order properties. Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized normally.
-
 *You can opt to use a different shader to get different kinds of blending, by changing the shader on the Material. Handling and working around the resulting blending behavior will likewise be up to you.
+
+###### Sorting Layer and Order
+The **Sorting Layer** and **Sorting Order** properties found in `SkeletonRenderer`/`SkeletonAnimation`’s Inspector actually modifies the `MeshRenderer`’s [sorting layer](http://docs.unity3d.com/ScriptReference/Renderer-sortingLayerID.html) and [sorting order](http://docs.unity3d.com/ScriptReference/Renderer-sortingOrder.html) properties.
+
+Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized/stored normally as part of `MeshRenderer` and not part of SkeletonRenderer.
 
 #### So can I ever render anything between parts of my Spine skeleton?
 Sometimes, you need your character to ride a bicycle, or lift a rock hug an Ionic column. In Spine terms, this means you have to render some parts behind a thing, and some parts in front of a thing.
