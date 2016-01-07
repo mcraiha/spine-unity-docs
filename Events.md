@@ -13,6 +13,8 @@ The information here may change over time as the implementations within Spine-Un
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
 ![](http://i.imgur.com/kzv0qRA.png)
+Fig 1. Chart of Events raised without mixing/crossfading.
+
 
 Spine.AnimationState raises the following events:
  - **Start** is raised when an animation starts playing,
@@ -35,6 +37,16 @@ At the junction where an animation completes playback, and a queued animation wi
 
 **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an infinite recursion of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
+
+#### Events During Mixing
+
+The standard AnimationState implementation treats events differently when it does mixing.
+
+When you have a mix time set (or `Default Mix` on your Skeleton Data Asset), there is a span of time where the next animation starts being mixed with an increasing alpha, and the previous animation is still being applied to the skeleton.
+
+During this crossfade:
+* (((possibly to be changed))) user events in the previous animation are not raised. 
+* `Complete` and `End` events for the previous/outgoing animation are not raised. 
 
 ----------
 
@@ -78,3 +90,11 @@ public class MySpineControllerThing : MonoBehaviour {
 	}
 }
 ```
+
+----------
+
+# Advanced
+
+Since the Spine runtimes are source-available and fully modifiable in your project, you can of-course define and raise your own events in AnimationState or in whatever version of it you make.
+
+ 
