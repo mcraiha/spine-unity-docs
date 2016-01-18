@@ -20,10 +20,13 @@ Spine.AnimationState raises the following events:
  - **Start** is raised when an animation starts playing,
 	 - This applies to right when you call `SetAnimation`.
 	 - I can also be raised when a queued animation starts playing.
- - **End** is raised an animation is cleared or interrupted,
+ - **End** is raised an animation is cleared (or interrupted),
 	 - This applies to when you call `SetAnimation` before the current animation has a chance to finish.
 	 - This is also raised when you clear the track using `ClearTrack` or `ClearTracks`.
-	 - **NEVER** handle the End event with a method that calls SetAnimation. See the warning below. 
+	 - (3.0) During a mix/crossfade, end is raised after a mix is completed.
+	 - **NEVER** handle the End event with a method that calls SetAnimation. See the warning below.
+ - **Interrupt** (3.0) is raised when a new animation is set and a current animation is still playing.
+	 - This is raised when an animation starts mixing/crossfading into another animation. 
  - **Complete** is raised an animation completes its full duration,
 	 - This is raised when a non-looping animation finishes playing, whether or not a next animation is queued.
 	 - This is also raised every time a looping animation finishes an loop.

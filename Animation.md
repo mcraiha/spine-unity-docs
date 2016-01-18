@@ -65,7 +65,9 @@ This object represents the instance of an animation playback for the animation y
 
 `TrackEntry` lets you control the state of a playing or queued animation, and playback parameters not included in `SetAnimation` and `AddAnimation`.
 
-###### Start Time
+###### Current Time (or Start Time)
+The time the Animation is currently playing at can be changed at any point while it's playing.
+
 For example, you can change the `.Time` immediately after `SetAnimation` so the animation starts in the middle instead of the beginning. Note that time is in seconds. To convert Spine editor frames to seconds, you must divide by the dopesheet’s 30 fps tick marks: `time = (frameNumber/30f)`.
 
 ```csharp
@@ -79,12 +81,14 @@ For example, you can change the `.Time` immediately after `SetAnimation` so the 
 ```
 
 > If you are doing this to Animations with animation events, make sure you also set `lastTime` to the same value as well.
-> If `lastTime` is left as 0, all events between time 0 and `time` will be captured and raised/fired in the next Update. 
+> If `lastTime` is left as 0, all events between time 0 and `time` will be captured and raised/fired in the next Update.
 
 You can also change the point where the animation ends by setting `.EndTime`.
 
 ###### Timescale
 You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`. This gets multiplied by the `SkeletonAnimation.timeScale` and `AnimationState.timeScale` to get the final timescale.
+
+> You can set timeScale to 0 so it pauses. Note that even if `timeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
 
 ###### TrackEntry-specific events.
 You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](https://github.com/pharan/spine-unity-docs/blob/master/Events.md).
