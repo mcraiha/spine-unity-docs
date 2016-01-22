@@ -10,6 +10,8 @@ The information here may change over time as the implementations within Spine-Un
 
 > **For the novice programmer**: [Callbacks](https://en.wikipedia.org/wiki/Callback_%28computer_programming%29) mean you can tell the system to inform you when *something* specific happens by giving it a method to call when that something happens. [Events](https://en.wikipedia.org/wiki/Event_%28computing%29) are the meaningful points in program execution— in this case, that you can subscribe to/handle with your own code by providing a function/method for the event system to call.
 > 
+> When the event happens, the process of calling the function/method you provided is called "raising" or "firing" the event. Most C# documentation will call it "raising". But Spine documentation will call it "firing". Those mean the same thing. 
+>  
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
 ![](http://i.imgur.com/kzv0qRA.png)
