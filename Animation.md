@@ -66,7 +66,7 @@ This object represents the instance of an animation playback for the animation y
 `TrackEntry` lets you control the state of a playing or queued animation, and playback parameters not included in `SetAnimation` and `AddAnimation`.
 
 If you choose not to keep the reference to the `TrackEntry` object when you called SetAnimation or AddAnimation, you can get the currently active TrackEntry by calling
-```
+```csharp
 	var trackEntry = skeletonAnimation.state.GetCurrent(myTrackNumber); // null if no animation is playing.
 ```
 
@@ -97,7 +97,7 @@ You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`.
 > You can set timeScale to 0 so it pauses. Note that even if `timeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
 
 Here is a sample helper method if you want to jump to a certain point in time.
-```
+```csharp
 static public Spine.TrackEntry JumpToTime (SkeletonAnimation skeletonAnimation, int trackNumber, float time, bool skipEvents, bool stop) {
      if (skeletonAnimation == null) return null;
      return JumpToTime(skeletonAnimation.state.GetCurrent(trackNumber), time, skipEvents, stop);
