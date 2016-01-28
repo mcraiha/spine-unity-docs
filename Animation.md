@@ -65,6 +65,12 @@ This object represents the instance of an animation playback for the animation y
 
 `TrackEntry` lets you control the state of a playing or queued animation, and playback parameters not included in `SetAnimation` and `AddAnimation`.
 
+If you choose not to keep the reference to the `TrackEntry` object when you called SetAnimation or AddAnimation, you can get the currently active TrackEntry by calling
+```
+	var trackEntry = skeletonAnimation.state.GetCurrent(myTrackNumber); // null if no animation is playing.
+```
+
+
 ###### Current Time (or Start Time)
 The time the Animation is currently playing at can be changed at any point while it's playing.
 
@@ -90,6 +96,27 @@ You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`.
 
 > You can set timeScale to 0 so it pauses. Note that even if `timeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
 
+Here is a sample helper method if you want to jump to a certain point in time.
+```
+static public Spine.TrackEntry JumpToTime (SkeletonAnimation skeletonAnimation, int trackNumber, float time, bool skipEvents, bool stop) {
+     if (skeletonAnimation == null) return null;
+     return JumpToTime(skeletonAnimation.state.GetCurrent(trackNumber), time, skipEvents, stop);
+}
+
+static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float time, bool skipEvents, bool stop) {
+     if (trackEntry == null) return trackEntry;
+     trackEntry.time = time;
+     if (skipEvents)
+          trackEntry.lastTime = time;
+
+     if (stop)
+          trackEntry.timeScale = 0;
+
+     return trackEntry;
+}
+```
+
+
 ###### TrackEntry-specific events.
 You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](https://github.com/pharan/spine-unity-docs/blob/master/Events.md).
 
@@ -105,11 +132,13 @@ This means that if you play two Animations at the same time using `Spine.Animati
 
 This system allows the user to combine **different animations for different parts of the skeleton** and play them back independently of each other. 
 
-#### One Animation After Another
+#### One Animation After Another (pre-3.0)
 This also means that without **auto-reset logic**, playing animations one after another will not necessarily cause it to look like what the animations like in Spine editor. Instead, playing a sequence of animations will result in later animations inheriting the values and bone poses of the previous animation.
 
 
-In the inspector, `SkeletonAnimation` has a **Generic Auto-reset checkbox** under "Advanced". Check that box if you want to enable it. You can also set the public bool property `SkeletonAnimation.Autoreset` to `true`.
+
+In 3.0, Spine.AnimationState will handle auto-reset logic itself and give you the option to use it so it can behave like it does in Spine editor, or if you want the original free-rein mode for advanced uses.
+
 
 ## Animation Callbacks + Spine Events
 **Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
