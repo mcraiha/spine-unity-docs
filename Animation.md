@@ -104,15 +104,15 @@ static public Spine.TrackEntry JumpToTime (SkeletonAnimation skeletonAnimation, 
 }
 
 static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float time, bool skipEvents, bool stop) {
-     if (trackEntry == null) return trackEntry;
-     trackEntry.time = time;
-     if (skipEvents)
-          trackEntry.lastTime = time;
+    if (trackEntry != null) {
+		trackEntry.time = time;
+		if (skipEvents)
+			trackEntry.lastTime = time;	// in pre-3.0. This ignores attachment keys too.
 
-     if (stop)
-          trackEntry.timeScale = 0;
-
-     return trackEntry;
+		if (stop)
+			trackEntry.timeScale = 0;
+	}
+	return trackEntry;
 }
 ```
 
