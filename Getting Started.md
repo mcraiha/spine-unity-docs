@@ -71,31 +71,33 @@ For __2D Toolkit__ users, packing a `.png` and `.atlas.txt` is not necessary. In
 
 ----------
 
+## Optional Modules
+Inside your `spine-unity\Modules\` folder, you'll find reusable sample scripts and modules that can be removed from the project if you're not using them. You can think of them as "Spine-Unity Standard Assets".
+
+**TK2D** contains extra code needed for Spine to work with the 3rd-party asset. [2DToolkit](https://www.assetstore.unity3d.com/en/#!/content/908).
+
+**Ghost** lets you render trailing previous poses of your skeleton. It looks like Spine editor's ghosting feature.
+
+**Ragdoll** generates colliders and rigidbodies (2D and 3D) of your skeleton's bone hierarchy and allows it to ragdoll and be subject to physics simulation.
+
+**SkeletonGraphic** is the Unity.UI version of the SkeletonAnimation component. (requires Unity 5.2 or later, uses `Spine.Unity.ISimpleMeshGenerator` included in the Mesh Generation folder.)
+
+**YieldInstructions** is a set of classes you can yield when you use Unity coroutines. They're instructions for waiting for Spine Animations to finish or for certain Spine.AnimationState events to fire.
+
+**SkeletonUtility Modules** is a set of sample scripts that work with SkeletonUtility. `SkeletonUtilityEyeConstraint` allows eye movement. `SkeletonUtilityGroundConstraint` allows foot positioning based on colliders. `SkeletonUtilityKinematicShadow` takes transform value changes and applies them to rigidbodies as forces.
+
+**AtlasRegionAttacher** allows you to add regions from any Spine atlas into your skeleton as RegionAttachments.
+
+**SpriteAttacher** lets you add a Unity Sprite to your skeleton as a RegionAttachment.
+
+**CustomSkin** lets you mix and match attachments on your skeleton into a skin you can generate at runtime (for example, for equipping items or variations of your character). This is more robust than just changing attachment slots directly since it supports animation, various poses and skeleton resetting.
+
+**Mesh Generation Samples** contains sample mesh generation code you can study, use and modify based on your needs (transforming a stateful Spine.Skeleton into a Unity mesh). Also see the folder `spine-unity/Mesh Generation` for the latest recommended implementations (currently used by SkeletonGraphic)
+
 
 ## Example Scenes
 
-To run the examples:
-
-1. Download the Spine Runtimes source using [git](https://help.github.com/articles/set-up-git) or by downloading it [as a zip](https://github.com/EsotericSoftware/spine-runtimes/archive/master.zip).
-1. Copy the contents of `spine-csharp/src` to `spine-unity/Assets/spine-csharp`.
-1. Open an example scene file from `spine-unity/Assets/examples/` using Unity 4.3.4 or above.
-
-#### Spineboy
-This shows the spineboy skeleton. The included Spineboy script shows the basics of controlling SkeletonAnimation through code.
-
-There is also a cube which follow's Spineboy's hand using the `BoneFollower` script. This script allows a Unity Transform to follow the position and rotation of a Spine bone.
-##### Spineboy Movement
-This shows the spineboy skeleton controlled through a condensed SkeletonAnimation controller setup: `SpineboyController`.
-
-You can make Spineboy run left and right, and he will react to mouse clicks.
-
-#### Goblins
-This shows a male and female goblin that use the same skeleton and animations. Click to change the skin from male to female and back. It has a single atlas page, so is drawn with just 1 draw call. It uses the `Skeleton Lit` shader for vertex lighting. The [Goblins.cs](https://github.com/EsotericSoftware/spine-runtimes/blob/master/spine-unity/Assets/examples/goblins/Goblins.cs) script manipulates the head bone after the animation is applied.
-#### Dragon
-This shows the dragon skeleton. The flying animation has many image changes. It also shows shadow rendering. This example uses a multi-page atlas so has a high number of draw calls.
-
-#### Raptor
-The raptor skeleton demonstrates animated Free-form deformation, skinning (its legs and tail) and IK constrants (on its feet, and spineboy's hands).
+After you add the Spine-Unity runtime to your Unity project, you can find the example scenes in the examples folder. Open the Getting Started scenes or any of the other sample scenes there. 
 
 ##### Raptor Animated Physics
 This playful version of the raptor scene demonstrates a SkeletonUtility setup, where certain bones are driven by a chain of rigidbodies to simulate physics. Here, the raptor's tail, neck and arms are bouncing according to Box2D physics. Note how Unity's default Time Settings can cause a different update rate between physics (`FixedUpdate`) and animation (`Update`). You may have to handle this yourself if you choose to integrate physics into your animations.  Certain rigidbody interpolation settings and timestep sizes can improve the quality.
