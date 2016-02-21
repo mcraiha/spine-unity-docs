@@ -130,12 +130,16 @@ In Spine runtimes, a `Spine.Animation` is applied to a skeleton with `Animation.
 
 This means that if you play two Animations at the same time using `Spine.AnimationState`'s track system, the `Timeline`s of the higher track will overwrite any changes that the lower track applied, but will not modify anything else.
 
-This system allows the user to combine **different animations for different parts of the skeleton** and play them back independently of each other. 
+This system allows the user to combine **different animations for different parts of the skeleton** and play them back independently of each other.
+
+### Posing the Skeleton according to an animation frame/time.
+
+You can call `Animation.Apply` directly if you want to pose a skeleton according to a certain point in time in that `Animation`. The Spine-Unity runtime also has a `Skeleton.PoseWithAnimation` extension method that allows you to do this according to an animation's name.
+
+One of the parameters is always time. This is time in seconds. If you want to pose the skeleton according to what you see in the editor, you may need to call `skeleton.SetToSetupPose()` before calling `Animation.Apply` or `Skeleton.PoseWithAnimation`
 
 #### One Animation After Another (pre-3.0)
 This also means that without **auto-reset logic**, playing animations one after another will not necessarily cause it to look like what the animations like in Spine editor. Instead, playing a sequence of animations will result in later animations inheriting the values and bone poses of the previous animation.
-
-
 
 In 3.0, Spine.AnimationState will handle auto-reset logic itself and give you the option to use it so it can behave like it does in Spine editor, or if you want the original free-rein mode for advanced uses.
 
@@ -154,7 +158,7 @@ Spine.AnimationState raises events:
 
 To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](https://github.com/pharan/spine-unity-docs/blob/master/Events.md).
 
-----------
+-------------------
 
 ### Advanced Animation Control
 Tracks and TrackEntry are just part of `Spine.AnimationState`, and `AnimationState` is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
