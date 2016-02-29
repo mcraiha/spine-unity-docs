@@ -18,11 +18,28 @@ It deserializes  JSON (`.json`) and binary (`.skel.bytes` in Unity) skeleton dat
 
 It also includes the base implementation of `AnimationState`, Spine's basic, out-of-the-box Animation controller. (More on this below)
 
-All of its classes are under the `Spine` namespace.
+All of its classes are under the `Spine` namespace. 
 
 **Spine-C#** is shared between **Spine-Unity**, **Spine-XNA** and **Spine-MonoGame**— all C# runtimes. Any other potential Spine runtimes written in .NET/mono can use Spine-C# as its base. Because of this, it uses none of UnityEngine’s classes or functionality.
 
 To maintain compatibility with Unity’s older Mono runtime and compiler, Spine-C# doesn’t use any of the latest C# language features.
+
+#### Stateful vs Stateless
+The Spine classes are generally divided into stateful-instance and stateless-data classes:
+
+**Stateful**
+Classes like `Skeleton`, `Bone`, `Slot`, `AnimationState` define *stateful* objects and can be modified without affecting other instances. You can flip a `Skeleton`, reposition a `Bone`, or modify a `Slot` or change the timeScale of an `AnimationState`, and it will only apply to that single instance.
+
+**Stateless**
+Classes like `SkeletonData`, `Animation`, `Attachment`, `BoneData`, `SlotData` define *stateless* objects and, by default and by design, are shared across (and will affect) all Skeleton instances you create. (Each Spine Unity Spine GameObject creates one Skeleton). Most of the time, you won't need to (and probably shouldn't) modify these stateless objects.
+
+As a rule of thumb:
+- If you want to find *stateful* objects, access them through `Skeleton`. (eg, when you want to pose a skeleton or swap a slot attachment)
+- If you want to find *stateless* objects, access them through `SkeletonData`. (eg, when you want information about an `Animation` like its duration, or an `Event`, or the setup/bind pose) 
+
+> This is just the intended design. If you are an advanced user and know your way around the runtime, you can define how "stateless" objects really are for your project's needs.
+
+You can find this and more detailed information about the base Spine runtimes [here](http://esotericsoftware.com/spine-using-runtimes).
 
 ### Spine-Unity
 Spine-Unity is the layer around Spine-C# that allows it to work with `UnityEngine`, and work in Unity editor.
@@ -36,7 +53,7 @@ Spine-Unity also times and manages the deserialization and instantiation of Spin
 
 In scripting, this is relevant: all Spine-C# classes are instantiated on `Awake`. This means that without controlling Script Execution Order directly, instances of Skeleton and AnimationState are not guaranteed to exist once your script’s `Awake` is called.
 
-You should cache or access references to `.state` or `.skeleton` on or after `Start`. This is in line with [Unity’s documentation for Awake](http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html).
+You should access (and cache) references to `.state` or `.skeleton` on or after `Start`. This is in line with [Unity’s documentation for Awake](http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html).
 
 ### SkeletonUtility and Spine-Unity Extras
 Spine-Unity also includes classes for optional functionality, and alternative workflows.
@@ -89,7 +106,7 @@ Because of the very similar syntax (and the language tradition) Spine-C# closely
 In Spine-C#:
 
  - The core library used in Spine-C# is [mscorlib](http://referencesource.microsoft.com/#mscorlib,namespaces)*. This includes Dictionary for maps, Array for array methods.
- - Methods and enum values are identified by **PascalCase** instead of **camelCase**. This is the C# language standard.
+ - Methods and enum values are identified by **PascalCase** instead of **camelCase**. This is the C# language standard. (For serialization compatibility reasons, some enums are camelCase.)
  - Properties and Auto-Properties are used instead of Java’s getter and setter methods.
    This is purely a syntax and API matter. Under the hood, properties are compiled into methods.
  - Events definition and subscription are done with C# events and delegates.

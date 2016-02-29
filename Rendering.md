@@ -25,12 +25,64 @@ The `SkeletonRenderer class` (base class of `SkeletonAnimation`) builds the mesh
 The `Mesh` goes into the `MeshFilter` component, which is used by the `MeshRenderer`.
 The `MeshRenderer` renders the mesh at the appropriate point in [Unity’s game loop](http://docs.unity3d.com/Manual/ExecutionOrder.html).
 
-`MeshFilter` and `MeshRenderer` have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); that is, mesh and materials don't need to be passed to them every frame for the visibility to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the updates at runtime (by disabling `SkeletonAnimation` or `SkeletonRenderer`) will not destroy the visible mesh. 
+`MeshFilter` and `MeshRenderer` have a [Retained Mode](https://en.wikipedia.org/wiki/Retained_mode) API (as opposed to an Immediate Mode API); that is, mesh and materials don't need to be passed to them every frame for the visibility to persist. This means that while `SkeletonRenderer`/`SkeletonAnimation` can update the mesh every frame, disabling the updates at runtime (by disabling `SkeletonAnimation` or `SkeletonRenderer`) will not destroy the visible mesh.
+
+> **Advanced use: Frame skipping per skeleton**
+> This also means that, after the initial mesh generation step, you can control and skip mesh updates to implement specific frameskipping and staggered-update behavior. This can be used to minimize updates on less important game elements, or achieve a stylistic frame-by-frame look to the animations.
 
 #### Materials
 Spine-Unity also uses Materials to store information about what texture, shader and material properties should be used. The Materials are assigned through the `AtlasAsset`.
 
 The materials array of the `MeshRenderer` is managed by the `SkeletonRenderer` every frame depending on what `AtlasAssets` it needs to use. Modifying that array directly does not work like a typical Unity setup.
+
+#### So many Materials
+You may notice that your MeshRenderer has a lot of Materials— particularly, more materials than you actually set in your `AtlasAsset`.
+
+This is not unusual if you have more than one atlas page. The renderer's material array is not supposed to reflect the order and number of items in your AtlasAsset. SkeletonRenderer lays out a Material array based on what materials it needs to render Spine Attachments.
+
+If all attachments share one material, SkeletonRenderer only puts one Material in MeshRenderer.
+
+If some attachments require material A and some material B, a Material array is laid out according to the order the materials are needed. This is based on the order the attachments are drawn and which attachments can be found in which Material's texture.
+
+If the order goes:
+> Attachment from A
+> Attachment from A
+> Attachment from B
+> Attachment from A
+
+The resulting material array will be:
+> Material A (for the first two)
+> Material B (for the third)
+> Material A (for the fourth)
+
+In other words, the more the attachments alternate between coming from A and coming from B, the more materials there will be in the material array, and each item in the material array signifies it needing to switch materials.
+
+Having too many materials has a detrimental effect to performance because of [draw call count](http://docs.unity3d.com/Manual/DrawCallBatching.html). Each material change effectively counts as a separate draw call.
+
+The Dragon example demonstrates this:
+![](http://i.imgur.com/2aHrOfh.png)
+
+To learn more about how to arrange atlas regions in your Spine atlases, see this page: [Spine Texture Packer: Folder Structure](http://esotericsoftware.com/spine-texture-packer#Folder-structure)
+
+#### Setting Material Properties Per Instance.
+Likewise, using MeshRenderer.material and changing values there will not work.
+
+The `Renderer.material` property generates a copy just for that renderer, but that material will immediately be overwritten by SkeletonRenderer's render code.   
+
+On the other hand, `Renderer.sharedMaterial` will modify the original Material. And if you spawn more than one Spine GameObject that uses that Material, the changes you apply to it will be applied to all instances.
+
+In this case, Unity's [Renderer.SetPropertyBlock](http://docs.unity3d.com/ScriptReference/Renderer.SetPropertyBlock.html) is a useful method. Remember that `SkeletonRenderer`/`SkeletonAnimation` uses a `MeshRenderer`. Setting that MeshRenderer's material property block allows you to change property values just for that renderer.
+
+```csharp
+MaterialPropertyBlock mpb = new MaterialPropertyBlock();
+mpb.SetColor("_FillColor", Color.red); // "_FillColor" is a named property on a hypothetical shader. 
+GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
+```
+
+> **Notes on optimization**
+> - using Renderer.SetPropertyBlock allows renderers with the same material to be batched correctly even if their material properties are changed by different MaterialPropertyBlocks.
+> - You do need to call `SetPropertyBlock` whenever you change or add a property value to your MaterialPropertyBlock. But you can keep that MaterialPropertyBlock as part of your class so you don't have to keep instantiating a new one whenever you want to change a property.
+> - When you need to set a property frequently, you can use the static method: `Shader.PropertyToID(string)` to cache the int ID of that property instead of using the string overload of MaterialPropertyBlock's setters.  
 
 ### Sprite Texture Rendering/Z Ordering
 ![](http://i.imgur.com/xqDt3Sn.jpg)
@@ -64,6 +116,13 @@ For the most part, you won’t need to and shouldn’t touch Material.renderQueu
 The **Sorting Layer** and **Sorting Order** properties found in `SkeletonRenderer`/`SkeletonAnimation`’s Inspector actually modifies the `MeshRenderer`’s [sorting layer](http://docs.unity3d.com/ScriptReference/Renderer-sortingLayerID.html) and [sorting order](http://docs.unity3d.com/ScriptReference/Renderer-sortingOrder.html) properties.
 
 Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized/stored normally as part of `MeshRenderer` and not part of SkeletonRenderer.
+
+###### Sorting via Camera Distance
+If you keep all your renderers in the same sorting layer and order, they will be subject to the other sorting schemes mentioned above.
+
+If the queue tag is also the same (if you're using the same material and shader), then you should be able to control sorting of your Spine GameObjects according to camera distance.
+
+Also remember that [perspective cameras have sorting modes](http://docs.unity3d.com/ScriptReference/Camera-transparencySortMode.html). 
 
 #### So can I ever render anything between parts of my Spine skeleton?
 Sometimes, you need your character to ride a bicycle, or lift a rock hug an Ionic column. In Spine terms, this means you have to render some parts behind a thing, and some parts in front of a thing.
@@ -100,7 +159,7 @@ Accessing `Skeleton.FlipX` and `Skeleton.FlipY` can allow you to flip the skelet
 It’s usually a good idea to make all your skeletons face one direction so that your flipping logic can be consistent throughout your code. But if not, you can always add an extra `bool` to your controller and [negate your intended flip value with boolean logic](http://stackoverflow.com/questions/13983198/negate-a-boolean-based-on-another-boolean).
 
 You may have learned to flip your 2D sprites in Unity setting a negative scale on the Transform, or rotating it along the y-axis by 180 degrees.
-Both of these work for purely visual purposes. But they have their own side effects:
+Both of these work for purely visual purposes. But they have their own side effects to keep in mind:
 
  - Nonuniform scale can cause a mesh to bypass Unity’s batching system. This means it will have its own (set of) draw calls for each instance. So it’s okay for your main character. It can be detrimental if you have nonuniform scale for dozens of skeletons.
  - Rotating causes normals to rotate with the mesh. For lighting 2D sprites, this means they’ll point in the wrong direction.

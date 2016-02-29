@@ -25,6 +25,22 @@ Looping can be enabled and disabled, and the Time Scale can be changed. These In
 
 For beginner code, you can use `skeletonAnimation.AnimationName` property to change the playing animation with its name. It will start playing and loop if the `skeletonAnimation.loop` was set to true at the time it was changed.
 
+### LEFT AND RIGHT ANIMATIONS
+It is not necessary for you to animate left-facing and right-facing animations in Spine editor.
+`SkeletonAnimation`'s `Skeleton` object has a FlipX property (and FlipY) you can set which horizontally flips the rendering and logical positions of bones of that skeleton.
+```csharp
+// If your character was facing right, this will cause it to face left.
+skeletonAnimation.skeleton.FlipX = true; 
+```
+
+However, if you opted to design your character asymmetrically but the movement is essentially the same in both directions, you can use Spine's Skins feature to have two skins— one facing right, and one facing left— and switch between those two as your character faces left and right.
+```csharp
+bool facingLeft = (facing != "right");  
+skeletonAnimation.skeleton.FlipX = facingLeft;
+skeletonAnimation.skeleton.SetSkin(facingLeft ? "leftSkin" : "rightSkin");
+```
+
+
 ### FOR TYPICAL USE
 The class that actually controls the animation of the skeleton is **Spine.AnimationState**.
 `SkeletonAnimation` is built around `AnimationState`. It stores a reference to its instance of `Spine.AnimationState` in `SkeletonAnimation.state`. This is instantiated on `Awake` so make sure to only access it on `Start` or any time after.
