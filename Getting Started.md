@@ -99,15 +99,16 @@ Inside your `spine-unity\Modules\` folder, you'll find reusable sample scripts a
 
 After you add the Spine-Unity runtime to your Unity project, you can find the example scenes in the examples folder. Open the Getting Started scenes or any of the other sample scenes there. 
 
-##### Raptor Animated Physics
+**Raptor Animated Physics**
 This playful version of the raptor scene demonstrates a SkeletonUtility setup, where certain bones are driven by a chain of rigidbodies to simulate physics. Here, the raptor's tail, neck and arms are bouncing according to Box2D physics. Note how Unity's default Time Settings can cause a different update rate between physics (`FixedUpdate`) and animation (`Update`). You may have to handle this yourself if you choose to integrate physics into your animations.  Certain rigidbody interpolation settings and timestep sizes can improve the quality.
 
-##### Raptor GroundConstraint
+**Raptor GroundConstraint**
 This version of the Raptor scene demonstrates the primary use of `SkeletonUtilityGroundConstraint`. By controlling the position of the foot IK targets and checking colliders, you can allow your character to visually plant their feet on uneven terrain.
-#### Eyes
+
+**Eyes**
 The Eyes scene demonstrates a simple case of programmatic control of skeletons. Here, eyes can follow a target Unity Transform. Move the box around and see the eyes follow it. This is done through `SkeletonUtilityEyeConstraint`.
 
-### SpineGauge
+**SpineGauge**
 This is a simple scene with a script that demonstrates using a Spine skeleton for a visual healthbar or arbitrary gauge. It does this using `Animation.Apply`, a relatively lower-level Spine API.
 Using this technique, the gauge animation can be made as complicated as the Spine allows, give more control of the movement and visuals to the animator, or remove the need for extra logic for UI alignment.
 

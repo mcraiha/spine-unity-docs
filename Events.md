@@ -4,7 +4,7 @@ The information here may change over time as the implementations within Spine-Un
 ----------
 
 ![](http://i.imgur.com/x9sd6yd.png)
-## Coding for Spine Events & AnimationState callbacks
+# Spine Events & AnimationState callbacks
 
 **Spine.AnimationState** provides functionality for animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
 
@@ -40,22 +40,20 @@ Spine.AnimationState raises the following events:
 
 At the junction where an animation completes playback, and a queued animation will start, the events are raised in this order: `Complete`, `End`, `Start`.
 
-**WARNING:**
+> **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an infinite recursion of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
 
-#### Events During Mixing
+### Events During Mixing
 
 The standard AnimationState implementation treats events differently when it does mixing.
 
 When you have a mix time set (or `Default Mix` on your Skeleton Data Asset), there is a span of time where the next animation starts being mixed with an increasing alpha, and the previous animation is still being applied to the skeleton.
 
 During this crossfade:
-* (((possibly to be changed))) user events in the previous animation are not raised. 
+* user events in the previous animation are not raised. (this will change in a future version)
 * `Complete` and `End` events for the previous/outgoing animation are not raised. 
 
-----------
-
-### Sample Code
+## Sample Code
 
 Here is a sample `MonoBehaviour` that subscribes to `AnimationState`'s events. Read the comments to see what's going on.
 ```csharp
@@ -96,9 +94,7 @@ public class MySpineControllerThing : MonoBehaviour {
 }
 ```
 
-----------
-
-# Advanced
+## Advanced
 
 Since the Spine runtimes are source-available and fully modifiable in your project, you can of-course define and raise your own events in AnimationState or in whatever version of it you make.
 
