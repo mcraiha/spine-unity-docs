@@ -245,10 +245,10 @@ The resulting material array will be:
 
 In other words, the more the attachments alternate between coming from A and coming from B, the more materials there will be in the material array, and each item in the material array signifies it needing to switch materials.
 
-Having too many materials has a detrimental effect to performance because of [draw call count](http://docs.unity3d.com/Manual/DrawCallBatching.html). Each material change effectively counts as a separate draw call.
-
 The Dragon example demonstrates this:
 ![](http://i.imgur.com/2aHrOfh.png)
+
+More materials in this array means more [draw calls](http://docs.unity3d.com/Manual/DrawCallBatching.html), which can adversely affect performance if the same skeleton is instantiated enough times. If you only have one of this skeleton, it is probably not a cause for significant slowdown.
 
 To learn more about how to arrange atlas regions in your Spine atlases, see this page: [Spine Texture Packer: Folder Structure](http://esotericsoftware.com/spine-texture-packer#Folder-structure)
 
