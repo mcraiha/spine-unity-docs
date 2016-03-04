@@ -1,8 +1,156 @@
+# Getting Started
 
-#### spine-unity
-The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document. 
+## Installing
+1. Download and install [Unity](http://unity3d.com/get-unity) (There's a free version.)
+1. Create an empty Unity project.
+1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
+1. Import the unitypackage (you can double-click on it and Unity will open it).
+1. Go to the `Examples\Getting Started` folder in the Project panel. Open and examine those Unity Scene files in order. Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
+> If you're not familiar with programming in C# and using Unity in general, we recommend watching the [official Unity Tutorials](http://unity3d.com/learn/tutorials) first. The [Interface Essentials](http://unity3d.com/learn/tutorials/topics/interface-essentials) and then [Scripting](http://unity3d.com/learn/tutorials/topics/interface-essentials) topics are a good place to start. Their Animation topic is not directly applicable to Spine-Unity so there's no need to learn that to know how to use Spine-Unity.
+
+## Bringing Your Spine Assets Into Your Project
+### Exporting from Spine
+1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.
+1. Choose `JSON` on the upper-left of the Export window.
+1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).
+1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
+	1. On the lower-right, look for the textbox labeled `Atlas extension` and make sure it is set to `.atlas.txt`. (This is to work around Unity not accepting file extensions it doesn't recognize despite being plain text, but the Spine-Unity runtime can actually handle auto-renaming `.atlas` files. However, setting it to `.atlas.txt` minimizes problems and ambiguities with subsequent exports.)
+	1. You're done with the Texture Packer Settings window. Click `OK` to close.
+1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)
+1. Click `Export`.
+1. This will export three files:
+	- a **.json** file that holds data of the skeleton.
+	- a **.png** file which is the packed version of all your images in one texture.
+	- a **.atlas.txt** file that has data of where each image is in the packed texture.
+
+### Importing into Unity
+1. Make sure your Unity project is open.
+	- It should already have a functioning Spine-Unity runtime in it.
+1. Look for the folder where you exported your 3 files. (**json**, **.atlas.txt** and **.png**)
+1. Drag the 3 files (or the folder containing them) into Unity. Drop them in Unity's **Project panel**.
+	- This will cause the Spine-Unity runtime to process them and auto-generate the necessary Unity assets.
+	- You will notice 3 new files.
+		- a **_Material** asset that holds references to the shader and **.png** texture.
+		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
+		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
+	- For advanced cases, you can create these three files yourself. The arrangement is noted above.
+4. Right-click on the **_SkeletonData** asset and choose `Spine > Instantiate (SkeletonAnimation)`. This will instantiate a new Spine GameObject. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
+
+# Updating Your Project's Spine-Unity Runtime
+Some Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
+
+- As with Unity updates, it is always recommended that you back up your whole Unity project before performing an update.
+- Always check with your Lead Programmer and Technical Artist before updating your Spine runtime. Spine runtimes are source-available and designed to be user-modifiable based on varying project needs. Your project's spine runtime may have been modified by your programmer. In this case, updating to the latest runtime also requires reapplying those modifications to the new version of the runtime.
+- You have three options for updating your Spine-Unity runtime. An in-place update with Unity's `Import Package` dialog is the recommended option. In rare, complicated cases, you may have to delete your older version of spine-unity and then import the unitypackage.   
+
+## In-place Update (.unitypackage)
+1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
+2. Import the .unitypackage into your project by double-clicking on the unitypackage file or dragging it into Unity editor.
+3. The Import dialog will show which files are updated and will update them regardless of where you moved them in your project since you last imported.
+
+>  - This functionality may not work correctly if your meta files were corrupted or replaced. In that case, you may have to do delete the old version of the runtime before importing the unitypackage.
+>  - Much older versions of the unitypackage had inconsistent meta files for spine-c#. You may have to delete the older spine-csharp folder when updating. This otherwise works correctly.
+>  - Occasionally, some files may be removed and merged. Importing the .unitypackage will not delete those files so you may have to do that yourself. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924 
+
+## Manual (.unitypackage)
+1. Open an empty scene. (to be safe)
+1. Delete the previous spine-unity and spine-csharp runtime from your Unity project.
+1. Import the .unitypackage normally.
+
+## Manual (zip from github)
+1. Open an empty scene. (to be safe)
+1. Download the zip file of the spine runtimes from the github repository: https://github.com/EsotericSoftware/spine-runtimes.
+	1. Extract the files where you can find them. (You only need `spine-csharp` and `spine-unity`)
+1. Look for the correct folders and replace them in your project.
+	- These are the following folders you need
+		- `spine-csharp/src` (this is named "spine-csharp" in the unitypackage)
+		- `spine-unity/Assets/Gizmos` this is often just "Gizmos" in the Project view in Unity.
+		- `spine-unity/Assets/spine-unity`
+		- `spine-unity/Assets/Examples`(optional)
+
+>  - Some files may have been removed and merged. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924
+>  - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
+ 
+
+----------
+
+
+# Overall Structure
+How is Spine-Unity Put together?
+A functioning Spine-Unity setup consists of:
+
+ - Spine-C#
+ - Spine-Unity
+ - ... and Unity Engine itself.
+
+## Spine-C# ##
+**spine-csharp** is the C# port of the common core of all Spine runtimes
+
+This common core contains the code for the classes and data structures you can see in Spine editor, including  `Skeleton`, `Bone`, `Slot`, `Skin`, `Attachment`, `Animation`. These are also the classes described in the [Official Spine Documentation](http://esotericsoftware.com/spine-using-runtimes). 
+
+It deserializes  JSON (`.json`) and binary (`.skel.bytes` in Unity) skeleton data files into the SkeletonData object model.
+
+It also includes the base implementation of `AnimationState`, Spine's basic, out-of-the-box Animation controller. (More on this below)
+
+All of its classes are under the `Spine` namespace. 
+
+**spine-csharp** is shared between **Spine-Unity**, **Spine-XNA** and **Spine-MonoGame**— all C# runtimes. Any other potential Spine runtimes written in .NET/mono can use Spine-C# as its base. Because of this, it uses none of UnityEngine’s classes or functionality.
+
+To maintain compatibility with Unity’s older Mono runtime and compiler, Spine-C# doesn’t use any of the latest C# language features.
+
+### Stateful vs Stateless
+The Spine core classes (defined in spine-csharp) are generally divided into *stateful-instance* and *stateless-data* classes:
+
+Classes like `Skeleton`, `Bone`, `Slot`, `AnimationState` define *stateful* objects and can be modified without affecting other instances. You can flip a `Skeleton`, reposition a `Bone`, or modify a `Slot` or change the timeScale of an `AnimationState`, and it will only apply to that single instance.
+
+Classes like `SkeletonData`, `Animation`, `Attachment`, `BoneData`, `SlotData` define *stateless* objects and, by default and by design, are shared across (and will affect) all Skeleton instances you create. (Each Spine Unity Spine GameObject creates one Skeleton). Most of the time, you won't need to (and probably shouldn't) modify these stateless objects.
+
+As a rule of thumb:
+- If you want to find *stateful* objects, access them through `Skeleton`. (eg, when you want to pose a skeleton or swap a slot attachment)
+- If you want to find *stateless* objects, access them through `SkeletonData`. (eg, when you want information about an `Animation` like its duration, or an `Event`, or the setup/bind pose) 
+
+This is just the intended design. If you are an advanced user and know your way around the runtime, you can define how "stateless" objects really are for your project's needs.
+
+You can find this and more detailed information about the base runtime and Spine core classes [here](http://esotericsoftware.com/spine-using-runtimes).
+
+### Differences between Spine-C# and Spine-libGDX
+Because of the very similar syntax (and the language tradition) Spine-C# closely resembles Spine-libGDX(Java), except where C# and Java differ.
+
+In Spine-C#:
+
+ - The core library used in Spine-C# is [mscorlib](http://referencesource.microsoft.com/#mscorlib,namespaces)^. This includes `Dictionary` for maps, `Array` for array methods.
+ - Methods and enum values are identified by **PascalCase** instead of **camelCase**. This is the C# language standard. (For serialization compatibility reasons, some enums are camelCase.)
+ - Properties and Auto-Properties are used instead of Java’s getter and setter methods.
+   This is purely a syntax and API matter. Under the hood, properties are compiled into methods and occasionally inlined by the Mono JIT compiler.
+ - Events definition and subscription are done with C# events and delegates.
+
+> ^ For performance reasons, Spine-C# uses the included `ExposedList(T)` class instead of `System.Collections.Generic.List(T)` in hot-running code.
+
+## Spine-Unity
+Spine-Unity is the layer around Spine-C# that allows it to work with `UnityEngine`, and be usable in Unity Editor through inspectors and windows.
+
+It contains definitions of Spine MonoBehaviours and Asset files, as well as various editor tools, automatic asset processing for user convenience, and code tools like [PropertyAttributes](http://docs.unity3d.com/ScriptReference/PropertyDrawer.html).
+
+Spine-Unity mostly times and manages the functions that Spine-C# does according to [UnityEngine’s lifecycles and game loop](http://docs.unity3d.com/Manual/ExecutionOrder.html). 
+But it also contains the main render code (in `.LateUpdate`) which turns Spine skeletons into visible meshes.
+
+Spine-Unity also times and manages the deserialization and instantiation of Spine-C# classes in-editor and at runtime.
+
+In scripting, this is relevant: all Spine-C# classes are instantiated on `Awake`. This means that without controlling Script Execution Order directly, instances of Skeleton and AnimationState are not guaranteed to exist once your script’s `Awake` is called.
+
+You should access (and cache) references to `.state` or `.skeleton` on or after `Start`. This is in line with [Unity’s documentation for Awake](http://docs.unity3d.com/ScriptReference/MonoBehaviour.Awake.html).
+
+### SkeletonUtility and Spine-Unity Modules
+Spine-Unity also includes classes for optional functionality, and alternative workflows.
+
+`SkeletonAnimator` allows users to use a Mecanim `AnimationController` to drive animation.
+SkeletonUtility allows interfacing between the transforms of `Spine.Bones` and `UnityEngine.Transform`s.
+This lets you drive `Bone` movement by controlling `UnityEngine.Transform`s, or let `GameObject`s follow `Bone` movements.
+
+Several other modules are also included in the `spine-unity\Modules\` folder, which are ready-to-use for certain simple cases, but are really useful as sample implementations to be studied or modified.
+
+Some modules are dependent on each other but you can freely remove unused modules from your project by deleting their specific folders without worrying about affecting the rest of Spine's functionality.
 
 # Controlling Animation
 ![](http://i.imgur.com/7qOlCn8.png)
@@ -30,7 +178,7 @@ skeletonAnimation.AnimationName = "run";
 ```
 
 ### Left and Right Animations
-It is not necessary for you to create separate left-facing and right-facing animations in Spine editor.
+It is not necessary for you to animate left-facing and right-facing animations in Spine editor.
 `SkeletonAnimation`'s `Skeleton` object has a FlipX property (and FlipY) you can set which horizontally flips the rendering and logical positions of bones of that skeleton.
 ```csharp
 // If your character was facing right, this will cause it to face left.
