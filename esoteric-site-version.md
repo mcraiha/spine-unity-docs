@@ -1,3 +1,7 @@
+> **Licensing**
+> This Spine runtime may only be used for personal or internal use, typically to evaluate Spine before purchasing. If you would like to incorporate a Spine Runtime into your applications, distribute software containing a Spine Runtime, or modify a Spine Runtime, then you will need a valid [Spine license](https://esotericsoftware.com/spine-purchase). Please see the [Spine Runtimes Software License](https://github.com/EsotericSoftware/spine-runtimes/blob/master/LICENSE) for detailed information.
+> The Spine Runtimes are developed with the intent to be used with data exported from Spine. By purchasing Spine, `Section 2` of the [Spine Software License](https://esotericsoftware.com/files/license.txt) grants the right to create and distribute derivative works of the Spine Runtimes.
+
 # Getting Started
 
 ## Installing
@@ -9,12 +13,20 @@
 
 > If you're not familiar with programming in C# and using Unity in general, we recommend watching the [official Unity Tutorials](http://unity3d.com/learn/tutorials) first. The [Interface Essentials](http://unity3d.com/learn/tutorials/topics/interface-essentials) and then [Scripting](http://unity3d.com/learn/tutorials/topics/interface-essentials) topics are a good place to start. Their Animation topic is not directly applicable to Spine-Unity so there's no need to learn that to know how to use Spine-Unity.
 
+
+> Spine-Unity is built on top of Spine-C# ([spine-csharp](https://github.com/EsotericSoftware/spine-runtimes/tree/master/spine-csharp)).
+
+> The **Spine-Unity** runtime provides functionality to load, manipulate and render [Spine](http://esotericsoftware.com) skeletal animation data in [Unity](http://unity3d.com/) engine.
+
+> Spine-Unity works in Unity without the need for any other plugins. But it also works with [2D Toolkit](http://www.unikronsoftware.com/2dtoolkit/) and can render skeletons using TK2D's texture atlas system. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
+
+
 ## Bringing Your Spine Assets Into Your Project
 ### Exporting from Spine
 1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.
 1. Choose `JSON` on the upper-left of the Export window.
 1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).
-1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
+	1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
 	1. On the lower-right, look for the textbox labeled `Atlas extension` and make sure it is set to `.atlas.txt`. (This is to work around Unity not accepting file extensions it doesn't recognize despite being plain text, but the Spine-Unity runtime can actually handle auto-renaming `.atlas` files. However, setting it to `.atlas.txt` minimizes problems and ambiguities with subsequent exports.)
 	1. You're done with the Texture Packer Settings window. Click `OK` to close.
 1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)
@@ -22,7 +34,9 @@
 1. This will export three files:
 	- a **.json** file that holds data of the skeleton.
 	- a **.png** file which is the packed version of all your images in one texture.
-	- a **.atlas.txt** file that has data of where each image is in the packed texture.
+	- a **.atlas.txt** file (libGDX atlas) that has data of where each image is in the packed texture.
+
+> For __2D Toolkit__ users, Step 3 (packing a `.png` and `.atlas.txt`) is not necessary. Instead, you will have the appropriate field in your SkeletonDataAsset to assign a reference to `tk2dSpriteCollectionData`. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 
 ### Importing into Unity
 1. Make sure your Unity project is open.
@@ -36,6 +50,11 @@
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 	- For advanced cases, you can create these three files yourself. The arrangement is noted above.
 4. Right-click on the **_SkeletonData** asset and choose `Spine > Instantiate (SkeletonAnimation)`. This will instantiate a new Spine GameObject. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
+
+> - **CHANGING SHADERS** Using Spine-Unity's default shaders (`Spine/Skeleton` or `Spine/SkeletonLit`) requires textures that were saved with **Premultiplied Alpha**. This is the default setting in Spine's Texture Packer. Choosing other shaders may yield unexpected results and may require you to re-export the texture without premultiplied alpha. For more information on premultiply alpha, [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
+> - **TEXTURE SIZES.** Unity scales overly large images down by default. The Spine-Unity runtime automatically sets atlas maximum sizes to 2048x2048. If your textures are larger than this, it will cause atlas coordinates to be incorrect. Make sure the import settings are set appropriately, or decrease the maximum page width and height in your Spine Texture Packer settings.
+> - **TEXTURE ARTIFACTS FROM COMPRESSION.** Unity's 2D project defaults import new images added to the project with the Texture Type "Sprite". This can cause artifacts when using the `Spine/Skeleton` shader. To avoid these artifacts, make sure the Texture Type is set to "Texture" and . Spine-Unity's automatic import will attempt to apply these settings but in the process of updating your textures, these settings may be reverted.
+
 
 # Updating Your Project's Spine-Unity Runtime
 Some Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
@@ -65,13 +84,15 @@ Some Spine editor updates require that you update your Spine-Unity runtime so it
 1. Look for the correct folders and replace them in your project.
 	- These are the following folders you need
 		- `spine-csharp/src` (this is named "spine-csharp" in the unitypackage)
-		- `spine-unity/Assets/Gizmos` this is often just "Gizmos" in the Project view in Unity.
+		- `spine-unity/Assets/Gizmos`.
 		- `spine-unity/Assets/spine-unity`
 		- `spine-unity/Assets/Examples`(optional)
 
->  - Some files may have been removed and merged. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924
->  - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
- 
+> - `Gizmos` is a [special folder](http://docs.unity3d.com/Manual/SpecialFolders.html) in Unity. It needs to be at the root of your assets folder to function correctly. (ie. `Assets/Gizmos`)
+> - `spine-csharp` and `spine-unity` can be placed in any subfolder you want.
+> - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
+> - Some files may have been removed and merged since the last version you used. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924
+
 
 ----------
 
@@ -148,9 +169,9 @@ Spine-Unity also includes classes for optional functionality, and alternative wo
 SkeletonUtility allows interfacing between the transforms of `Spine.Bones` and `UnityEngine.Transform`s.
 This lets you drive `Bone` movement by controlling `UnityEngine.Transform`s, or let `GameObject`s follow `Bone` movements.
 
-Several other modules are also included in the `spine-unity\Modules\` folder, which are ready-to-use for certain simple cases, but are really useful as sample implementations to be studied or modified.
+Several other modules are also included in the `spine-unity\Modules\` folder, which are ready-to-use for certain simple cases, but are really useful as sample implementations to be studied or modified for more advanced uses.
 
-Some modules are dependent on each other but you can freely remove unused modules from your project by deleting their specific folders without worrying about affecting the rest of Spine's functionality.
+You can freely remove unused modules from your project by deleting their specific folders without worrying about affecting the rest of Spine's functionality. Note: some modules may be dependent on another module. Try removing them one by one. Unity should warn you after compiling if some classes were dependent on those deleted files. 
 
 # Controlling Animation
 ![](http://i.imgur.com/7qOlCn8.png)
