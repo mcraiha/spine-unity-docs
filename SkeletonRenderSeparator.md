@@ -1,6 +1,10 @@
 # SkeletonRenderSeparator
 a Spine-Unity Rendering Module (Modules\SkeletonRenderSeparator)
+**SkeletonRenderSeparator** allows you to split your SkeletonRenderer or SkeletonAnimation render into two or more MeshRenderers instead of only one.
 
+This means you can set their sorting layers and sorting order individually, allowing you to render things in between parts of your skeleton. This can be particles, Unity SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort. This can be useful for dynamically sorted special effects, if you need your character to ride a vehicle, or if just want them to hug a tree.
+
+You can find a sample scene in the unitypackage: `Examples/Other Examples/SkeletonRenderSeparator.unity` 
 
 
 ## How to Use
