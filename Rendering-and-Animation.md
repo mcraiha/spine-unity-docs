@@ -144,7 +144,7 @@ You can subscribe to events just for that specific animation playback instance. 
 
 A `Spine.Animation` object corresponds to an individual "animation clip" animated in Spine. If a run animation called "run" was animated in Spine, you'll get a `Spine.Animation` object named "run".
 
-Each `Spine.Animation` is a collection of `Timeline` objects. Each `Timeline` object is a collection of keys, which defines how a certain animatable value (scale, rotation, position, color, attachment, mesh vertices, IK, events, draw order) changes over time. Each `Timeline` has its own target: a `Bone` for scale, rotation and position; a `slot` for attachments and colors; a `MeshAttachment` for free-form deformation/mesh vertices, and the appropriate parts of the skeleton for *draw order* and *events*.
+Each `Spine.Animation` is a collection of `Timeline` objects. Each `Timeline` object is a collection of keys, which defines how a certain animatable value (scale, rotation, position, color, attachment, mesh vertices, IK, events, draw order) changes over time. Each `Timeline` has its own target: a `Bone` for scale, rotation and position; a `slot` for attachments and colors; a `MeshAttachment` for mesh deformation, and the appropriate parts of the skeleton for *draw order* and *events*.
 
 In Spine runtimes, a `Spine.Animation` is applied to a skeleton with `Animation.Apply(...)`. This poses the `Skeleton`'s various parts only according to that Animation's `Timeline`s and keys. If a `Timeline` isn't there, the animatable value won't change. If a `Timeline` is there, it will overwrite whatever value is there with a new value.
 
@@ -187,7 +187,7 @@ If you wanted to do bookkeeping of your animations a different way, whether to b
 In this case, studying the [Official Spine Documentation](http://esotericsoftware.com/spine-using-runtimes) will come in handy.
 
 # Rendering
-In general, Spine’s systems are built to take advantage of the way modern game engines use 3D graphics. This is especially true for its advanced features like FFD (Free-form Deformation) and Weights.
+In general, Spine’s systems are built to take advantage of the way modern game engines use 3D graphics. This is especially true for its advanced features like Mesh Deformation and Weights.
 
 It does this by interfacing with frameworks and engines “in 3D terms”; in terms of meshes and vertices, and texture mapping and UVs. So every image part is either defined by a polygon comprised of several triangles, or a rectangle made up of two triangles. This is not unusual even if the engine is mainly for 2D graphics.
 
@@ -317,11 +317,7 @@ Sometimes, you need your character to ride a bicycle, or lift a rock hug an Ioni
 
 In Unity, meshes are rendered as a whole. So how do you get one to render behind and in front?
 
-The answer to this question may change in the future.
-
-But for now, you can use the Spine-Unity SkeletonUtility function called "Submesh Renderers". Its use will be covered separately.
-
-But basically, what it does is allow your `SkeletonRenderer`’s mesh to be split by a slot (things above it and things below it). Those resulting pieces will then be rendered by their own MeshRenderers in their own `GameObject`s. Because they become separate renderers, you can set their sorting order individually.
+Please see [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/SkeletonRenderSeparator.md)
 
 ### I lowered the alpha to fade out my skeleton. Why are the overlaps showing?
 This is how realtime mesh rendering works anywhere. The opacity is applied right when the triangles are drawn, not after.
