@@ -27,7 +27,7 @@ Open and examine those Unity Scene files in order.
 Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
 Those will cover the basics of playing animations and posing characters.
-
+s
 Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=12) for more information.
 
 ## Bringing Your Spine Assets Into Your Project
@@ -68,7 +68,7 @@ Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=
 
 
 # Updating Your Project's Spine-Unity Runtime
-Some Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
+Major Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
 
 - As with Unity updates, it is always recommended that you back up your whole Unity project before performing an update.
 - Always check with your Lead Programmer and Technical Artist before updating your Spine runtime. Spine runtimes are source-available and designed to be user-modifiable based on varying project needs. Your project's spine runtime may have been modified by your programmer. In this case, updating to the latest runtime also requires reapplying those modifications to the new version of the runtime.

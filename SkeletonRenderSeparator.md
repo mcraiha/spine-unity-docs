@@ -25,6 +25,8 @@ Set the separator slots by choosing the correct slot(s) under "Separator Slot Na
 ### Step 3: Make sure you have enough Parts Renderers 
 The inspector will warn you if you don't have enough renderers to render the parts. Click on the "Add the missing renderers (n)" button if this is the case. This will create GameObjects with SkeletonPartsRenderers on them, and add them to SkeletonRenderSeparator's partsRenderers list.
 
+> Note: The SkeletonRenderSeparator only detects the currently required number of parts renderers. If at any point at runtime during animations, the render requires more because you changed the draw order, you may need to add one or two extra manually by clicking on `Add Parts Renderer`.
+
 ### Step 4: Set Sorting Layers and Orders
 Each of these SkeletonPartsRenderers are now in their own GameObject. Each of them have their own sorting layer and order via their own MeshRenderers.
 Select them in the hierarchy and set their properties in the inspector.
