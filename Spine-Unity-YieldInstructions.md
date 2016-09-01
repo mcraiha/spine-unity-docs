@@ -10,9 +10,8 @@ Despite this, the changes to allow this functionality were only introduced in Un
 Firstly, you can find [basic tutorials](https://unity3d.com/learn/tutorials/topics/scripting/coroutines) and [documentation](https://docs.unity3d.com/Manual/Coroutines.html) on Unity coroutines to learn about them.
 
 Assuming you understand how to use Unity Coroutines, the following demonstrates how to use Spine-Unity's custom yield instructions.
-Like Unity's built-in yield instructions, these yield instructions pause execution of a coroutine until certain conditions are met.
 
-> Tip : Also like Unity's built-in yield instructions, instances of these spine-unity yield instructions can be reused to prevent extra memory allocations. 
+Like Unity's built-in yield instructions, these yield instructions pause execution of a coroutine until certain conditions are met. 
 
 
 ### WaitForSpineEvent
@@ -30,7 +29,8 @@ yield return new WaitForSpineAnimationComplete(track);
 Listens for when a `Spine.TrackEntry` finishes playing, when it fires its `Complete` event.
 
 ### Tips
-- **WaitForSpineEvent**: Listening for a Spine.Event with a name string is great for fast prototyping. But when it's time to optimize, you can cache and pass it the Spine.Event's `Spine.EventData` reference. WaitForSpineEvent has a few constructor overloads that will allow you to do this.  
+- **Memory allocation optimization**: Like Unity's built-in yield instructions, instances of these spine-unity yield instructions can be reused to prevent extra memory allocations.
+- **WaitForSpineEvent constructor overloads**: Listening for a Spine.Event with a name string is great for fast prototyping. But when it's time to optimize, you can cache and pass it the Spine.Event's `Spine.EventData` reference. WaitForSpineEvent has a few constructor overloads that will allow you to do this.
 
 
 ## A note on Execution Order
