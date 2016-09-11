@@ -12,7 +12,7 @@ You can find a sample scene in the unitypackage: `Examples/Other Examples/Skelet
 
 ## How to Use
 ### Step 0
-Make sure you know your Skeleton's draw order. Find out which slot you want use to separate your Skeleton's render into parts. For convenience, label this slot clearly before exporting your Skeleton.
+Make sure you know your Skeleton's draw order. Find out which slot you want use to separate your Skeleton's render into parts. For editor convenience, make an empty slot in Spine specifically for this purpose, put it in the right spot in the Draw Order, and label it clearly before exporting your Skeleton.
 
 ![](http://i.imgur.com/dZMCU7R.gif)
 Fig 1. Steps 1 to 3
