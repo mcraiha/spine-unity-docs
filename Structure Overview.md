@@ -1,6 +1,9 @@
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document.
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting%20Started.md) document.
+
+Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
+If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 # Overall Structure
 How is Spine-Unity Put together?
@@ -11,6 +14,8 @@ A functioning Spine-Unity setup consists of:
  - ... and Unity Engine itself.
 
 ## Spine-C# ##
+// TODO: Venn diagram of Spine-C#, Spine-XNA and Spine-Unity.
+
 **spine-csharp** is the C# port of the common core of all Spine runtimes
 
 This common core contains the code for the classes and data structures you can see in Spine editor, including  `Skeleton`, `Bone`, `Slot`, `Skin`, `Attachment`, `Animation`. These are also the classes described in the [Official Spine Documentation](http://esotericsoftware.com/spine-using-runtimes). 
@@ -89,13 +94,13 @@ You can play, queue or generally control playing animations through the appropri
 
 ```csharp
 // Plays the animation named “stand” once on Track 0.
-skeletonAnimation.state.SetAnimation(0, “stand”, false);
+skeletonAnimation.AnimationState.SetAnimation(0, “stand”, false);
 
 // Queues the animation named “run” to loop on Track 0 after the last animation is done.
-skeletonAnimation.state.AddAnimation(0, “run”, true, 0f);
+skeletonAnimation.AnimationState.AddAnimation(0, “run”, true, 0f);
 
 ```  
 
 `SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a SkeletonDataAsset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
 
-For more information on SkeletonAnimation, see the [Animation documentation](https://github.com/pharan/spine-unity-docs/blob/master/Animation.md).
+For more information on SkeletonAnimation, see the [Animation documentation](Rendering-and-Animation.md).
