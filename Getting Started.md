@@ -57,12 +57,14 @@ Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=
 		- a **_Material** asset that holds references to the shader and **.png** texture.
 		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
-4. Right-click on the **_SkeletonData** asset and choose `Spine > Instantiate (SkeletonAnimation)`. This will instantiate a new Spine GameObject.
+4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.
 	- See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
 
 
 > - **MANUAL ASSET SETUP** For advanced cases, you can create these three files yourself. The arrangement is noted in the bullet points of Step 3.
 > - **CHANGING SHADERS** Using Spine-Unity's default shaders (`Spine/Skeleton` or `Spine/SkeletonLit`) requires textures that were saved with **Premultiplied Alpha**. This is the default setting in Spine's Texture Packer. Choosing other shaders may yield unexpected results and may require you to re-export the texture without premultiplied alpha. For more information on premultiply alpha, [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
+> - Older versions of Spine-Unity did not do drag-and-drop instantiation. If you have an older version, right-click on the **_SkeletonData** asset and choose `Spine > Instantiate (SkeletonAnimation)`. This will instantiate a new Spine GameObject.
+> - Due to a limitation in Unity Editor APIs, dragging the asset into an empty hierarchy panel will not work. In this case, just drag the asset into Scene View.
 > - **TEXTURE SIZES.** Unity scales overly large images down by default. The Spine-Unity runtime automatically sets atlas maximum sizes to 2048x2048. If your textures are larger than this, it will cause atlas coordinates to be incorrect. Make sure the import settings are set appropriately, or decrease the maximum page width and height in your Spine Texture Packer settings.
 > - **TEXTURE ARTIFACTS FROM COMPRESSION.** Unity's 2D project defaults import new images added to the project with the Texture Type "Sprite". This can cause artifacts when using the `Spine/Skeleton` shader. To avoid these artifacts, make sure the Texture Type is set to "Texture" and . Spine-Unity's automatic import will attempt to apply these settings but in the process of updating your textures, these settings may be reverted.
 
