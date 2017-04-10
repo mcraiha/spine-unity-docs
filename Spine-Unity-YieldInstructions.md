@@ -1,3 +1,6 @@
+Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
+If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
+
 # Spine-Unity Coroutine Yield Instructions
 This module is a set of Coroutine yield instructions. (requires Unity 5.3 or higher)
 
@@ -34,6 +37,8 @@ Listens for when a `Spine.TrackEntry` finishes playing, when it fires its `Compl
 
 
 ## A note on Execution Order
+//TODO: ILLUSTRATION OF EXECUTION ORDER RELEVANT TO THE ABOVE YIELD INSTRUCTIONS GOES HERE
+
 At their core, these yield instructions yield `null` to the coroutine system.
 This means they check pausing and continuing execution AFTER MonoBehaviour Update and BEFORE MonoBehaviour LateUpdate.
 See more information in Unity's documentation: https://docs.unity3d.com/Manual/ExecutionOrder.html 

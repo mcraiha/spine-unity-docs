@@ -1,11 +1,14 @@
 
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md) document. 
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting%20Started.md) document.
+
+Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
+If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 
 # Controlling Animation
-![](http://i.imgur.com/7qOlCn8.png)
+![](/img/animationcoding.png)
 
 ## SkeletonAnimation
 Normally, `Spine.AnimationState` manages keeping track of time, updating the skeleton, queueing, layering and mixing/crossfading animation. If you're used to "Mecanim" as having State Machines, `Spine.AnimationState` is a simpler, non-programmable kind, but flexible enough to serve as the base for most animation logic.
@@ -24,8 +27,8 @@ Looping can be enabled and disabled, and the Time Scale can be changed. These In
 For beginner code, you can use `skeletonAnimation.AnimationName` property to change the playing animation with its name. It will start playing and loop if the `skeletonAnimation.loop` was set to true at the time it was changed.
 
 ```
-skeletonAnimation.timeScale = 1.5f;
-skeletonAnimation.loop = true;
+skeletonAnimation.TimeScale = 1.5f;
+skeletonAnimation.Loop = true;
 skeletonAnimation.AnimationName = "run";
 ```
 
@@ -34,30 +37,30 @@ It is not necessary for you to create separate left-facing and right-facing anim
 `SkeletonAnimation`'s `Skeleton` object has a FlipX property (and FlipY) you can set which horizontally flips the rendering and logical positions of bones of that skeleton.
 ```csharp
 // If your character was facing right, this will cause it to face left.
-skeletonAnimation.skeleton.FlipX = true; 
+skeletonAnimation.Skeleton.FlipX = true; 
 ```
 
 However, if you opted to design your character asymmetrically but the movement is essentially the same in both directions, you can use Spine's Skins feature to have two skins— one facing right, and one facing left— and switch between those two as your character faces left and right.
 ```csharp
 bool facingLeft = (facing != "right");  
-skeletonAnimation.skeleton.FlipX = facingLeft;
-skeletonAnimation.skeleton.SetSkin(facingLeft ? "leftSkin" : "rightSkin");
+skeletonAnimation.Skeleton.FlipX = facingLeft;
+skeletonAnimation.Skeleton.SetSkin(facingLeft ? "leftSkin" : "rightSkin");
 ```
 
 
 ### For Typical Use
 The class that actually controls the animation of the skeleton is **Spine.AnimationState**.
-`SkeletonAnimation` is built around `AnimationState`. It stores a reference to its instance of `Spine.AnimationState` in `SkeletonAnimation.state`. This is instantiated on `Awake` so make sure to only access it on `Start` or any time after.
+`SkeletonAnimation` is built around `AnimationState`. It stores a reference to its instance of `Spine.AnimationState` in `SkeletonAnimation.AnimationState`. This is instantiated on `Awake` so make sure to only access it on `Start` or any time after.
 
 `AnimationState` is Spine’s common-case implementation of a Spine Animation State Machine. It is lower-level in a sense that it only manages updating, queuing, layering and mixing/crossfading animations. (It is not a "State Machine" in the Mecanim sense).
 
 In code, you can play animations through `AnimationState` methods:
 ```csharp
 // Plays the animation named “stand” once on Track 0.
-skeletonAnimation.state.SetAnimation(0, “stand”, false);
+skeletonAnimation.AnimationState.SetAnimation(0, “stand”, false);
 
 // Queues the animation named “run” to loop on Track 0 after the last animation is done.
-skeletonAnimation.state.AddAnimation(0, “run”, true, 0f);
+skeletonAnimation.AnimationState.AddAnimation(0, “run”, true, 0f);
 ```
 
 Mixing/crossfading options can be found on your `SkeletonDataAsset`'s inspector. There you'll find a field for "Default Mix" which is the default duration of a mix between two animations on the same track. You may also define specific mix durations for specific pairs of animations there.
@@ -74,8 +77,8 @@ The animations keys of the animation playing on the higher track will override t
 
 ```csharp
 // Play a running animation on track 0, and a shooting animation on track 1.
-skeletonAnimation.state.SetAnimation(0, "run", true);
-skeletonAnimation.state.SetAnimation(1, "shoot", false);
+skeletonAnimation.AnimationState.SetAnimation(0, "run", true);
+skeletonAnimation.AnimationState.SetAnimation(1, "shoot", false);
 ```
 
 #### TRACKENTRY
@@ -87,23 +90,23 @@ This object represents the instance of an animation playback for the animation y
 
 If you choose not to keep the reference to the `TrackEntry` object when you called SetAnimation or AddAnimation, you can get the currently active TrackEntry by calling
 ```csharp
-	var trackEntry = skeletonAnimation.state.GetCurrent(myTrackNumber); // null if no animation is playing.
+	var trackEntry = skeletonAnimation.AnimationState.GetCurrent(myTrackNumber); // null if no animation is playing.
 ```
 
 
 ###### Current Time (or Start Time)
 The time the Animation is currently playing at can be changed at any point while it's playing.
 
-For example, you can change the `.Time` immediately after `SetAnimation` so the animation starts in the middle instead of the beginning. Note that time is in seconds. To convert Spine editor frames to seconds, you must divide by the dopesheet’s 30 fps tick marks: `time = (frameNumber/30f)`.
+For example, you can change the `.Time` immediately after `SetAnimation` so the animation starts in the middle instead of the beginning. Note that time is in seconds. To convert Spine editor frames to seconds, you must divide by the dopesheet’s 30 fps tick marks: `AnimationTime = (frameNumber/30f)`.
 
 ```csharp
      // Play a "dance" animation starting from frame 10
-     var trackEntry = skeletonAnimation.state.SetAnimation(0, "dance", false);
-     trackEntry.Time = 10f/30f;
+     var trackEntry = skeletonAnimation.AnimationState.SetAnimation(0, "dance", false);
+     trackEntry.AnimationTime = 10f/30f;
 
      // You can shorten the above code this way if you only need
      // to change one field, and don't need to store the trackEntry.
-     skeletonAnimation.state.SetAnimation(0, "dance", false).Time = 10f/30f;
+     skeletonAnimation.AnimationState.SetAnimation(0, "dance", false).Time = 10f/30f;
 ```
 
 > If you are doing this to Animations with animation events, make sure you also set `lastTime` to the same value as well.
@@ -112,25 +115,25 @@ For example, you can change the `.Time` immediately after `SetAnimation` so the 
 You can also change the point where the animation ends by setting `.EndTime`.
 
 ###### Timescale
-You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`. This gets multiplied by the `SkeletonAnimation.timeScale` and `AnimationState.timeScale` to get the final timescale.
+You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`. This gets multiplied by the `SkeletonAnimation.TimeScale` and `AnimationState.TimeScale` to get the final timescale.
 
-> You can set timeScale to 0 so it pauses. Note that even if `timeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
+> You can set timeScale to 0 so it pauses. Note that even if `TimeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
 
 Here is a sample helper method if you want to jump to a certain point in time.
 ```csharp
 static public Spine.TrackEntry JumpToTime (SkeletonAnimation skeletonAnimation, int trackNumber, float time, bool skipEvents, bool stop) {
      if (skeletonAnimation == null) return null;
-     return JumpToTime(skeletonAnimation.state.GetCurrent(trackNumber), time, skipEvents, stop);
+     return JumpToTime(skeletonAnimation.AnimationState.GetCurrent(trackNumber), time, skipEvents, stop);
 }
 
 static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float time, bool skipEvents, bool stop) {
     if (trackEntry != null) {
-		trackEntry.time = time;
+		trackEntry.AnimationTime = time;
 		if (skipEvents)
-			trackEntry.lastTime = time;	// in pre-3.0. This ignores attachment keys too.
+			trackEntry.AnimationLast = time;
 
 		if (stop)
-			trackEntry.timeScale = 0;
+			trackEntry.TimeScale = 0;
 	}
 	return trackEntry;
 }
@@ -138,7 +141,7 @@ static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float ti
 
 
 ###### TrackEntry-specific events.
-You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](http://esotericsoftware.com/spine-unity-events).
+You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](/Events.md).
 
 ## Spine.Animation
 
@@ -176,7 +179,7 @@ Spine.AnimationState raises events:
 **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an **infinite recursion** of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
 
-To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](http://esotericsoftware.com/spine-unity-events).
+To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](Events.md).
 
 ### Advanced Animation Control
 Tracks and TrackEntry are just part of `Spine.AnimationState`, and `AnimationState` is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
@@ -191,7 +194,7 @@ In general, Spine’s systems are built to take advantage of the way modern game
 
 It does this by interfacing with frameworks and engines “in 3D terms”; in terms of meshes and vertices, and texture mapping and UVs. So every image part is either defined by a polygon comprised of several triangles, or a rectangle made up of two triangles. This is not unusual even if the engine is mainly for 2D graphics.
 
-![](http://i.imgur.com/XMsoUww.jpg)
+![](/img/render_spineunity_p1.jpg)
 
 The basic idea is this:
 You have mesh made of triangles. This is shaped based on the Spine skeleton/model.
@@ -200,7 +203,7 @@ And you have shader programs or blending instructions.
 
 You give all that to the game engine, the game engine gives it to the GPU, and then it renders. The textures are mapped to the mesh, and rendered based on the shader and blend mode.
 
-![](http://i.imgur.com/URrFWUW.jpg)
+![](/img/render_spineunity_p2.jpg)
 
 Spine-Unity rendering uses Unity’s `MeshRenderer` and `MeshFilter` components, and Material assets. These are the same components that Unity uses to render 3D models.
 
@@ -245,8 +248,8 @@ The resulting material array will be:
 
 In other words, the more the attachments alternate between coming from A and coming from B, the more materials there will be in the material array, and each item in the material array signifies it needing to switch materials.
 
-The Dragon example demonstrates this:
-![](http://i.imgur.com/2aHrOfh.png)
+The Dragon example demonstrates this: 
+![](/img/render_spineunity_alternatingmaterials.png)
 
 More materials in this array means more [draw calls](http://docs.unity3d.com/Manual/DrawCallBatching.html), which can adversely affect performance if the same skeleton is instantiated several times. If you only have one of this skeleton, it is probably not a cause for significant slowdown.
 
@@ -267,13 +270,15 @@ mpb.SetColor("_FillColor", Color.red); // "_FillColor" is a named property on a 
 GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
 ```
 
+// TODO: Small section on clearing the property block
+
 > **Notes on optimization**
 > - using Renderer.SetPropertyBlock allows renderers with the same material to be batched correctly even if their material properties are changed by different MaterialPropertyBlocks.
 > - You do need to call `SetPropertyBlock` whenever you change or add a property value to your MaterialPropertyBlock. But you can keep that MaterialPropertyBlock as part of your class so you don't have to keep instantiating a new one whenever you want to change a property.
 > - When you need to set a property frequently, you can use the static method: `Shader.PropertyToID(string)` to cache the int ID of that property instead of using the string overload of MaterialPropertyBlock's setters.  
 
 ## Sprite Texture Rendering/Z Ordering
-![](http://i.imgur.com/xqDt3Sn.jpg)
+![](/img/render_spineunity_sortingface.jpg)
 
 Spine typically* uses alpha-blending to render your Spine model parts.
 
@@ -319,11 +324,15 @@ In Unity, meshes are rendered as a whole. So how do you get one to render behind
 
 Please see [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/SkeletonRenderSeparator.md)
 
+// TODO: Short Section on [Sorting Groups](https://docs.unity3d.com/560/Documentation/Manual/SortingGroup.html) (Unity 5.6)
+
 ### I lowered the alpha to fade out my skeleton. Why are the overlaps showing?
 This is how realtime mesh rendering works anywhere. The opacity is applied right when the triangles are drawn, not after.
 
-There are probably many solutions to this. Some workarounds too.
-You’ll find many good examples of workarounds from studying how various 2D games do it. Go out and play some of your favorites!
+To apply the lowered alpha to the whole skeleton after it has been rendered at full alpha, you would need to temporarily render it to a different target first, then draw the contents of that target to the screen. The implementation for this is highly dependent on your setup.
+
+There are many solutions and workarounds for this.
+You’ll find many good and creative examples of workarounds from studying how various 2D games do it. Go out and play some of your favorites!
 
 ## How does Spine-Unity determine how big my model will be?
 Spine editor uses a 1 pixel:1 unit scale. Meaning, that if you just include an image into your skeleton without any rotation or scaling, 1 pixel in that image will be 1 unit tall and 1 unit wide in Spine.
@@ -332,7 +341,7 @@ In Unity, 1 unit is 1 meter. This is defined by Unity’s default physics values
 
 For convenience, when you import your Spine data into Unity, the scale is set at a default of 0.01 to match Unity’s sprites.
 
-![](http://i.imgur.com/4YHiEUF.png)
+![](/img/skeletonDataScale.png)
 
 If you want to set your skeleton’s base scale to something higher or lower, you can change this value in your Skeleton Data Asset’s inspector. This value is a multiplier used when your `SkeletonData` is loaded. Changing this value at runtime will not do anything after the `SkeletonData` has already been loaded.
 

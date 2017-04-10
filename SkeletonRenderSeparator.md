@@ -1,3 +1,6 @@
+Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
+If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
+
 # SkeletonRenderSeparator
 a Spine-Unity Rendering Module (Modules\SkeletonRenderSeparator)
 
@@ -8,13 +11,13 @@ Normally, Spine components that render a skeleton will use a single renderer to 
 This means you can set their sorting layers and sorting order individually, allowing you to render things in between parts of your skeleton. This can be particles, Unity SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort. This can be useful for dynamically sorted special effects, if you need your character to ride a vehicle, or if just want them to hug a tree.
 
 You can find a sample scene in the unitypackage: `Examples/Other Examples/SkeletonRenderSeparator.unity` 
-![](http://i.imgur.com/YGa572Y.png)
+![](/img/skeletonrenderseparator_p1.png)
 
 ## How to Use
 ### Step 0
 Make sure you know your Skeleton's draw order. Find out which slot you want use to separate your Skeleton's render into parts. For convenience, label this slot clearly before exporting your Skeleton.
 
-![](http://i.imgur.com/dZMCU7R.gif)
+![](/img/skeletonrenderseparator_steps.gif)
 Fig 1. Steps 1 to 3
 
 ### Step 1: Add the SkeletonRenderSeparator component
