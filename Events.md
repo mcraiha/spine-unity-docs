@@ -85,9 +85,9 @@ public class MySpineEventHandler : MonoBehaviour {
 		// This is how you subscribe via a declared method. The method needs the correct signature.
 		skeletonAnimation.AnimationState.Event += HandleEvent;
 
-		skeletonAnimation.AnimationState.Start += delegate (Spine.AnimationState state, int trackIndex) {
+		skeletonAnimation.AnimationState.Start += delegate (TrackEntry trackEntry) {
 			// You can also use an anonymous delegate.
-			Debug.Log(string.Format("track {0} started a new animation.", trackIndex));
+			Debug.Log(string.Format("track {0} started a new animation.", trackEntry.TrackIndex));
 		};
 
 		skeletonAnimation.AnimationState.End += delegate {
@@ -96,7 +96,7 @@ public class MySpineEventHandler : MonoBehaviour {
 		};
 	}
 
-	void HandleEvent (Spine.AnimationState state, int trackIndex, Spine.Event e) {
+	void HandleEvent (TrackEntry trackEntry, Spine.Event e) {
 		// Play some sound if the event named "footstep" fired.
 		if (e.Data.Name == footstepEventName) {			
 			Debug.Log("Play a footstep sound!");
