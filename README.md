@@ -5,12 +5,13 @@ Most of these documents are still works in progress.
 ----------
 
 ## For Beginners
-- [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting%20Started.md)
+- [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting-Started.md)
 
 ## Intermediate Users
-- [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/Structure%20Overview.md)
-- [Rendering and Animation](https://github.com/pharan/spine-unity-docs/blob/master/Rendering-and-Animation.md)
+- [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/Structure-Overview.md)
+- [Animation](https://github.com/pharan/spine-unity-docs/blob/master/Animation.md)
 - [Events and AnimationState Callbacks](https://github.com/pharan/spine-unity-docs/blob/master/Events.md)
+- [Rendering](https://github.com/pharan/spine-unity-docs/blob/master/Rendering.md)
 
 ## Specific Modules
 - [Spine-Unity YieldInstructions](https://github.com/pharan/spine-unity-docs/blob/master/Spine-Unity-YieldInstructions.md)

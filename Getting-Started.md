@@ -6,6 +6,8 @@
 # Getting Started
 
 ## Installing
+Adding Spine-Unity into your Unity project:
+
 1. Download and install [Unity](http://unity3d.com/get-unity) (There's a free version.)
 1. Create an empty Unity project.
 1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
@@ -21,17 +23,32 @@
 > Spine-Unity is built on top of Spine-C# ([spine-csharp](https://github.com/EsotericSoftware/spine-runtimes/tree/master/spine-csharp)).
 
 ## Sample Code
-After you have imported the latest unitypackage, go to the `Examples\Getting Started` folder in the Project panel.
+The basic animation-playing code will look like this:
+```csharp
+void Start () {
+    var skeletonAnimation = GetComponent<SkeletonAnimation>();
+
+	skeletonAnimation.AnimationState.SetAnimation(0, "run", true);
+	// The first parameter is the track number. You can have many animations playing on top of one another on different tracks at the same time.
+	// The second parameter is the animation name. For optimization stages, non-string API also exists.
+	// The third parameter is for making your animation loop.
+}
+```
+
+For more sample code, the Spine-Unity unitypackage comes with a set of sample scenes and scripts. 
+Once you have imported the latest unitypackage, find the `Examples\Getting Started` folder in the Project panel.
 
 Open and examine those Unity Scene files in order.
 Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
 Those will cover the basics of playing animations and posing characters.
-s
+
 Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=12) for more information.
 
 ## Bringing Your Spine Assets Into Your Project
 ### Exporting from Spine
+// TODO: Add image of export dialog.
+
 1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.
 1. Choose `JSON` on the upper-left of the Export window.
 1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).
@@ -45,9 +62,12 @@ Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=
 	- a **.png** file which is the packed version of all your images in one texture.
 	- a **.atlas.txt** file (libGDX atlas) that has data of where each image is in the packed texture.
 
+// TODO: Add image of the 3 resulting files.
+
 > For __2D Toolkit__ users, Step 3 (packing a `.png` and `.atlas.txt`) is not necessary. Instead, you will have the appropriate field in your SkeletonDataAsset to assign a reference to `tk2dSpriteCollectionData`. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 
 ### Importing into Unity
+// TODO: Add gifs for each step.
 1. Make sure your Unity project is open.
 	- It should already have a functioning Spine-Unity runtime in it.
 1. Look for the folder where you exported your 3 files. (**json**, **.atlas.txt** and **.png**)
@@ -59,7 +79,7 @@ Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.
 	- See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
-
+// TODO: Add the drag and drop gif.
 
 > - **MANUAL ASSET SETUP** For advanced cases, you can create these three files yourself. The arrangement is noted in the bullet points of Step 3.
 > - **CHANGING SHADERS** Using Spine-Unity's default shaders (`Spine/Skeleton` or `Spine/SkeletonLit`) requires textures that were saved with **Premultiplied Alpha**. This is the default setting in Spine's Texture Packer. Choosing other shaders may yield unexpected results and may require you to re-export the texture without premultiplied alpha. For more information on premultiply alpha, [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
@@ -77,6 +97,8 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 - You have three options for updating your Spine-Unity runtime. An in-place update with Unity's `Import Package` dialog is the recommended option. In rare, complicated cases, you may have to delete your older version of spine-unity and then import the unitypackage.   
 
 ## In-place Update (.unitypackage)
+// TODO: Add an image with Unity's unitypackage update interface showing changes.
+
 1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
 2. Import the .unitypackage into your project by double-clicking on the unitypackage file or dragging it into Unity editor.
 3. The Import dialog will show which files are updated and will update them regardless of where you moved them in your project since you last imported.
@@ -104,4 +126,4 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 > - `Gizmos` is a [special folder](http://docs.unity3d.com/Manual/SpecialFolders.html) in Unity. It needs to be at the root of your assets folder to function correctly. (ie. `Assets/Gizmos`)
 > - `spine-csharp` and `spine-unity` can be placed in any subfolder you want.
 > - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
-> - Some files may have been removed and merged since the last version you used. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924
+> - Some files may have been removed and merged since the last version you used. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/spine-unity-download/
