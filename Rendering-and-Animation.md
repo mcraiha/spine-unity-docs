@@ -8,7 +8,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 
 
 # Controlling Animation
-![](/img/animationcoding.png)
+![](/img/spine-runtimes-guide/spine-unity/animationcoding.png)
 
 ## SkeletonAnimation
 Normally, `Spine.AnimationState` manages keeping track of time, updating the skeleton, queueing, layering and mixing/crossfading animation. If you're used to "Mecanim" as having State Machines, `Spine.AnimationState` is a simpler, non-programmable kind, but flexible enough to serve as the base for most animation logic.
@@ -194,7 +194,7 @@ In general, Spine’s systems are built to take advantage of the way modern game
 
 It does this by interfacing with frameworks and engines “in 3D terms”; in terms of meshes and vertices, and texture mapping and UVs. So every image part is either defined by a polygon comprised of several triangles, or a rectangle made up of two triangles. This is not unusual even if the engine is mainly for 2D graphics.
 
-![](/img/render_spineunity_p1.jpg)
+![](/img/spine-runtimes-guide/spine-unity/render_spineunity_p1.jpg)
 
 The basic idea is this:
 You have mesh made of triangles. This is shaped based on the Spine skeleton/model.
@@ -203,7 +203,7 @@ And you have shader programs or blending instructions.
 
 You give all that to the game engine, the game engine gives it to the GPU, and then it renders. The textures are mapped to the mesh, and rendered based on the shader and blend mode.
 
-![](/img/render_spineunity_p2.jpg)
+![](/img/spine-runtimes-guide/spine-unity/render_spineunity_p2.jpg)
 
 Spine-Unity rendering uses Unity’s `MeshRenderer` and `MeshFilter` components, and Material assets. These are the same components that Unity uses to render 3D models.
 
@@ -249,7 +249,7 @@ The resulting material array will be:
 In other words, the more the attachments alternate between coming from A and coming from B, the more materials there will be in the material array, and each item in the material array signifies it needing to switch materials.
 
 The Dragon example demonstrates this: 
-![](/img/render_spineunity_alternatingmaterials.png)
+![](/img/spine-runtimes-guide/spine-unity/render_spineunity_alternatingmaterials.png)
 
 More materials in this array means more [draw calls](http://docs.unity3d.com/Manual/DrawCallBatching.html), which can adversely affect performance if the same skeleton is instantiated several times. If you only have one of this skeleton, it is probably not a cause for significant slowdown.
 
@@ -278,7 +278,7 @@ GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
 > - When you need to set a property frequently, you can use the static method: `Shader.PropertyToID(string)` to cache the int ID of that property instead of using the string overload of MaterialPropertyBlock's setters.  
 
 ## Sprite Texture Rendering/Z Ordering
-![](/img/render_spineunity_sortingface.jpg)
+![](/img/spine-runtimes-guide/spine-unity/render_spineunity_sortingface.jpg)
 
 Spine typically* uses alpha-blending to render your Spine model parts.
 
@@ -341,7 +341,7 @@ In Unity, 1 unit is 1 meter. This is defined by Unity’s default physics values
 
 For convenience, when you import your Spine data into Unity, the scale is set at a default of 0.01 to match Unity’s sprites.
 
-![](/img/skeletonDataScale.png)
+![](/img/spine-runtimes-guide/spine-unity/skeletonDataScale.png)
 
 If you want to set your skeleton’s base scale to something higher or lower, you can change this value in your Skeleton Data Asset’s inspector. This value is a multiplier used when your `SkeletonData` is loaded. Changing this value at runtime will not do anything after the `SkeletonData` has already been loaded.
 

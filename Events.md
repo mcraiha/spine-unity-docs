@@ -6,7 +6,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 
 ----------
 
-![](/img/events.png)
+![](/img/spine-runtimes-guide/spine-unity/events.png)
 # Spine Events & AnimationState callbacks
 
 **Spine.AnimationState** provides functionality for animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
@@ -17,7 +17,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 >  
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
-![](/img/callbackchart.png)
+![](/img/spine-runtimes-guide/spine-unity/callbackchart.png)
 Fig 1. Chart of Events raised without mixing/crossfading.
 
 
