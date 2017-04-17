@@ -17,7 +17,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 >  
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
-![](/img/spine-runtimes-guide/spine-unity/callbackchart.png)
+![](/img/spine-runtimes-guide/spine-unity/callbackchart.png) 
 Fig 1. Chart of Events raised without mixing/crossfading.
 
 
@@ -67,6 +67,7 @@ By default, a TrackEntry stops raising user events right when TrackEntry starts 
 
 Here is a sample `MonoBehaviour` that subscribes to `AnimationState`'s events. Read the comments to see what's going on.
 ```csharp
+// Sample written for for Spine 3.5
 using UnityEngine;
 using Spine;
 using Spine.Unity;

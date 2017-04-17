@@ -3,7 +3,7 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 14)
+Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 16)
 If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 
@@ -120,7 +120,7 @@ You can also change the point where the animation ends by setting `.EndTime`.
 ###### Timescale
 You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`. This gets multiplied by the `SkeletonAnimation.TimeScale` and `AnimationState.TimeScale` to get the final timescale.
 
-> You can set timeScale to 0 so it pauses. Note that even if `TimeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
+> You can set `TimeScale` to 0 so it pauses. Note that even if `TimeScale = 0` results in the skeleton not moving, the animation is still be applied to the skeleton every frame. Any changes you make to the skeleton will still be overridden in the normal updates.
 
 Here is a sample helper method if you want to jump to a certain point in time.
 ```csharp
@@ -142,7 +142,6 @@ static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float ti
 }
 ```
 
-
 ###### TrackEntry-specific events.
 You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](/Events.md).
 
@@ -160,27 +159,13 @@ This system allows the user to combine **different animations for different part
 
 ### Posing the Skeleton according to an animation frame/time.
 
-You can call `Animation.Apply` directly if you want to pose a skeleton according to a certain point in time in that `Animation`. The Spine-Unity runtime also has a `Skeleton.PoseWithAnimation` extension method that allows you to do this according to an animation's name.
+You can call `Animation.Apply` directly if you want to pose a skeleton according to a certain point in time in that `Animation`. The Spine-Unity runtime also has a `Skeleton.PoseWithAnimation` (Unity-specific) extension method that allows you to do this according to an animation's name.
 
-One of the parameters is always time. This is time in seconds. If you want to pose the skeleton according to what you see in the editor, you may need to call `skeleton.SetToSetupPose()` before calling `Animation.Apply` or `Skeleton.PoseWithAnimation`
-
-#### One Animation After Another (pre-3.0)
-This also means that without **auto-reset logic**, playing animations one after another will not necessarily cause it to look like what the animations like in Spine editor. Instead, playing a sequence of animations will result in later animations inheriting the values and bone poses of the previous animation.
-
-In 3.0, Spine.AnimationState will handle auto-reset logic itself and give you the option to use it so it can behave like it does in Spine editor, or if you want the original free-rein mode for advanced uses.
+One of the parameters is always time. This is time in seconds. If you want to pose the skeleton according to what you see in the editor, you may need to call `skeleton.SetToSetupPose()` before calling `Animation.Apply` or `Skeleton.PoseWithAnimation` (Unity-specific)
 
 
 ## Animation Callbacks + Spine Events
-**Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
-
-Spine.AnimationState raises events:
- - `Start` when an animation starts playing,
- - `End` when an animation is cleared or interrupted,
- - `Complete` when an animation completes its full duration,
- - `Event` when a user-defined event is detected.
-
-**WARNING:**
-> NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an **infinite recursion** of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
+Sometimes, you need your game to execute a piece of code based on events in and around animations, such as sounds and effects. **Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback such as the start of an animation, when it ends or is interrupted, when it completes or loops, or event that were user-created in Spine.
 
 To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](Events.md).
 
