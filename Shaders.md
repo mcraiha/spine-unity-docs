@@ -90,10 +90,130 @@ Premultiply Alpha Blending ("PMA") is a type of alpha blending scheme that assum
 If you are new to writing shaders, you can begin by using node-based visual shader editors. A few examples are [ShaderForge](https://www.assetstore.unity3d.com/en/#!/content/14147) and [Amplify Shader Editor](https://www.assetstore.unity3d.com/en/#!/content/68570) (still in beta at the time of writing).
 
 These shader editors will generate Unity shader code text (a `.shader` file) that you can open, read, understand, edit and compare with changes you make in the nodes.
+This means, even if you are experienced in writing shaders, that generated shaders can serve as a template or starting point for more complex, hand-coded shaders.
 
 But remember that most of these editors are aimed at making 3D shaders. Not everything in shaders for 3D meshes will work for 2D sprites. You have to keep the characteristics mentioned above in mind for your shader to work correctly with Spine skeleton rendering and Unity sprites in general.
 
 # Example
+
+A plain Skeleton rendering shader that has no features.
+```ShaderLab
+// - Unlit + no shadow
+// - Premultiplied Alpha Blending (One OneMinusSrcAlpha)
+// - Double-sided, no depth
+
+Shader "Spine/Skeleton Plain" {
+	Properties {
+		[NoScaleOffset]_MainTex ("MainTex", 2D) = "white" {}
+	}
+	SubShader {
+		Tags { "IgnoreProjector"="True" "Queue"="Transparent" "RenderType"="Transparent" "PreviewType"="Plane" }
+		Blend One OneMinusSrcAlpha		//PMA
+		Cull Off						//Double-sided
+		ZWrite Off						//No depth
+		Lighting Off					//No lighting
+
+		Pass {
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#include "UnityCG.cginc"
+			sampler2D _MainTex;
+
+			struct VertexInput {
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			struct VertexOutput {
+				float4 pos : SV_POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			VertexOutput vert (VertexInput v) {
+				VertexOutput o;
+				o.uv = v.uv;
+				o.vertexColor = v.vertexColor;
+				o.pos = UnityObjectToClipPos(v.vertex); // Unity 5.6
+				return o;
+			}
+
+			float4 frag (VertexOutput i) : COLOR {
+				float4 rawColor = tex2D(_MainTex,i.uv);
+				float finalAlpha = rawColor.a * i.vertexColor.a;
+				float3 finalColor = rawColor.rgb * i.vertexColor.rgb;
+				return float4(finalColor, finalAlpha);
+			}
+			ENDCG
+		}
+	}
+	FallBack "Diffuse"
+}
+```
+ 
+Same as above, but with the ability to add a color overlay.
+```ShaderLab
+// - Unlit + no shadow
+// - Premultiplied Alpha Blending (One OneMinusSrcAlpha)
+// - Double-sided, no depth
+// - Can render a sprite with a solid color overlay (_FillColor). Use _FillPhase to adjust color overlay amount. 
+
+Shader "Spine/Skeleton Fill" {
+	Properties {
+		_FillColor ("FillColor", Color) = (1,1,1,1)
+		_FillPhase ("FillPhase", Range(0, 1)) = 0
+		[NoScaleOffset]_MainTex ("MainTex", 2D) = "white" {}
+	}
+	SubShader {
+		Tags { "IgnoreProjector"="True" "Queue"="Transparent" "RenderType"="Transparent" "PreviewType"="Plane" }
+		Blend One OneMinusSrcAlpha
+		Cull Off
+		ZWrite Off
+		Lighting Off
+
+		Pass {
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#include "UnityCG.cginc"
+			sampler2D _MainTex;
+			float4 _FillColor;
+			float _FillPhase;
+
+			struct VertexInput {
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			struct VertexOutput {
+				float4 pos : SV_POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			VertexOutput vert (VertexInput v) {
+				VertexOutput o = (VertexOutput)0;
+				o.uv = v.uv;
+				o.vertexColor = v.vertexColor;
+				o.pos = UnityObjectToClipPos(v.vertex); // Unity 5.6
+				return o;
+			}
+
+			float4 frag (VertexOutput i) : COLOR {
+				float4 rawColor = tex2D(_MainTex,i.uv);
+				float finalAlpha = (rawColor.a * i.vertexColor.a);
+				float3 finalColor = lerp((rawColor.rgb * i.vertexColor.rgb), (_FillColor.rgb * finalAlpha), _FillPhase); // make sure to PMA _FillColor.
+				return fixed4(finalColor, finalAlpha);
+			}
+			ENDCG
+		}
+	}
+	FallBack "Diffuse"
+}
+```
 
 
 # Related Links
