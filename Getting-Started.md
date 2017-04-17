@@ -22,29 +22,6 @@ Adding Spine-Unity into your Unity project:
 >
 > Spine-Unity is built on top of Spine-C# ([spine-csharp](https://github.com/EsotericSoftware/spine-runtimes/tree/master/spine-csharp)).
 
-## Sample Code
-The basic animation-playing code will look like this:
-```csharp
-void Start () {
-    var skeletonAnimation = GetComponent<SkeletonAnimation>();
-
-	skeletonAnimation.AnimationState.SetAnimation(0, "run", true);
-	// The first parameter is the track number. You can have many animations playing on top of one another on different tracks at the same time.
-	// The second parameter is the animation name. For optimization stages, non-string API also exists.
-	// The third parameter is for making your animation loop.
-}
-```
-
-For more sample code, the Spine-Unity unitypackage comes with a set of sample scenes and scripts. 
-Once you have imported the latest unitypackage, find the `Examples\Getting Started` folder in the Project panel.
-
-Open and examine those Unity Scene files in order.
-Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
-
-Those will cover the basics of playing animations and posing characters.
-
-Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=12) for more information.
-
 ## Bringing Your Spine Assets Into Your Project
 ### Exporting from Spine
 // TODO: Add image of export dialog.
@@ -127,3 +104,29 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 > - `spine-csharp` and `spine-unity` can be placed in any subfolder you want.
 > - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
 > - Some files may have been removed and merged since the last version you used. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/spine-unity-download/
+
+## Sample Code
+The basic animation-playing code will look like this:
+```csharp
+// Sample written for for Spine 3.5
+void Start () {
+    var skeletonAnimation = GetComponent<SkeletonAnimation>();
+
+	skeletonAnimation.AnimationState.SetAnimation(0, "run", true);
+	// The first parameter is the track number. You can have many animations playing on top of one another on different tracks at the same time.
+	// The second parameter is the animation name. For optimization stages, non-string API also exists.
+	// The third parameter is for making your animation loop.
+}
+```
+
+For more sample code, the Spine-Unity unitypackage comes with a set of sample scenes and scripts. 
+Once you have imported the latest unitypackage, find the `Examples\Getting Started` folder in the Project panel.
+
+Open and examine those Unity Scene files in order.
+Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
+
+Those will cover the basics of playing animations and posing characters.
+
+For more detailed information on how to control animations, see the [Controlling Animation](Animation.md) documentation.
+
+Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=12) for more information.
