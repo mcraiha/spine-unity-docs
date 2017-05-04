@@ -47,8 +47,8 @@ Spine-Unity comes with a default shader— `Spine/Skeleton`— which is used by 
 - Uses vertex colors to tint the texture via multiply.
 - Has a "ShadowCaster" pass so it can cast shadows in Unity's system.
 - Material Properties:
-	- Main Texture
-	- Shadow alpha cutoff
+	- _MainTex "Main Texture"
+	- _Cutoff "Shadow alpha cutoff"
 
 Because it is a typical premultiply-alpha blended shader, you easily have the option of using other 2D shaders.
 If you opt to use another shader, different characteristics could be accomodated for:
@@ -86,10 +86,34 @@ Premultiply Alpha Blending ("PMA") is a type of alpha blending scheme that assum
 - You can use Unity's default Sprite shader
 - Other options, requirements for it to work.
 
+## Example Alternate Setup
+
+**Using Unity's "Sprites/Default" shader**
+The `Sprites/Default` shader has the following characteristics:
+- Straight alpha blending (internal rendering PMA but requires a non-PMA texture)
+- No depth
+- No backface culling
+- No lighting
+- No shadow pass
+- Uses vertex colors via multiply
+- Material Properties (mostly hidden in the inspector):
+	- _MainTex : Texture2D
+	- _Color : Color
+	- _PixelSnap : flag (Float)
+	- _Flip : Vector4 (Vector)
+	- _AlphaTex : Texture2D
+	- _EnableExternalAlpha : flat (Float)
+
+To make this setup work, you need to make sure to export your atlas from Spine Texture Packer with the **Premultiply Alpha checkbox unchecked**.
+You also need to **disable PMA Vertex Colors** under the `Advanced...` foldout in SkeletonAnimation's inspector.
+
+Unfortunately, despite having the Main Texture property, `Sprites/Default` does not show it in the inspector, so it has to be edited while another shader is chosen.
+
+
 # Visual Shader Editors
 If you are new to writing shaders, you can begin by using node-based visual shader editors. A few examples are [ShaderForge](https://www.assetstore.unity3d.com/en/#!/content/14147) and [Amplify Shader Editor](https://www.assetstore.unity3d.com/en/#!/content/68570) (still in beta at the time of writing).
 
-These shader editors will generate Unity shader code text (a `.shader` file) that you can open, read, understand, edit and compare with changes you make in the nodes.
+These shader editors will generate Unity shader code text (a `.shader` file) that you can open, read, understand, edit and compare with changes you make in the nodes. (See [Unity ShaderLab](https://docs.unity3d.com/Manual/SL-Shader.html) and [Cg](http://http.developer.nvidia.com/CgTutorial/cg_tutorial_chapter01.html))
 This means, even if you are experienced in writing shaders, that generated shaders can serve as a template or starting point for more complex, hand-coded shaders.
 
 But remember that most of these editors are aimed at making 3D shaders. Not everything in shaders for 3D meshes will work for 2D sprites. You have to keep the characteristics mentioned above in mind for your shader to work correctly with Spine skeleton rendering and Unity sprites in general.
@@ -98,6 +122,7 @@ But remember that most of these editors are aimed at making 3D shaders. Not ever
 
 A plain Skeleton rendering shader that has no features.
 ```ShaderLab
+// - Requires PMA texture.
 // - Unlit + no shadow
 // - Premultiplied Alpha Blending (One OneMinusSrcAlpha)
 // - Double-sided, no depth
@@ -153,8 +178,9 @@ Shader "Spine/Skeleton Plain" {
 }
 ```
  
-Same as above, but with the ability to add a color overlay.
+Now here's the same shader, but with the ability to add a color overlay.
 ```ShaderLab
+// - Requires PMA texture.
 // - Unlit + no shadow
 // - Premultiplied Alpha Blending (One OneMinusSrcAlpha)
 // - Double-sided, no depth
@@ -213,6 +239,74 @@ Shader "Spine/Skeleton Fill" {
 	}
 	FallBack "Diffuse"
 }
+```
+
+A PMA Multiply Shader
+```ShaderLab
+// Spine/Skeleton PMA Multiply
+// - Requires PMA texture.
+// - single color multiply tint
+// - unlit
+// - Premultiplied alpha Multiply blending
+// - No depth, no backface culling, no fog.
+
+Shader "Spine/Skeleton PMA Multiply" {
+	Properties {
+		_Color ("Tint Color", Color) = (1,1,1,1)
+		[NoScaleOffset] _MainTex ("MainTex", 2D) = "black" {}
+	}
+
+	SubShader {
+		Tags {
+			"Queue"="Transparent"
+			"IgnoreProjector"="True"
+			"RenderType"="Transparent"
+		}
+
+		Fog { Mode Off }
+		Cull Off
+		ZWrite Off
+		Blend DstColor OneMinusSrcAlpha
+		Lighting Off
+
+		Pass {
+			CGPROGRAM
+			#pragma vertex vert
+			#pragma fragment frag
+			#include "UnityCG.cginc"
+
+			sampler2D _MainTex;
+			float4 _Color;
+
+			struct VertexInput {
+				float4 vertex : POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			struct VertexOutput {
+				float4 pos : SV_POSITION;
+				float2 uv : TEXCOORD0;
+				float4 vertexColor : COLOR;
+			};
+
+			VertexOutput vert (VertexInput v) {
+				VertexOutput o;
+				o.pos = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.uv = v.uv;
+				o.vertexColor = v.vertexColor * float4(_Color.rgb * _Color.a, _Color.a); // Combine a PMA version of _Color with vertexColor.
+				return o;
+			}
+
+			float4 frag (VertexOutput i) : COLOR {
+				float4 texColor = tex2D(_MainTex, i.uv);
+				return (texColor * i.vertexColor);
+			}
+			ENDCG
+		}
+	}
+}
+
 ```
 
 
