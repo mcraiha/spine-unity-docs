@@ -12,7 +12,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 In Unity, shaders are handled as [Shader Assets](https://docs.unity3d.com/Manual/class-Shader.html) (`.shader`  text files), and contain more information than what is typically considered a "shader" in other frameworks. 
 
 Unity shaders are written in two languages:
-// TODO: Illustration of Cg within ShaderLab context.
+![](img\spine-runtimes-guide\spine-unity\shader_shaderlabcgparts.png)
 
 **ShaderLab**
 The [Unity ShaderLab language](https://docs.unity3d.com/Manual/SL-Shader.html) defines:
@@ -32,7 +32,7 @@ Cg is the same code you would see used in other game engines and frameworks.
 
 In Unity, a shader for a renderer is chosen by setting the [Materials](https://docs.unity3d.com/Manual/Materials.html) on that renderer.
 
-// TODO: Illustration of a Material's two parts. (Shader + Material Properties like texture, sliders, etc).
+![](img\spine-runtimes-guide\spine-unity\shader_partsofmaterial.png)
 
 Unity Materials combine a **Unity Shader** with a set of **Material Property values**. For 3D meshes, this commonly means that a Material defines whether a flat square looks like a rocky ground, or a brick wall, or metal panels. But for 2D meshes acting as sprites, a Material stores where to find the image data (the main texture), and how to render it (the shader, and the various material property values).
 
