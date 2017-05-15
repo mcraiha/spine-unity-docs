@@ -6,6 +6,7 @@ Most of these documents are still works in progress.
 
 ## For Beginners
 - [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting-Started.md)
+- [Export Settings](https://github.com/pharan/spine-unity-docs/blob/master/Export-Settings.md)
 
 ## Intermediate Users
 - [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/Structure-Overview.md)

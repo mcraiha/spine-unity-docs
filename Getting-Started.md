@@ -35,11 +35,12 @@ Adding Spine-Unity into your Unity project:
 1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)
 1. Click `Export`.
 1. This will export three files:
+	- ![](img\spine-runtimes-guide\spine-unity\three-exported-files.png) 
 	- a **.json** file that holds data of the skeleton.
 	- a **.png** file which is the packed version of all your images in one texture.
 	- a **.atlas.txt** file (libGDX atlas) that has data of where each image is in the packed texture.
 
-// TODO: Add image of the 3 resulting files.
+For more information on ideal export settings, see the [Export Settings](Export-Settings.md) documentation.
 
 > For __2D Toolkit__ users, Step 3 (packing a `.png` and `.atlas.txt`) is not necessary. Instead, you will have the appropriate field in your SkeletonDataAsset to assign a reference to `tk2dSpriteCollectionData`. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 
@@ -55,8 +56,9 @@ Adding Spine-Unity into your Unity project:
 		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.
-	- See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
-// TODO: Add the drag and drop gif.
+![](img\spine-runtimes-guide\spine-unity\drag-and-drop-instantiate.gif)
+
+5. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
 
 > - **MANUAL ASSET SETUP** For advanced cases, you can create these three files yourself. The arrangement is noted in the bullet points of Step 3.
 > - **CHANGING SHADERS** Using Spine-Unity's default shaders (`Spine/Skeleton` or `Spine/SkeletonLit`) requires textures that were saved with **Premultiplied Alpha**. This is the default setting in Spine's Texture Packer. Choosing other shaders may yield unexpected results and may require you to re-export the texture without premultiplied alpha. For more information on premultiply alpha, [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
@@ -74,11 +76,11 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 - You have three options for updating your Spine-Unity runtime. An in-place update with Unity's `Import Package` dialog is the recommended option. In rare, complicated cases, you may have to delete your older version of spine-unity and then import the unitypackage.   
 
 ## In-place Update (.unitypackage)
-// TODO: Add an image with Unity's unitypackage update interface showing changes.
-
 1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
 2. Import the .unitypackage into your project by double-clicking on the unitypackage file or dragging it into Unity editor.
-3. The Import dialog will show which files are updated and will update them regardless of where you moved them in your project since you last imported.
+3. The Import dialog will show which files are new or updated and will update them regardless of where you moved them in your project since you last imported.  
+![](img\spine-runtimes-guide\spine-unity\unitypackage-update.png)
+
 
 >  - This functionality may not work correctly if your meta files were corrupted or replaced. In that case, you may have to do delete the old version of the runtime before importing the unitypackage.
 >  - Much older versions of the unitypackage had inconsistent meta files for spine-c#. You may have to delete the older spine-csharp folder when updating. This otherwise works correctly.
