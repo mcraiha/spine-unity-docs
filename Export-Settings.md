@@ -8,7 +8,7 @@ If this documentation doesn't cover some questions, please feel free to post in 
 
 # Recommended Spine Export Settings for Spine-Unity #
 ### Export Settings for Spine-Unity ###
-![](img\spine-runtimes-guide\spine-unity\spine-unity-export-settings.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)
 Spine-Unity is capable of loading both Json and Binary files.
 **Json** is best during development. While we always recommend freezing your Spine editor version to the specific runtime version your game is using in development, we recommend exporting with json during development as it is more resilient to minor updates in runtime versions.
 
@@ -21,7 +21,7 @@ Json also makes it easier to debug, test and handle errors.
 
 
 ### Texture Packer Settings for Spine-Unity ###
-![](img\spine-runtimes-guide\spine-unity\spine-unity-texture-packer-settings.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-texture-packer-settings.png)
 **Regions**
 If you are using **Spine Professional** and using meshes, we recommend leaving `Strip Whitespace` OFF.
 Whitespace stripping causes problems with mesh UV coordinates.
