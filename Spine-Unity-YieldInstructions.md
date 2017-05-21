@@ -37,11 +37,11 @@ Listens for when a `Spine.TrackEntry` finishes playing, when it fires its `Compl
 
 
 ## A note on Execution Order
-//TODO: ILLUSTRATION OF EXECUTION ORDER RELEVANT TO THE ABOVE YIELD INSTRUCTIONS GOES HERE
 
-At their core, these yield instructions yield `null` to the coroutine system.
+At their core, these yield instructions **yield null** to the coroutine system.
 This means they check pausing and continuing execution AFTER MonoBehaviour Update and BEFORE MonoBehaviour LateUpdate.
-See more information in Unity's documentation: https://docs.unity3d.com/Manual/ExecutionOrder.html 
+See more information in Unity's documentation: https://docs.unity3d.com/Manual/ExecutionOrder.html
+![](img\spine-runtimes-guide\spine-unity\yieldinstructions-execution-order.png) 
 
 These yield instructions are tied to Spine.AnimationState's functionality and rely on it to raise the necessary events.
 This means that when the target AnimationState is not active or updated, it cannot notify the yield instruction, so the yield instruction will continue to block execution of your coroutine. 

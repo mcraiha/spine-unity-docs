@@ -75,14 +75,16 @@ More materials in this array means more [draw calls](http://docs.unity3d.com/Man
 
 To learn more about how to arrange atlas regions in your Spine atlases, see this page: [Spine Texture Packer: Folder Structure](http://esotericsoftware.com/spine-texture-packer#Folder-structure)
 
-### Setting Material Properties Per Instance.
-Likewise, using MeshRenderer.material and changing values there will not work.
+### Setting Material Properties Per Instance
+Because SkeletonRenderer uses Materials based on the Material loaded when attachments were loaded, using MeshRenderer.material and changing values on MeshRenderer.material will not work.
 
-The `Renderer.material` property generates a copy just for that renderer, but that material will immediately be overwritten by SkeletonRenderer's render code.   
+In regular Unity use, the `Renderer.material` property generates a copy just for that renderer. But that material will immediately be overwritten by SkeletonRenderer's render code.
 
 On the other hand, `Renderer.sharedMaterial` will modify the original Material. And if you spawn more than one Spine GameObject that uses that Material, the changes you apply to it will be applied to all instances.
 
-In this case, Unity's [Renderer.SetPropertyBlock](http://docs.unity3d.com/ScriptReference/Renderer.SetPropertyBlock.html) is a useful method. Remember that `SkeletonRenderer`/`SkeletonAnimation` uses a `MeshRenderer`. Setting that MeshRenderer's material property block allows you to change property values just for that renderer.
+This is where Unity's [Renderer.SetPropertyBlock](http://docs.unity3d.com/ScriptReference/Renderer.SetPropertyBlock.html) is a useful method. Remember that `SkeletonRenderer`/`SkeletonAnimation` uses a `MeshRenderer`. Setting that MeshRenderer's material property block allows you to change property values *just for that renderer*.
+
+**To set a specific renderer's material property values**, you need to have a `UnityEngine.MaterialPropertyBlock` object (you can create it using `new`, and cache the value in your class). Then call the renderer's `SetPropertyBlock` method with your MaterialPropertyBlock as the argument.
 
 ```csharp
 MaterialPropertyBlock mpb = new MaterialPropertyBlock();
@@ -90,7 +92,14 @@ mpb.SetColor("_FillColor", Color.red); // "_FillColor" is a named property on a 
 GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
 ```
 
-// TODO: Small section on clearing the property block
+Keep in mind that even if a MaterialPropertyBlock is a class/reference type, **you will need to pass it to SetPropertyBlock every time whenever you make changes to it** in order to see the changes applied to the renderer.
+
+**To remove the renderer's material property values**, you need to clear the MaterialPropertyBlock and then call SetPropertyBlock using the empty MaterialPropertyBlock.
+```csharp
+MaterialPropertyBlock mpb = this.cachedMaterialPropertyBlock; // assuming you had cached a MaterialPropertyBlock with values in it.
+mpb.Clear(); // Clear the property values from the MaterialPropertyBlock
+GetComponent<Renderer>().SetPropertyBlock(mpb); // set the renderer property block using the empty MaterialPropertyBlock.
+```
 
 > **Notes on optimization**
 > - using Renderer.SetPropertyBlock allows renderers with the same material to be batched correctly even if their material properties are changed by different MaterialPropertyBlocks.
@@ -175,7 +184,7 @@ You may have learned to flip your 2D sprites in Unity setting a negative scale o
 Both of these work for purely visual purposes. But they have their own side effects to keep in mind:
 
  - Nonuniform scale can cause a mesh to bypass Unity’s batching system. This means it will have its own (set of) draw calls for each instance. So it’s okay for your main character. It can be detrimental if you have nonuniform scale for dozens of skeletons.
- - Rotating causes normals to rotate with the mesh. For lighting 2D sprites, this means they’ll point in the wrong direction.
- - Rotating X or Y may also cause Unity’s 2D Colliders to behave unpredictably.
+ - Rotating causes normals to rotate with the mesh. For lighting 2D sprites, this means they’ll point in the wrong direction unless your shader uses viewspace normals.
+ - Rotating X or Y may cause Unity’s 2D Colliders to behave unpredictably.
  - Negative scale can cause attached physics Colliders and some script logic to behave with unexpected results.
 

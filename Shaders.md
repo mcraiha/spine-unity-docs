@@ -77,15 +77,6 @@ Premultiply Alpha Blending ("PMA") is a type of alpha blending scheme that assum
 
 > Unity cannot detect PMA settings automatically. If you want to use a non-PMA shader (such as `Sprites/Default`), you must make sure the texture is saved without premultiply alpha, and you must make sure PMA Vertex Colors is disabled under the SkeletonAnimation's `Advanced...` foldout in the inspector.  
 
-
-// TODO:
-- Default assumptions and implementation (that it's nothing special)
-	- Premultiplied Alpha
-	- Depth
-	- Vertex Colors
-- You can use Unity's default Sprite shader
-- Other options, requirements for it to work.
-
 ## Example Alternate Setup
 
 **Using Unity's "Sprites/Default" shader**
@@ -117,6 +108,8 @@ These shader editors will generate Unity shader code text (a `.shader` file) tha
 This means, even if you are experienced in writing shaders, that generated shaders can serve as a template or starting point for more complex, hand-coded shaders.
 
 But remember that most of these editors are aimed at making 3D shaders. Not everything in shaders for 3D meshes will work for 2D sprites. You have to keep the characteristics mentioned above in mind for your shader to work correctly with Spine skeleton rendering and Unity sprites in general.
+
+At the same time, these node-based shader editors are limited in what you can do with them. For example, multi-pass (extra non-lighting pass) shaders can be done by hand coding but neither Amplify nor ShaderForge allow this.
 
 # Examples
 
@@ -311,7 +304,11 @@ Shader "Spine/Skeleton PMA Multiply" {
 
 
 Here is `Spine/Effects/Skeleton Cloak`, a 2D depth-writing refraction shader, made using ShaderForge 1.36.
-```
+```ShaderLab
+// Spine/Effects/Skeleton Cloak
+// - Opacity Clip
+// - 
+
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
 // Shader created with Shader Forge v1.36 
@@ -350,7 +347,6 @@ Shader "Spine/Effects/Skeleton Cloak" {
             #pragma multi_compile _ PIXELSNAP_ON
             #include "UnityCG.cginc"
             #pragma multi_compile_fwdbase
-            #pragma only_renderers d3d9 d3d11 glcore gles 
             #pragma target 3.0
             uniform sampler2D Refraction;
             uniform sampler2D _MainTex;
