@@ -14,7 +14,7 @@ A functioning Spine-Unity setup consists of:
  - ... and Unity Engine itself.
 
 ## Spine-C# ##
-// TODO: Venn diagram of Spine-C#, Spine-XNA and Spine-Unity.
+![](/img/spine-runtimes-guide/spine-unity/unity-csharp-xna.png)
 
 **spine-csharp** is the C# port of the common core of all Spine runtimes
 
