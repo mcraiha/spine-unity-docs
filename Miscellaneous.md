@@ -53,11 +53,11 @@ If you want to create a SkeletonGraphic from code, you need to do use `SkeletonG
 var newSkeletonGraphic = SkeletonGraphic.NewSkeletonGraphicGameObject(skeletonDataAsset, canvasTransform);
 ```
 
-### What if I want to create the skeletonDataAsset from code as well?
+### What if I want to create the SkeletonDataAsset from code as well?
 SkeletonDataAsset and AtlasAsset provide static functions to create new instances at runtime. This sometimes makes sense if you have on-demand assets where having the extra assets would just be unnecessary data.
 
 See the code below:
-```
+```csharp
 using UnityEngine;
 
 using Spine;
@@ -75,13 +75,12 @@ public class RuntimeInstantiationSamples : MonoBehaviour {
 	SkeletonAnimation runtimeSkeletonAnimation;
 
 	void CreateRuntimeAssetsAndGameObject () {
-		// Create the AtlasAsset (needs atlas text asset and textures, and materials/shader);
-		runtimeAtlasAsset = AtlasAsset.CreateRuntimeInstance(atlasText, textures, materialPropertySource, true);
+		// 1. Create the AtlasAsset (needs atlas text asset and textures, and materials/shader);
+		// 2. Create SkeletonDataAsset (needs json or binary asset file, and an AtlasAsset)
+		// 3. Create SkeletonAnimation (needs a valid SkeletonDataAsset)
 
-		// Create SkeletonDataAsset (needs json or binary asset file, and an AtlasAsset) 
-		runtimeSkeletonDataAsset = SkeletonDataAsset.CreateRuntimeInstance(skeletonJson, runtimeAtlasAsset, true);
-
-		// Create SkeletonAnimation (needs a valid SkeletonDataAsset)
+		runtimeAtlasAsset = AtlasAsset.CreateRuntimeInstance(atlasText, textures, materialPropertySource, true);		
+		runtimeSkeletonDataAsset = SkeletonDataAsset.CreateRuntimeInstance(skeletonJson, runtimeAtlasAsset, true);		
 		runtimeSkeletonAnimation = SkeletonAnimation.NewSkeletonAnimationGameObject(runtimeSkeletonDataAsset);
 	}
 
