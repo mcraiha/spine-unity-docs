@@ -3,7 +3,7 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 16)
+Documentation last updated for Spine-Unity for Spine 3.6.x (2017 Aug 4)
 If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 
@@ -100,7 +100,7 @@ If you choose not to keep the reference to the `TrackEntry` object when you call
 ###### Current Time (or Start Time)
 The time the Animation is currently playing at can be changed at any point while it's playing.
 
-For example, you can change the `.Time` immediately after `SetAnimation` so the animation starts in the middle instead of the beginning. Note that time is in seconds. To convert Spine editor frames to seconds, you must divide by the dopesheet’s 30 fps tick marks: `AnimationTime = (frameNumber/30f)`.
+For example, you can change the `.TrackTime` immediately after `SetAnimation` so the animation starts in the middle instead of the beginning. Note that time is in seconds. To convert Spine editor frames to seconds, you must divide by the dopesheet’s 30 fps tick marks: `AnimationTime = (frameNumber/30f)`.
 
 ```csharp
      // Play a "dance" animation starting from frame 10
@@ -109,13 +109,13 @@ For example, you can change the `.Time` immediately after `SetAnimation` so the 
 
      // You can shorten the above code this way if you only need
      // to change one field, and don't need to store the trackEntry.
-     skeletonAnimation.AnimationState.SetAnimation(0, "dance", false).Time = 10f/30f;
+     skeletonAnimation.AnimationState.SetAnimation(0, "dance", false).TrackTime = 10f/30f;
 ```
 
 > If you are doing this to Animations with animation events, make sure you also set `lastTime` to the same value as well.
 > If `lastTime` is left as 0, all events between time 0 and `time` will be captured and raised/fired in the next Update.
 
-You can also change the point where the animation ends by setting `.EndTime`.
+You can also change the point when the TrackEntry animation ends by setting `.TrackEnd`.
 
 ###### Timescale
 You can change the playback speed by setting that `TrackEntry`’s `.TimeScale`. This gets multiplied by the `SkeletonAnimation.TimeScale` and `AnimationState.TimeScale` to get the final timescale.
