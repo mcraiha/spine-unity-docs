@@ -2,7 +2,7 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 14)
+Documentation last updated for Spine-Unity for Spine 3.6.x
 If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 
@@ -92,7 +92,7 @@ mpb.SetColor("_FillColor", Color.red); // "_FillColor" is a named property on a 
 GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
 ```
 
-Keep in mind that even if a MaterialPropertyBlock is a class/reference type, **you will need to pass it to SetPropertyBlock every time whenever you make changes to it** in order to see the changes applied to the renderer.
+Keep in mind that even if a MaterialPropertyBlock is a class/reference type, **you will need to pass it to SetPropertyBlock every time you make changes to it** in order to see the changes applied to the renderer.
 
 **To remove the renderer's material property values**, you need to clear the MaterialPropertyBlock and then call SetPropertyBlock using the empty MaterialPropertyBlock.
 ```csharp
@@ -100,6 +100,8 @@ MaterialPropertyBlock mpb = this.cachedMaterialPropertyBlock; // assuming you ha
 mpb.Clear(); // Clear the property values from the MaterialPropertyBlock
 GetComponent<Renderer>().SetPropertyBlock(mpb); // set the renderer property block using the empty MaterialPropertyBlock.
 ```
+
+//TODO: Describe CustomMaterialOverride and CustomSlotMaterial lists.
 
 > **Notes on optimization**
 > - using Renderer.SetPropertyBlock allows renderers with the same material to be batched correctly even if their material properties are changed by different MaterialPropertyBlocks.
@@ -126,6 +128,7 @@ Between meshes, Spine-Unity uses many of Unity’s render order systems to deter
 - Whole meshes are rendered in an order determined by many factors:
    - Distance from the camera. (Camera determines [what kind of distance; planar or perspective](http://docs.unity3d.com/ScriptReference/Camera-transparencySortMode.html).)
    - Renderer Sorting Layer/Sorting Order. ([All UnityEngine.Renderers have these sorting properties](https://unity3d.com/learn/tutorials/modules/beginner/2d/sorting-layers).)
+   - [Sorting Group](https://docs.unity3d.com/Manual/SortingGroup.html) components on the current GameObject or on any of the parents GameObjects.
    - Shader’s ShaderLab Queue Tag (defaults to the “Transparent” queue like other sprites)
    - Material.renderQueue. (does nothing until you set it. It just overrides the shaderlab queue tag).
    - [Camera depth](http://docs.unity3d.com/ScriptReference/Camera-depth.html). (For multi-camera setups.)
