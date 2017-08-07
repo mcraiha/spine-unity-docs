@@ -2,7 +2,7 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 
 Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
-If this documentation doesn't cover some questions, please feel free to post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 ----------
 
