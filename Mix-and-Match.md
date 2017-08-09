@@ -16,16 +16,22 @@ While Skins in the editor don't allow you to preview this yet, this is doable wi
 
 ## Can Skins really help me?
 The things you put in slots, such as *images* and *meshes*, are called **Attachments**.
-A **Skin** is just a container for Attachments; and you can retrieve specific attachments by name (`string`).
+A **Skin** is just a container for Attachments; and you can retrieve specific attachments by name & slot index (`string` and `int`).
 
-For example, this is a theoretical "Red character" skin.
+For example, this is a representation of a "Red character" skin.
+//TODO: Replace this with the json format?
 ```
-|   NAME (key)      |   ATTACHMENT OBJECT (value)   |
-=====================================================
-|   "left hand"     |   red left glove              |
-|   "right hand"    |   red right glove             |
-|   "mouth"         |   mouth with fangs mesh       |
-|   "cape"          |   red cape mesh               |
+Skin name: Red character
+
+| SLOT#      NAME                ATTACHMENT OBJECT           |            
+|--------|-------------------|-------------------------------|
+|  4     |   "left hand"     |   red left glove              |
+|  12    |   "right hand"    |   red right glove             |
+|  11    |   "mouth"         |   mouth with fangs mesh       |
+|  1     |   "cape"          |   red cape mesh               |
+|  ...   |   ...             |   ...                         |
+|  ...   |   ...             |   ...                         |
+ ------------------------------------------------------------
 ```
 
 At runtime and during animations, Spine.Skeleton uses the active and base skins as the source for what Attachments to use.
@@ -35,7 +41,7 @@ Normally, in Spine, you can define Skins as a fixed set of attachments to be use
 In Spine, you create a skin, add skin placeholders in slots, and then add attachments to skin placeholders.
 This Skin can then be used at runtime, is part of SkeletonData, and is shared across all instances of skeletons using that SkeletonData.
 ![](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png)
-
+//TODO: Add a side-by-side with the json format for better clarity about how it translates to actual accessible data at runtime.
 
 ### Runtime Skins
 Skins normally work as mentioned above, but skins can also be created and manipulated at runtime. We can call these "runtime skins".
@@ -68,7 +74,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
-using Spine.Unity.Modules.AttachmentTools; // A set of helpful extension methods can be found by scoping to the AttachmentTools namespace.
+using Spine.Unity.Modules.AttachmentTools; // A set of helpful extension methods for mix and match
 
 public class MixAndMatchExample : MonoBehaviour {
 
@@ -85,13 +91,16 @@ public class MixAndMatchExample : MonoBehaviour {
 		int mouthSlot = skeleton.FindSlotIndex(mouthSlotName);
 		int gunSlot = skeleton.FindSlotIndex(gunSlotName);
 
+		// Get the original attachments
 		var chosenMouth = skeleton.GetAttachment(mouthSlot, chosenMouthName);
 		var chosenGun = skeleton.GetAttachment(gunSlot, chosenGunName);
 
+		// Create a new skin, and add those attachments to it.
 		Skin newSkin = new Skin("my new skin");
 		newSkin.AddAttachment(mouthSlot, "mouth", chosenMouth);
 		newSkin.AddAttachment(gunSlot, "gun", chosenGun);
-
+		
+		// Set and apply the Skin to the skeleton.
 		skeleton.SetSkin(newSkin);
 		skeleton.SetSlotsToSetupPose();
 		skeletonAnimation.Update(0);
@@ -110,7 +119,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Spine;
 using Spine.Unity;
-using Spine.Unity.Modules.AttachmentTools; // A set of helpful extension methods can be found by scoping to the AttachmentTools namespace.
+using Spine.Unity.Modules.AttachmentTools; // A set of helpful extension methods for mix and match.
 
 public class MixAndMatchExample : MonoBehaviour {
 
@@ -122,13 +131,16 @@ public class MixAndMatchExample : MonoBehaviour {
 		Skeleton skeleton = skeletonAnimation.skeleton;
 		SkeletonData skeletonData = skeleton.Data;
 
+		// Get the source skins.
 		var goldArmorSkin = skeletonData.FindSkin(inspectedArmorName);
 		var redGlovesSkin = skeletonData.FindSkin(inspectedGlovesName);
 
+		// Create a new skin, and append those skins to it.
 		Skin myEquipsSkin = new Skin("my new skin");
 		myEquipsSkin.Append(goldArmorSkin);
 		myEquipsSkin.Append(redGlovesSkin);
 
+		// Set and apply the Skin to the skeleton.
 		skeleton.SetSkin(myEquipsSkin);
 		skeleton.SetSlotsToSetupPose();
 		skeletonAnimation.Update(0);
@@ -136,28 +148,40 @@ public class MixAndMatchExample : MonoBehaviour {
 }
 ```
 
-
 #### Option 2: Use template attachments in Spine, and generate Attachments from UnityEngine.Sprites in Unity.
 This can be handy if you have an arbitrarily large number of equips and customization, or ones that can come from anywhere- DLC, game updates, etc...
 
+1. The first step is to **create a skeleton in Spine and use a set of images that are supposed to be templates for your eventual equips**.
+Those template images will need to be the right height and width because they will form the bases of your actual equips.
+If they can't all fit into one size, you may want to use more than one template. (eg. instead of just one "sword" template, you can have templates for "short sword", "wide sword", "dagger", "long sword", etc...)
+For best results, you should animate with those template images in Spine. Create a skin called "template" and add your template swords and armor and whatever images into Skin Placeholders. (see: [Spine User Guide - Skins](http://esotericsoftware.com/spine-skins)). 
+// TODO: Create and link to a sample skeleton with templated equips.
 
-The first step is to create a skeleton in Spine and use a set of images that are supposed to be templates for your eventual equips.
+2. The next step is to **create those actual equip/customization images with the same height and width as your template images**.
+You will import these individual (unpacked) images into your Unity project as Sprites.
+**Requirements:**
+You can pack these Sprites using Unity's packer, but they need to use **Full Rect** packing mode.
+If you plan to use these Sprites with runtime repacking (see the next section), then you will need to use "Read/Write Enabled". 
+   
+3. Then you write your C# code that can combine use your template skin. This will vary as your equip or character customization system depends on how your game works.
 
-A set of helpful extension methods can be found by scoping to the AttachmentTools namespace.
+> See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
+
 ```
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 using Spine;
 using Spine.Unity;
-using Spine.Unity.Modules.AttachmentTools; // Add this on top of your .cs file.
-```
+using Spine.Unity.Modules.AttachmentTools; // A set of helpful extension methods for mix and match.
 
-```
 // TODO: sample code for creating Attachments from UnityEngine.Sprites, or using UnityEngine.Sprites as backing images to linked meshes
+// Currently, there is sample code that comes with the Spine-Unity unitypackage. See Mix and Match sample scene and MixAndMatch.cs
 ```
 
 ### Runtime Repacking
 
 > See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
-
 //TODO: Mention useful [SpineAttributes] that can be used to find slots, template attachments, etc...
 
 //TODO: Summary of what attachments are.
