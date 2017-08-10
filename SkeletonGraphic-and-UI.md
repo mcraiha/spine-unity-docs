@@ -38,3 +38,6 @@ Because of the difference in systems, the normal BoneFollower will not work with
 
 You can add a BoneFollowerGraphic GameObject by choosing it in the context menu, just like SkeletonAnimation.
 ![](/img/spine-runtimes-guide/spine-unity/skeletongraphic-bonefollower.png)
+
+Some UnityEngine.UI.Text with BoneFollowerGraphic components. (see "6 Skeleton Graphic" sample scene)
+![](/img/spine-runtimes-guide/spine-unity/skeletongraphic-bonefollower-demo.gif)
