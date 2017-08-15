@@ -8,11 +8,11 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 
 # Recommended Spine Export Settings for Spine-Unity #
 ### Export Settings for Spine-Unity ###
-![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)
-Spine-Unity is capable of loading both Json and Binary files.
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)  
+Spine-Unity is capable of loading both Json and Binary files.  
 **Json** is best during development. While we always recommend freezing your Spine editor version to the specific runtime version your game is using in development, we recommend exporting with json during development as it is more resilient to minor updates in runtime versions.
 
-Json also makes it easier to debug, test and handle errors.
+Json also makes it easier to debug, test and handle errors.  
 **Nonessential data** allows you to more fully rehydrate a Spine project from a json export in cases of data loss.
 **Pretty Print** adds whitespace (spaces, tabs and line endings) to the json to make the text more humanly readable and cleaner to track by version control (such as git). This makes it easy to debug problems in the export and make manual changes for testing, and keep track of changes.
 
@@ -21,10 +21,10 @@ Json also makes it easier to debug, test and handle errors.
 
 
 ### Texture Packer Settings for Spine-Unity ###
-![](/img/spine-runtimes-guide/spine-unity/spine-unity-texture-packer-settings.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-texture-packer-settings.png)  
 **Regions**
 If you are using **Spine Professional** and using meshes, we recommend leaving `Strip Whitespace` OFF.
-Whitespace stripping causes problems with mesh UV coordinates.
+Whitespace stripping causes problems with mesh UV coordinates.  
 *The best practice is to pre-trim your images before starting to set up your skeleton in Spine.*
 
 **Pages**
