@@ -77,7 +77,15 @@ With the above example, as long as you have "armor" and "hair" active, your skel
 But where do you get Attachments to add to your custom skin?
 That's up to you, and depending on what works best for your game's setup.
 
-#### Option 1: Add variations in Spine
+Runtime skins work best when your skeleton is animated with a template/dummy skin in Spine. This helps avoid problems with "empty" slots and sharing skins between different skeletons. In Spine, make a Skin called "template" and create Skin Placeholders for all the attachments that you want to be able to customize. Use those Skin Placeholders whenever you animate attachments and attachment swaps.   
+
+//TODO: Update sample code or sample project/unitypackage. 
+
+#### Option 1: Add variations in Spine (Prepacked variants)
+See the sample project named "MixAndMatch-ESS-Prepacked.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png).
+You'll notice that the slots with customizable attachments have the customization/attachment options added to the slot too.
+These attachments will be stored with the Skeleton and the images will be packed with the atlas.
+
 Adding variations in Spine and having the variations live inside the atlas is best for when you have a limited number of customizations. It will save you the potential repacking step or issues with using multiple texture atlases. 
 
 **You can put source attachments plainly in slots.**
@@ -164,20 +172,22 @@ public class MixAndMatchExample : MonoBehaviour {
 ```
 
 #### Option 2: Use template attachments in Spine, and generate Attachments from UnityEngine.Sprites in Unity.
+See the sample project named "MixAndMatch-ESS.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png).
+You'll notice that the skeleton only has the template skin. All the customization options will use Sprites in Unity editor, and will need to be based on the attachments in the template skin.
+
 This can be handy if you have an arbitrarily large number of equips and customization, or ones that can come from anywhere- DLC, game updates, etc...
 
 1. The first step is to **create a skeleton in Spine and use a set of images that are supposed to be templates for your eventual equips**.
 Those template images will need to be the right height and width because they will form the bases of your actual equips.
 If they can't all fit into one size, you may want to use more than one template. (eg. instead of just one "sword" template, you can have templates for "short sword", "wide sword", "dagger", "long sword", etc...)
 For best results, you should animate with those template images in Spine. Create a skin called "template" and add your template swords and armor and whatever images into Skin Placeholders. (see: [Spine User Guide - Skins](http://esotericsoftware.com/spine-skins)). 
-// TODO: Create and link to a sample skeleton with templated equips.
 
 2. The next step is to **create those actual equip/customization images with the same height and width as your template images**.
-You will import these individual (unpacked) images into your Unity project as Sprites.
+You will import these individual (unpacked) images into your Unity project as Sprites.  
 **Requirements:**
+![](/img/spine-runtimes-guide/spine-unity/mixandmatch-texture-inspector-options.png)  
 You can pack these Sprites using Unity's packer, but they need to use **Full Rect** packing mode.
-If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".
-// TODO: screenshot of texture inspector with options highlighted.
+If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".  
 You need to know the type of shader you are using. If you are using a Premultiply Alpha shader, such as the default "Spine/Skeleton", you need to use "PMAClone" methods. More on this later.  
    
 3. Then you write your C# code that can combine use your template skin. This will vary as your equip or character customization system depends on how your game works.
@@ -217,8 +227,9 @@ public class MixAndMatchExample : MonoBehaviour {
 
 		// Clone the template gun Attachment, and map the sprite onto it.
 		// This sample uses the sprite and material set in the inspector.
-		Attachment newGun = templateGun.GetRemappedClone(gunSprite, sourceMaterial, premultiplyAlpha: true, cloneMeshAsLinked: true, useOriginalRegionSize: false);
-
+		Attachment newGun = templateGun.GetRemappedClone(gunSprite, sourceMaterial); // This has some optional parameters. See below.
+		//Attachment newGun = templateGun.GetRemappedClone(gunSprite, sourceMaterial, premultiplyAlpha: true, cloneMeshAsLinked: true, useOriginalRegionSize: false); // (Full signature.)
+		
 		// Add the gun to your new custom skin.
 		if (newGun != null) currentEquipsSkin.SetAttachment(gunSlotIndex, gunKey, newGun);
 
@@ -233,6 +244,7 @@ public class MixAndMatchExample : MonoBehaviour {
 > See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
 
 ### Runtime Repacking
+// TODO: Write this section.
 
 **Requirements**
 If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".
