@@ -24,7 +24,7 @@ Adding Spine-Unity into your Unity project:
 
 ## Bringing Your Spine Assets Into Your Project
 ### Exporting from Spine
-// TODO: Add image of export dialog.
+![](img\spine-runtimes-guide\spine-unity\spine-unity-export-settings.png)
 
 1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.
 1. Choose `JSON` on the upper-left of the Export window.
@@ -67,6 +67,16 @@ For more information on ideal export settings, see the [Export Settings](Export-
 > - **TEXTURE SIZES.** Unity scales overly large images down by default. The Spine-Unity runtime automatically sets atlas maximum sizes to 2048x2048. If your textures are larger than this, it will cause atlas coordinates to be incorrect. Make sure the import settings are set appropriately, or decrease the maximum page width and height in your Spine Texture Packer settings.
 > - **TEXTURE ARTIFACTS FROM COMPRESSION.** Unity's 2D project defaults import new images added to the project with the Texture Type "Sprite". This can cause artifacts when using the `Spine/Skeleton` shader. To avoid these artifacts, make sure the Texture Type is set to "Texture" and . Spine-Unity's automatic import will attempt to apply these settings but in the process of updating your textures, these settings may be reverted.
 
+### Using Skeleton Binary instead of json.
+If you want to use Skeleton Binary files, choose Binary instead of JSON on the upper left of the Spine Export window when exporting.
+![](img\spine-runtimes-guide\spine-unity\spine-unity-export-skel-bytes.png)
+
+- **EXTENSION:** Make sure the Extension is set to `.skel.bytes`. Otherwise, Unity will not recognize it as a binary file and Spine-Unity can't read it.
+- All the steps mentioned above that apply to `.json` also apply to `.skel.bytes`. Spine-Unity will automatically recognize it and ingest it into "_SkeletonData".
+- While the Spine Skeleton Binary format offers loading time improvements, the format is less stable across feature-update versions of the runtime. It's best to have a batch setup ready if you intend to update your runtime. For more info on command line exports, see: http://esotericsoftware.com/spine-export#Command-line
+
+
+-----------------------------------------------------
 
 # Updating Your Project's Spine-Unity Runtime
 Major Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
@@ -110,7 +120,7 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 ## Sample Code
 The basic animation-playing code will look like this:
 ```csharp
-// Sample written for for Spine 3.5
+// Sample written for for Spine 3.6
 void Start () {
     var skeletonAnimation = GetComponent<SkeletonAnimation>();
 
