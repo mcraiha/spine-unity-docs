@@ -55,6 +55,20 @@ skeletonAnimation.separatorSlots.Clear();
 skeletonAnimation.separatorSlots.Add(mySlot);
 ```
 
+### Adding a SkeletonRenderSeparator at runtime
+You can use the `SkeletonRenderSeparator.AddToSkeletonRenderer` static method to add and initialize your SkeletonRenderSeparator.
+```csharp
+SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
+skeletonAnimation.separatorSlots.Add(mySlot); // see above
+
+// Add the SkeletonRenderSeparator.
+SkeletonRenderSeparator skeletonRenderSeparator = SkeletonRenderSeparator.AddToSkeletonRenderer(skeletonAnimation);
+```
+This has a number of optional arguments. See the IDE autocomplete for more info on them.
+You will be able to specify the sorting layer and base sorting order index and increment.
+By default, it will add the necessary SkeletonPartsRenderers. (`addMinimumPartsRenderers:true`) and you can specify that it generate extra ones (`extraPartsRenderers: int`) if you know they will be needed. 
+
+
 ## Overview
 - The SkeletonRenderSeparator takes rendering instructions from SkeletonRenderer — by subscribing to its `GenerateMeshOverride` event.
 - It then splits up the instructions and distributes it among its SkeletonPartsRenderers. These are assigned in `SkeletonRenderSeparator.partsRenderers`.
