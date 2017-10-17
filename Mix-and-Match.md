@@ -182,9 +182,9 @@ Those template images will need to be the right height and width because they wi
 If they can't all fit into one size, you may want to use more than one template. (eg. instead of just one "sword" template, you can have templates for "short sword", "wide sword", "dagger", "long sword", etc...)
 For best results, you should animate with those template images in Spine. Create a skin called "template" and add your template swords and armor and whatever images into Skin Placeholders. (see: [Spine User Guide - Skins](http://esotericsoftware.com/spine-skins)). 
 
-2. The next step is to **create those actual equip/customization images with the same height and width as your template images**.
+2. The next step is to **create those actual equip/customization images with the same height and width as your template images**.  
 You will import these individual (unpacked) images into your Unity project as Sprites.  
-**Requirements:**
+**Requirements:**  
 ![](/img/spine-runtimes-guide/spine-unity/mixandmatch-texture-inspector-options.png)  
 You can pack these Sprites using Unity's packer, but they need to use **Full Rect** packing mode.
 If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".  
@@ -193,7 +193,7 @@ You need to know the type of shader you are using. If you are using a Premultipl
 3. Then you write your C# code that can combine use your template skin. This will vary as your equip or character customization system depends on how your game works.
 
 Sample Code:
-```
+```csharp
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -246,8 +246,8 @@ public class MixAndMatchExample : MonoBehaviour {
 ### Runtime Repacking
 // TODO: Write this section.
 
-**Requirements**
-If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".
+**Requirements**  
+If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".  
 
 > See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
 
