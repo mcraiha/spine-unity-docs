@@ -82,7 +82,7 @@ Runtime skins work best when your skeleton is animated with a template/dummy ski
 //TODO: Update sample code or sample project/unitypackage. 
 
 #### Option 1: Add variations in Spine (Prepacked variants)
-See the sample project named "MixAndMatch-ESS-Prepacked.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png).
+See the sample project named "MixAndMatch-ESS-Prepacked.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/MixAndMatch-ESS.zip).
 You'll notice that the slots with customizable attachments have the customization/attachment options added to the slot too.
 These attachments will be stored with the Skeleton and the images will be packed with the atlas.
 
@@ -172,7 +172,7 @@ public class MixAndMatchExample : MonoBehaviour {
 ```
 
 #### Option 2: Use template attachments in Spine, and generate Attachments from UnityEngine.Sprites in Unity.
-See the sample project named "MixAndMatch-ESS.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png).
+See the sample project named "MixAndMatch-ESS.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/MixAndMatch-ESS.zip).
 You'll notice that the skeleton only has the template skin. All the customization options will use Sprites in Unity editor, and will need to be based on the attachments in the template skin.
 
 This can be handy if you have an arbitrarily large number of equips and customization, or ones that can come from anywhere- DLC, game updates, etc...
