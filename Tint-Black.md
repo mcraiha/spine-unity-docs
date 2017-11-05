@@ -31,7 +31,7 @@ By setting "_Color" and "_Black" through the Material APIs ([Material](https://d
 The Spine editor features an optional Tint Black option for slots, allowing you to set the black tint for each slot.  
 See: http://esotericsoftware.com/spine-attachments#Tint-black
 
-For this to work, your skeleton's setup must have the following setup:
+For this to work, your skeleton's setup must have the following setup:  
 1.  Enable Tint Black in the SkeletonAnimation's inspector under "Advanced...":  
 ![](/img/spine-runtimes-guide/spine-unity/skeletonanimation-inspector-tintblack.png)
 2.  Set the Material's shader to `Spine/Skeleton Tint Black`  
@@ -42,11 +42,11 @@ In the Unity Editor, the changes may not all be applied together so you may need
 When the setup is incorrect, the mesh may be somewhat rainbow-colored, as in the case where Tint Black was not enabled on the component. In this case, make sure the setup is correct and you try to enter and exit play mode to refresh the meshes.
 
 ### SkeletonGraphic tint Black
-For **SkeletonGraphic**, steps are slightly different.
+For **SkeletonGraphic**, steps are slightly different.  
 1. You still need to enable Tint Black in the SkeletonGraphic's inspector under `Advanced...`.
-2. SkeletonGraphic's shader is `Spine/SkeletonGraphic Tint Black`. Since UI materials can be recycled (as textures are set via MaterialPropertyBlocks), just set the Material of the SkeletonGraphic to the bundled `SkeletonGraphicTintBlack` material.
+2. SkeletonGraphic's shader is `Spine/SkeletonGraphic Tint Black`. Since UI materials can be recycled (as textures are set via MaterialPropertyBlocks), just set the Material of the SkeletonGraphic to the bundled `SkeletonGraphicTintBlack` material.  
 ![](/img/spine-runtimes-guide/spine-unity/skeletongraphictintblack-material.png)
-3. Select the Canvas and enable the Additional Shader Channels for UV0 and UV1, labeled "TexCoord1" and "TexCoord2"    
+3. Select the Canvas and enable the Additional Shader Channels for UV0 and UV1, labeled "TexCoord1" and "TexCoord2"  
 ![](/img/spine-runtimes-guide/spine-unity/unity-canvas-texcoord1-texcoord2.png)
 
 ## Additional Notes
