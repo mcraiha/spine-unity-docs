@@ -37,11 +37,11 @@ For this to work, your skeleton's setup must have the following setup:
 2.  Set the Material's shader to `Spine/Skeleton Tint Black`  
 ![](/img/spine-runtimes-guide/spine-unity/skeleton-tint-black-material-shader.png)
 
-The changes may not all be applied together so you may need to enter and exit play mode to force a new mesh to be generated according to the settings.
+In the Unity Editor, the changes may not all be applied together so you may need to enter and exit play mode to force a new mesh to be generated according to the settings.
 
 ### SkeletonGraphic tint Black
 For **SkeletonGraphic**, an extra step needs to be done.
-Select the Canvas and enable the Additional Shader Channels for UV0 and UV1, labeled "TexCoord1" and "TexCoord2"
+Select the Canvas and enable the Additional Shader Channels for UV0 and UV1, labeled "TexCoord1" and "TexCoord2"  
 ![](/img/spine-runtimes-guide/spine-unity/unity-canvas-texcoord1-texcoord2.png)
 
 ## Additional Notes
