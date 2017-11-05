@@ -19,6 +19,7 @@ Most of these documents are still works in progress.
 - [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/SkeletonRenderSeparator.md)
 
 ## See Also
+- [Tint Black](https://github.com/pharan/spine-unity-docs/blob/master/Tint-Black.md)
 - [Miscellaneous/FAQ](https://github.com/pharan/spine-unity-docs/blob/master/Miscellaneous.md)
 
 ## Advanced Users
