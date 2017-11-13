@@ -51,10 +51,16 @@ For more information on ideal export settings, see the [Export Settings](Export-
 > For __2D Toolkit__ users, Step 3 (packing a `.png` and `.atlas.txt`) is not necessary. Instead, you will have the appropriate field in your SkeletonDataAsset to assign a reference to `tk2dSpriteCollectionData`. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 
 ### Importing into Unity
+
+Step 1-3: Open both Unity and your folder. Drag the 3 files into Unity.  
 ![](/img/spine-runtimes-guide/spine-unity/explorer-to-unity-project.gif)
-1. Make sure your Unity project is open.
-	- It should already have a functioning Spine-Unity runtime in it.
-1. Look for the folder where you exported your 3 files. (**json**, **.atlas.txt** and **.png**)
+
+Step 4: Drag the SkeletonData Asset into scene view or the hierarchy panel.  
+![](/img/spine-runtimes-guide/spine-unity/drag-and-drop-instantiate.gif)
+
+Specifically:
+1. Make sure your Unity project is open. It should already have a functioning Spine-Unity runtime in it.
+1. Open the folder where you exported your 3 files. (**json**, **.atlas.txt** and **.png**)
 1. Drag the 3 files (or the folder containing them) into Unity. Drop them in Unity's **Project panel**.
 	- This will cause the Spine-Unity runtime to process them and auto-generate the necessary Unity assets.
 	- You will notice 3 new files.
@@ -62,7 +68,6 @@ For more information on ideal export settings, see the [Export Settings](Export-
 		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.  
-![](/img/spine-runtimes-guide/spine-unity/drag-and-drop-instantiate.gif)
 
 5. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
 
