@@ -24,18 +24,18 @@ Adding Spine-Unity into your Unity project:
 
 ## Bringing Your Spine Assets Into Your Project
 ### Exporting from Spine
-![](img\spine-runtimes-guide\spine-unity\spine-unity-export-settings.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)
 
-1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.
-1. Choose `JSON` on the upper-left of the Export window.
-1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).
+1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.    
+1. Choose `JSON` on the upper-left of the Export window.  
+1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).  
 	1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
 	1. On the lower-right, look for the textbox labeled `Atlas extension` and make sure it is set to `.atlas.txt`. (This is to work around Unity not accepting file extensions it doesn't recognize despite being plain text, but the Spine-Unity runtime can actually handle auto-renaming `.atlas` files. However, setting it to `.atlas.txt` minimizes problems and ambiguities with subsequent exports.)
 	1. You're done with the Texture Packer Settings window. Click `OK` to close.
-1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)
-1. Click `Export`.
+1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)  
+1. Click `Export`.  
 1. This will export three files:
-	- ![](img\spine-runtimes-guide\spine-unity\three-exported-files.png) 
+	- ![](/img/spine-runtimes-guide/spine-unity/three-exported-files.png)
 	- a **.json** file that holds data of the skeleton.
 	- a **.png** file which is the packed version of all your images in one texture.
 	- a **.atlas.txt** file (libGDX atlas) that has data of where each image is in the packed texture.
@@ -56,7 +56,7 @@ For more information on ideal export settings, see the [Export Settings](Export-
 		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.
-![](img\spine-runtimes-guide\spine-unity\drag-and-drop-instantiate.gif)
+![](/img/spine-runtimes-guide/spine-unity/drag-and-drop-instantiate.gif)
 
 5. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
 
@@ -69,7 +69,7 @@ For more information on ideal export settings, see the [Export Settings](Export-
 
 ### Using Skeleton Binary instead of json.
 If you want to use Skeleton Binary files, choose Binary instead of JSON on the upper left of the Spine Export window when exporting.
-![](img\spine-runtimes-guide\spine-unity\spine-unity-export-skel-bytes.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-skel-bytes.png)
 
 - **EXTENSION:** Make sure the Extension is set to `.skel.bytes`. Otherwise, Unity will not recognize it as a binary file and Spine-Unity can't read it.
 - All the steps mentioned above that apply to `.json` also apply to `.skel.bytes`. Spine-Unity will automatically recognize it and ingest it into "_SkeletonData".
@@ -89,7 +89,7 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
 2. Import the .unitypackage into your project by double-clicking on the unitypackage file or dragging it into Unity editor.
 3. The Import dialog will show which files are new or updated and will update them regardless of where you moved them in your project since you last imported.  
-![](img\spine-runtimes-guide\spine-unity\unitypackage-update.png)
+![](/img/spine-runtimes-guide/spine-unity/unitypackage-update.png)
 
 
 >  - This functionality may not work correctly if your meta files were corrupted or replaced. In that case, you may have to do delete the old version of the runtime before importing the unitypackage.
