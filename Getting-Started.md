@@ -61,7 +61,7 @@ For more information on ideal export settings, see the [Export Settings](Export-
 		- a **_Material** asset that holds references to the shader and **.png** texture.
 		- an **_Atlas** asset that holds a reference to the material and the **.atlas.txt**.
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
-4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.
+4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.  
 ![](/img/spine-runtimes-guide/spine-unity/drag-and-drop-instantiate.gif)
 
 5. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
