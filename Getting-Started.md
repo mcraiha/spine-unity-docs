@@ -26,15 +26,21 @@ Adding Spine-Unity into your Unity project:
 ### Exporting from Spine
 ![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)
 
-1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.    
+1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.  
+	![](/img/spine-runtimes-guide/spine-unity/spinemenu-export-s.png)    
 1. Choose `JSON` on the upper-left of the Export window.  
+ 	![](/img/spine-runtimes-guide/spine-unity/exportwindow-json-s.png)  
 1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).  
+	![](/img/spine-runtimes-guide/spine-unity/exportwindow-createatlas-s.png)    
 	1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
 	1. On the lower-right, look for the textbox labeled `Atlas extension` and make sure it is set to `.atlas.txt`. (This is to work around Unity not accepting file extensions it doesn't recognize despite being plain text, but the Spine-Unity runtime can actually handle auto-renaming `.atlas` files. However, setting it to `.atlas.txt` minimizes problems and ambiguities with subsequent exports.)
-	1. You're done with the Texture Packer Settings window. Click `OK` to close.
+	1. You're done with the Texture Packer Settings window. Click `OK` to close.  
+	
 1. In the **Export window**, pick an output folder. (Recommendation: Make a new empty folder. Make sure you can find it.)  
+	![](/img/spine-runtimes-guide/spine-unity/exportwindow-json-outputfolder-s.png)  
 1. Click `Export`.  
-1. This will export three files:
+	![](/img/spine-runtimes-guide/spine-unity/exportwindow-exportbutton-s.png)
+1. This will export three files:  
 	- ![](/img/spine-runtimes-guide/spine-unity/three-exported-files.png)
 	- a **.json** file that holds data of the skeleton.
 	- a **.png** file which is the packed version of all your images in one texture.
@@ -45,7 +51,7 @@ For more information on ideal export settings, see the [Export Settings](Export-
 > For __2D Toolkit__ users, Step 3 (packing a `.png` and `.atlas.txt`) is not necessary. Instead, you will have the appropriate field in your SkeletonDataAsset to assign a reference to `tk2dSpriteCollectionData`. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 
 ### Importing into Unity
-// TODO: Add gifs for each step.
+![](/img/spine-runtimes-guide/spine-unity/explorer-to-unity-project.gif)
 1. Make sure your Unity project is open.
 	- It should already have a functioning Spine-Unity runtime in it.
 1. Look for the folder where you exported your 3 files. (**json**, **.atlas.txt** and **.png**)
