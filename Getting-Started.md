@@ -3,14 +3,14 @@
 > This Spine runtime may only be used for personal or internal use, typically to evaluate Spine before purchasing. If you would like to incorporate a Spine Runtime into your applications, distribute software containing a Spine Runtime, or modify a Spine Runtime, then you will need a valid [Spine license](https://esotericsoftware.com/spine-purchase). Please see the [Spine Runtimes Software License](https://github.com/EsotericSoftware/spine-runtimes/blob/master/LICENSE) for detailed information.
 > The Spine Runtimes are developed with the intent to be used with data exported from Spine. By purchasing Spine, `Section 2` of the [Spine Software License](https://esotericsoftware.com/files/license.txt) grants the right to create and distribute derivative works of the Spine Runtimes.
 
-# Getting Started
+# Getting Started with Spine-Unity
 
 ## Installing
 Adding Spine-Unity into your Unity project:
 
 1. Download and install [Unity](http://unity3d.com/get-unity) (There's a free version.)
 1. Create an empty Unity project.
-1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
+1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/spine-unity-download
 1. Import the unitypackage (you can double-click on it and Unity will open it).
 1. Go to the `Examples\Getting Started` folder in the Project panel. Open and examine those Unity Scene files in order. Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
