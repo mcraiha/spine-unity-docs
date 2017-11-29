@@ -142,6 +142,11 @@ The **Sorting Layer** and **Sorting Order** properties found in `SkeletonRendere
 
 Despite being hidden in MeshRenderer’s inspector, these properties are actually serialized/stored normally as part of `MeshRenderer` and not part of SkeletonRenderer.
 
+So while you can see them on SkeletonAnimation's Inspector, you can access them through code like this:
+```csharp
+GetComponent<MeshRenderer>().sortingOrder = 1; // Change the Order in Layer to 1. 
+```
+
 ### Sorting via Camera Distance
 If you keep all your renderers in the same sorting layer and order, they will be subject to the other sorting schemes mentioned above.
 
