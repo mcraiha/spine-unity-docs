@@ -83,8 +83,8 @@ To make sure you get the current values, you can either change Script Execution 
 
 ### SkeletonAnimation Update Callbacks
 - `SkeletonAnimation.UpdateLocal` is raised after the animations for the frame is updated and applied to the skeleton's local values. Use this if you need to read or modify bone local values. 
-- `SkeletonAnimation.UpdateWorld` is raised after the world values are calculated for all the bones in the Skeleton. If you subscribe to this event, it will call `skeleton.UpdateWorldTransform` a second time. Depending on the complexity of your skeleton or what you are doing, this may be unnecessary, or wasteful. Use this event if you need to modify bone world values directly.
 - `SkeletonAnimation.UpdateComplete` is raised after world values are calculated for all bones in the Skeleton. SkeletonAnimation makes no further operations in Update after this. Use this if you only need to read bone world values. Those values may still change if any of your scripts modify them after SkeletonAnimation's Update.
+- `SkeletonAnimation.UpdateWorld` is raised after the world values are calculated for all the bones in the Skeleton. If you subscribe to this event, it will call `skeleton.UpdateWorldTransform` a second time. Depending on the complexity of your skeleton or what you are doing, this may be unnecessary, or wasteful. Use this event if you need to modify bone local values based on bone world values. This is useful for implementing custom constraints in Unity code.
  
 
 For more information on on Unity's MonoBehaviour Lifecycle, see: https://docs.unity3d.com/Manual/ExecutionOrder.html
