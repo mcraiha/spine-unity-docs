@@ -90,8 +90,11 @@ public class RuntimeInstantiationSamples : MonoBehaviour {
 ### Can I make a specific Attachment render using a different Material?
 Yes. After being loaded, each renderable attachment stores a reference to its AtlasRegion and the Material needed to render it.  
 
-After your SkeletonData is loaded, you can change the RendererObject reference to a Material of your choosing.
+After your SkeletonData is loaded, you can change the Attachment's AtlasRegion properties to point to a different AtlasPage and Material.
 
+`(MeshAttachment/RegionAttachment)renderableAttachment`.`(AtlasPage)RendererObject`.`(AtlasPage)page`.`(Material)RendererObject`
+
+**Sample MonoBehaviour Code:**
 ```csharp
 using System.Collections;
 using System.Collections.Generic;
@@ -117,7 +120,7 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 		SetAttachmentRegionMaterial(myAttachment, customMaterial);
 	}
 
-	public static Attachment FindAttachment (SkeletonDataAsset skeletonDataAsset, string skinName, string slotName, string attachmentName) {
+	static public Attachment FindAttachment (SkeletonDataAsset skeletonDataAsset, string skinName, string slotName, string attachmentName) {
 		if (skeletonDataAsset == null) throw new System.ArgumentNullException("skeletonDataAsset");
 
 		var skeletonData = skeletonDataAsset.GetSkeletonData(true);
@@ -132,7 +135,7 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 	}
 
 	// This method will affect all skeletons using this Attachment.
-	public static void SetAttachmentRegionMaterial (Attachment attachment, Material material) {
+	static public void SetAttachmentRegionMaterial (Attachment attachment, Material material) {
 		if (attachment == null) return;
 
 		var atlasRegion = GetAttachmentAtlasRegion(attachment);
@@ -142,7 +145,7 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 		atlasRegion.page = atlasPage;
 	}
 
-	public static AtlasRegion GetAttachmentAtlasRegion (Attachment attachment) {
+	static public AtlasRegion GetAttachmentAtlasRegion (Attachment attachment) {
 		AtlasRegion atlasRegion = null;
 
 		var regionAttachment = attachment as RegionAttachment;
@@ -158,7 +161,6 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 	}
 
 }
-
 ```
 
 ### I want to change the attachment's material but not affect other Skeletons.
