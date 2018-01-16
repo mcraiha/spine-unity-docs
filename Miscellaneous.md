@@ -111,7 +111,7 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 	public SkeletonDataAsset skeletonDataAsset;
 	[SpineSlot] public string slotName;
 	[SpineSkin] public string skinName;
-	[SpineAttachment(skinField = "skinNAme", slotField = "slotName")]
+	[SpineAttachment(skinField = "skinName", slotField = "slotName")]
 	public string attachmentName;
 
 	void Start () {
@@ -134,7 +134,8 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 		return attachment;
 	}
 
-	// This method will affect all skeletons using this Attachment.
+	/// <summary>
+	/// Creates a new AtlasPage from the given Material, and uses it to modify the given Attachment's AtlasRegion. This method will affect all skeletons using this Attachment.</summary>
 	static public void SetAttachmentRegionMaterial (Attachment attachment, Material material) {
 		if (attachment == null) return;
 
@@ -145,6 +146,8 @@ public class ChangeAttachmentMaterialExample : MonoBehaviour {
 		atlasRegion.page = atlasPage;
 	}
 
+	/// <summary>
+	/// Gets a reference to an Attachment's AtlasRegion. Will return null if an attachment is not renderable.</summary>
 	static public AtlasRegion GetAttachmentAtlasRegion (Attachment attachment) {
 		AtlasRegion atlasRegion = null;
 
