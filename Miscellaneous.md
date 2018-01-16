@@ -22,7 +22,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// These are for Spine classes.
+// These namespaces are for Spine classes.
 using Spine;
 using Spine.Unity;
 
@@ -36,7 +36,7 @@ To learn the basics of Unity scripting, see the official Unity Tutorials Scripti
 For more in-depth information on using namespaces in C#, see the official Microsoft documentation: https://docs.microsoft.com/en-us/dotnet/articles/csharp/programming-guide/namespaces/using-namespaces 
  
 
-### How do I create a Spine GameObjects from code?
+### How do I create a Spine GameObject from code?
 Sometimes, it may make sense to create Spine GameObjects from code instead of creating prefabs.
 
 To do that, use the `NewSkeletonAnimationGameObject` static function. This is actually a convenience method for `SkeletonRenderer.NewSpineGameObject<SkeletonAnimation>()`. Calling the latter will return the same thing.
@@ -87,4 +87,84 @@ public class RuntimeInstantiationSamples : MonoBehaviour {
 }
 ```
 
-// TODO: Topic on http://esotericsoftware.com/forum/Sorting-Error-on-Start-8442
+### Can I make a specific Attachment render using a different Material?
+Yes. After being loaded, each renderable attachment stores a reference to its AtlasRegion and the Material needed to render it.  
+
+After your SkeletonData is loaded, you can change the RendererObject reference to a Material of your choosing.
+
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+using Spine;
+using Spine.Unity;
+using Spine.Unity.Modules.AttachmentTools;
+
+public class ChangeAttachmentMaterialExample : MonoBehaviour {
+
+	public Material customMaterial;
+
+	public SkeletonDataAsset skeletonDataAsset;
+	[SpineSlot] public string slotName;
+	[SpineSkin] public string skinName;
+	[SpineAttachment(skinField = "skinNAme", slotField = "slotName")]
+	public string attachmentName;
+
+	void Start () {
+		Attachment myAttachment = FindAttachment(skeletonDataAsset, skinName, slotName, attachmentName);
+		//if (myAttachment == null) return;
+		SetAttachmentRegionMaterial(myAttachment, customMaterial);
+	}
+
+	public static Attachment FindAttachment (SkeletonDataAsset skeletonDataAsset, string skinName, string slotName, string attachmentName) {
+		if (skeletonDataAsset == null) throw new System.ArgumentNullException("skeletonDataAsset");
+
+		var skeletonData = skeletonDataAsset.GetSkeletonData(true);
+		//if (skeletonData == null) return null;
+		var skin = skeletonData.FindSkin(skinName);
+		//if (skin == null) return null;
+		int slotIndex = skeletonData.FindSlotIndex(slotName);
+		//if (slotIndex <= 0) return null;
+		var attachment = skin.GetAttachment(slotIndex, attachmentName);
+
+		return attachment;
+	}
+
+	// This method will affect all skeletons using this Attachment.
+	public static void SetAttachmentRegionMaterial (Attachment attachment, Material material) {
+		if (attachment == null) return;
+
+		var atlasRegion = GetAttachmentAtlasRegion(attachment);
+		if (atlasRegion == null) return;
+
+		var atlasPage = material.ToSpineAtlasPage(); // extension from Spine.Unity.Modules.AttachmentTools
+		atlasRegion.page = atlasPage;
+	}
+
+	public static AtlasRegion GetAttachmentAtlasRegion (Attachment attachment) {
+		AtlasRegion atlasRegion = null;
+
+		var regionAttachment = attachment as RegionAttachment;
+		if (regionAttachment != null) {
+			atlasRegion = (AtlasRegion)regionAttachment.RendererObject;
+		} else {
+			var meshAttachment = attachment as MeshAttachment;
+			if (meshAttachment != null)
+				atlasRegion = (AtlasRegion)meshAttachment.RendererObject;
+		}
+
+		return atlasRegion;
+	}
+
+}
+
+```
+
+### I want to change the attachment's material but not affect other Skeletons.
+SkeletonAnimation.CustomSlotMaterials is a dictionary where you can assign special materials to slots.  
+By giving it a slot reference and a material reference, it will use that material whenever it needs to render that slot.
+
+```csharp
+GetComponent<SkeletonAnimation>().CustomSlotMaterials.Add((Slot)mySlot, (Material)myMaterial);
+``` 
