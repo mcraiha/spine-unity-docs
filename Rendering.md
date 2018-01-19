@@ -76,13 +76,14 @@ More materials in this array means more [draw calls](http://docs.unity3d.com/Man
 To learn more about how to arrange atlas regions in your Spine atlases, see this page: [Spine Texture Packer: Folder Structure](http://esotericsoftware.com/spine-texture-packer#Folder-structure)
 
 ### Setting Material Properties Per Instance
-Because SkeletonRenderer uses Materials based on the Material loaded when attachments were loaded, using MeshRenderer.material and changing values on MeshRenderer.material will not work.
+SkeletonRenderer uses Materials based on the Material reference stored in the Attachments at load time.
+This means using MeshRenderer.material and changing values on the Material object you get will not work.
 
-In regular Unity use, the `Renderer.material` property generates a copy just for that renderer. But that material will immediately be overwritten by SkeletonRenderer's render code.
+Normally, `Renderer.material` property generates a copy just for that renderer. But in SkeletonAnimation, that material will immediately be overwritten by SkeletonRenderer's render code.
 
 On the other hand, `Renderer.sharedMaterial` will modify the original Material. And if you spawn more than one Spine GameObject that uses that Material, the changes you apply to it will be applied to all instances.
 
-This is where Unity's [Renderer.SetPropertyBlock](http://docs.unity3d.com/ScriptReference/Renderer.SetPropertyBlock.html) is a useful method. Remember that `SkeletonRenderer`/`SkeletonAnimation` uses a `MeshRenderer`. Setting that MeshRenderer's material property block allows you to change property values *just for that renderer*.
+This is where Unity's [Renderer.SetPropertyBlock](http://docs.unity3d.com/ScriptReference/Renderer.SetPropertyBlock.html) is useful. `SkeletonRenderer`/`SkeletonAnimation` uses a `MeshRenderer`. Setting that MeshRenderer's material property block will allow you to change property values *just for that renderer* while not affecting others.
 
 **To set a specific renderer's material property values**, you need to have a `UnityEngine.MaterialPropertyBlock` object (you can create it using `new`, and cache the value in your class). Then call the renderer's `SetPropertyBlock` method with your MaterialPropertyBlock as the argument.
 
