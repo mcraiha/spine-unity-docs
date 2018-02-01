@@ -103,7 +103,7 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 ![](/img/spine-runtimes-guide/spine-unity/unitypackage-update.png)
 
 
->  - This functionality may not work correctly if your meta files were corrupted or replaced. In that case, you may have to do delete the old version of the runtime before importing the unitypackage.
+>  - This functionality may not work correctly if your meta files were corrupted or replaced. In that case, you may have to delete the old version of the runtime before importing the unitypackage.
 >  - Much older versions of the unitypackage had inconsistent meta files for spine-c#. You may have to delete the older spine-csharp folder when updating. This otherwise works correctly.
 >  - Occasionally, some files may be removed and merged. Importing the .unitypackage will not delete those files so you may have to do that yourself. Check here for announcements regarding that: http://esotericsoftware.com/forum/Noteworthy-Spine-Unity-Topics-5924 
 
@@ -133,7 +133,7 @@ The basic animation-playing code will look like this:
 ```csharp
 // Sample written for for Spine 3.6
 void Start () {
-    var skeletonAnimation = GetComponent<SkeletonAnimation>();
+	var skeletonAnimation = GetComponent<SkeletonAnimation>();
 
 	skeletonAnimation.AnimationState.SetAnimation(0, "run", true);
 	// The first parameter is the track number. You can have many animations playing on top of one another on different tracks at the same time.
