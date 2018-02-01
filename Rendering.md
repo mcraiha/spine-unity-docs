@@ -76,6 +76,9 @@ More materials in this array means more [draw calls](http://docs.unity3d.com/Man
 To learn more about how to arrange atlas regions in your Spine atlases, see this page: [Spine Texture Packer: Folder Structure](http://esotericsoftware.com/spine-texture-packer#Folder-structure)
 
 ### Setting Material Properties Per Instance
+![](/img/spine-runtimes-guide/spine-unity/materialpropertyblock-demo.gif)  
+See the "Per Instance Material Properties" sample scene in the unitypackage for example component code.  
+
 SkeletonRenderer uses Materials based on the Material reference stored in the Attachments at load time.
 This means using MeshRenderer.material and changing values on the Material object you get will not work.
 
