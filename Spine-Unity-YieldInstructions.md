@@ -47,9 +47,11 @@ If you disable the SkeletonAnimation component or its parent or ancestor GameObj
 Likewise, remember the `Update`>`Coroutine (yield null)`>`LateUpdate` order.
 This means disabling a SkeletonAnimation or its ancestor GameObjects inside a coroutine will cause the SkeletonAnimation to not execute its LateUpdate, and thus not update its mesh.
 
-This will cause the mesh to reflect the state of the skeleton right before the coroutine execution, and not after. Users have report this causing artifacts and blinking parts when you also modify the skeleton state within the Coroutine when you re-enable GameObjects.
+This will cause the mesh to reflect the state of the skeleton right before the coroutine execution, and not after. Users have reported this causing artifacts and blinking parts when you also modify the skeleton state within the Coroutine when you re-enable GameObjects.
 
-## Additional Compatibility Notes
+One solution for this may be to call `SkeletonAnimation.LateUpdate` after you make any changes within a coroutine whenever the Coroutine needs to yield on a frame where the GameObject is disabled.
+
+## Additional API Notes
 This code requires Unity 5.3 or higher.
 
 They use the `IEnumerator` interface and not the [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html) class from 5.3.
