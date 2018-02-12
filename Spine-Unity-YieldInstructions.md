@@ -2,16 +2,11 @@ Documentation last updated for Spine-Unity for Spine 3.6.x
 If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 # Spine-Unity Coroutine Yield Instructions
-This module is a set of Coroutine yield instructions. (requires Unity 5.3 or higher)
-
-They use the `IEnumerator` interface and not the [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html) class from 5.3.
-Despite this, the changes to allow this functionality were only introduced in Unity's Coroutine system in 5.3. So it is incompatible with older Unity versions.
-
+This module is a set of Coroutine yield instructions you can use to make your coroutines wait according to Spine-Unity states such as when an event fires or when an Animation completes.
 
 ## How to Use
 
-Firstly, you can find [basic tutorials](https://unity3d.com/learn/tutorials/topics/scripting/coroutines) and [documentation](https://docs.unity3d.com/Manual/Coroutines.html) on Unity coroutines to learn about them.
-
+Firstly, if you are new to Unity Coroutines, you can find [basic tutorials](https://unity3d.com/learn/tutorials/topics/scripting/coroutines) and [documentation](https://docs.unity3d.com/Manual/Coroutines.html) to learn about them.  
 Assuming you understand how to use Unity Coroutines, the following demonstrates how to use Spine-Unity's custom yield instructions.
 
 Like Unity's built-in yield instructions, these yield instructions pause execution of a coroutine until certain conditions are met. 
@@ -21,7 +16,7 @@ Like Unity's built-in yield instructions, these yield instructions pause executi
 ```csharp
 yield return new WaitForSpineEvent(skeletonAnimation.state, "spawn bullet");
 ```
-Listens for when a `Spine.AnimationState` fires a `Spine.Event` (a named user-defined event in Spine editor).
+WaitForSpineEvent listens for when a `Spine.AnimationState` fires a `Spine.Event` (a named user-defined event in Spine editor).
 
 
 ### WaitForSpineAnimationComplete
@@ -29,7 +24,7 @@ Listens for when a `Spine.AnimationState` fires a `Spine.Event` (a named user-de
 var track = skeletonAnimation.state.SetAnimation(0, "talk", false);
 yield return new WaitForSpineAnimationComplete(track);
 ```
-Listens for when a `Spine.TrackEntry` finishes playing, when it fires its `Complete` event.
+WaitForSpineAnimationComplete listens for when a `Spine.TrackEntry` finishes playing— ie. when it fires its `Complete` event.
 
 ### Tips
 - **Memory allocation optimization**: Like Unity's built-in yield instructions, instances of these spine-unity yield instructions can be reused to prevent extra memory allocations.
@@ -52,4 +47,11 @@ If you disable the SkeletonAnimation component or its parent or ancestor GameObj
 Likewise, remember the `Update`>`Coroutine (yield null)`>`LateUpdate` order.
 This means disabling a SkeletonAnimation or its ancestor GameObjects inside a coroutine will cause the SkeletonAnimation to not execute its LateUpdate, and thus not update its mesh.
 
-This will cause the mesh to reflect the state of the skeleton right before the coroutine execution, and not after. Users have report this causing artifacts and blinking parts when you also modify the skeleton state within the Coroutine when you re-enable GameObjects. 
+This will cause the mesh to reflect the state of the skeleton right before the coroutine execution, and not after. Users have report this causing artifacts and blinking parts when you also modify the skeleton state within the Coroutine when you re-enable GameObjects.
+
+## Additional Compatibility Notes
+This code requires Unity 5.3 or higher.
+
+They use the `IEnumerator` interface and not the [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html) class from 5.3.
+Despite this, the changes to allow this functionality were only introduced in Unity's Coroutine system in 5.3. So it is incompatible with older Unity versions.
+ 
