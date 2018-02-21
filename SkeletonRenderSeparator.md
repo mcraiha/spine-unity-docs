@@ -4,11 +4,13 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 # SkeletonRenderSeparator
 a Spine-Unity Rendering Module (Modules\SkeletonRenderSeparator)
 
-Normally, Spine components that render a skeleton will use a single renderer to render the whole mesh for its skeleton. This prevents you from inserting/sandwiching other UnityEngine.Renderers (SpriteRenderer, MeshRenderer, LineRenderer, ParticleSystem, etc...) between its parts arbitrarily.
+Normally, Spine components that render a skeleton will use a single renderer. It uses one renderer to renders the whole mesh for its skeleton. This prevents you from inserting/sandwiching other UnityEngine.Renderers (SpriteRenderer, MeshRenderer, LineRenderer, ParticleSystem, etc...) between its parts arbitrarily.
 
 **SkeletonRenderSeparator** allows you to split your SkeletonRenderer or SkeletonAnimation render into two or more MeshRenderers instead of only one.
 
-This means you can set their sorting layers and sorting order individually, allowing you to render things in between parts of your skeleton. This can be particles, Unity SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort. This can be useful for dynamically sorted special effects, if you need your character to ride a vehicle, or if just want them to hug a tree.
+This means you can individually set their sorting layers and sorting order, allowing you to render things in between parts of your skeleton. This can be particles, Unity SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort.
+
+This can be useful for dynamically sorted special effects, if you need your character to ride a vehicle, or if just want them to hug a tree.
 
 You can find a sample scene in the unitypackage: `Examples/Other Examples/SkeletonRenderSeparator.unity` 
 ![](/img/spine-runtimes-guide/spine-unity/skeletonrenderseparator_p1.png)
@@ -40,7 +42,7 @@ Select them in the hierarchy and set their properties in the inspector.
 ## Manipulation at runtime 
 ### Enabling and Disabling
 By default, SkeletonRenderSeparator will take over SkeletonRenderer's mesh rendering task.
-Likewise, if you disable SkeletonRenderSeparator, SkeletonRenderer should will take over rendering again.
+Likewise, if you disable SkeletonRenderSeparator, SkeletonRenderer will take over rendering again.
 
 In code, you can enable and disable this through:
 ```csharp
@@ -48,7 +50,9 @@ skeletonRenderSeparator.enabled = true; // separation is enabled.
 skeletonRenderSeparator.enabled = false; // separation is disabled.
 ```
 ### Changing the separation point
-The point of separation is not stored in SkeletonRenderSeparator. It is defined by the separator slots in SkeletonRenderer/SkeletonAnimation. If you want to manipulate this at runtime, you can call `Add`, `Remove` or `Clear` on SkeletonRenderer's `List<Slot> separatorSlots`.
+The point of separation is not stored in SkeletonRenderSeparator.  
+It is defined by the separator slots in SkeletonRenderer/SkeletonAnimation.  
+If you want to manipulate this at runtime, you can call `Add`, `Remove` or `Clear` on SkeletonRenderer's `List<Slot> separatorSlots`.
 ```csharp
 Spine.Slot mySlot = skeletonAnimation.skeleton.FindSlot("MY SPECIAL SLOT");
 skeletonAnimation.separatorSlots.Clear();
@@ -75,3 +79,4 @@ By default, it will add the necessary SkeletonPartsRenderers. (`addMinimumPartsR
 - Each SkeletonPartsRenderer processes those instructions to generate a mesh based on a range of slots.
 - The renderers are ordered according to Skeleton draw order. This is also similar to Unity's Sorting "Order in Layer" ordering. (This means the first SkeletonPartsRenderer is given the farthest attachments to render. And the last SkeletonPartsRenderer is given the nearest attachments.)
 - Each SkeletonPartsRenderer can have multiple submeshes. This makes it compatible with multi-page atlases and multi-atlas setups and selective material overrides. This also allows the number of resulting parts to be predictable (always 1 + the number of separator slots chosen).
+- The SkeletonPartsRenderer GameObjects don't have to be children of your Spine GameObject. The SkeletonRenderSeparator keeps references to the parts renderers and uses them accordingly, so you can organize them however you need to. 
