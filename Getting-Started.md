@@ -97,7 +97,7 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 - You have three options for updating your Spine-Unity runtime. An in-place update with Unity's `Import Package` dialog is the recommended option. In rare, complicated cases, you may have to delete your older version of spine-unity and then import the unitypackage.   
 
 ## In-place Update (.unitypackage)
-1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/files/runtimes/unity/spine-unity.unitypackage.
+1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/spine-unity-download
 2. Import the .unitypackage into your project by double-clicking on the unitypackage file or dragging it into Unity editor.
 3. The Import dialog will show which files are new or updated and will update them regardless of where you moved them in your project since you last imported.  
 ![](/img/spine-runtimes-guide/spine-unity/unitypackage-update.png)
