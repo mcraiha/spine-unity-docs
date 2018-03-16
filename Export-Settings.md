@@ -1,7 +1,7 @@
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 May 15)
+Documentation last updated for Spine-Unity for Spine 3.6.x (2018 Mar 16)
 If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 ----------
@@ -10,13 +10,13 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 ### Export Settings for Spine-Unity ###
 ![](/img/spine-runtimes-guide/spine-unity/spine-unity-export-settings.png)  
 Spine-Unity is capable of loading both Json and Binary files.  
-**Json** is best during development. While we always recommend freezing your Spine editor version to the specific runtime version your game is using in development, we recommend exporting with json during development as it is more resilient to minor updates in runtime versions.
-
+- **Json** is best during development. While we always recommend freezing your Spine editor version to the specific runtime version your game is using in development, we recommend exporting with json during development as it is more resilient to minor updates in runtime versions.  
 Json also makes it easier to debug, test and handle errors.  
-**Nonessential data** allows you to more fully rehydrate a Spine project from a json export in cases of data loss.
-**Pretty Print** adds whitespace (spaces, tabs and line endings) to the json to make the text more humanly readable and cleaner to track by version control (such as git). This makes it easy to debug problems in the export and make manual changes for testing, and keep track of changes.
 
-**Binary** is best for performance and release-testing and when you are closer to release. This is the point in your development where it is usually not a good idea to update any more of its plugins and extensions (such as Spine-Unity). Binary export provides faster loading times and smaller skeleton data sizes.
+- **Nonessential data** allows you to more fully rehydrate a Spine project from a json export in cases of data loss.
+- **Pretty Print** adds whitespace (spaces, tabs and line endings) to the json to make the text more humanly readable and cleaner to track by version control (such as git). This makes it easy to debug problems in the export and make manual changes for testing, and keep track of changes.
+
+- **Binary** is best for performance and release-testing and when you are closer to release. This is the point in your development where it is usually not a good idea to update any more of its plugins and extensions (such as Spine-Unity). Binary export allows faster loading times on the runtime side, and smaller skeleton data sizes.
   
 
 
