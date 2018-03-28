@@ -72,7 +72,7 @@ public class SkeletonHandlingSample : MonoBehaviour {
 ```
 
 ## Lifecycle
-![](/img/spine-runtimes-guide/spine-unity/spine-unity-skeletonanimation-updates.png)
+![](/img/spine-runtimes-guide/spine-unity/spine-unity-skeletonanimation-updates.png)  
 In the SkeletonAnimation component, AnimationState holds the state of all currently playing and queued animations.
 Every `Update`, the AnimationState is updated so that the animations progress forward in time. And then the new frame is applied to the Skeleton as a new pose.
 
