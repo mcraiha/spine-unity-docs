@@ -5,7 +5,7 @@ This contains intermediate-level documentation. If you're just starting out, try
 Documentation last updated for Spine-Unity for Spine 3.6.x
 If this documentation contains mistakes or doesn't cover some questions, please feel to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
-// TODO: gif of item swaps or character parts swaps. 
+![](/img/spine-runtimes-guide/spine-unity/equip_sample.gif) 
 
 # Equips, Customization, and Mix-and-Match
 Spine has a **Skins** feature, which allows you to create image variations of a certain skeleton or character.
