@@ -13,6 +13,7 @@ Most of these documents are still works in progress.
 - [Animation](https://github.com/pharan/spine-unity-docs/blob/master/Animation.md)
 - [Events and AnimationState Callbacks](https://github.com/pharan/spine-unity-docs/blob/master/Events.md)
 - [Rendering](https://github.com/pharan/spine-unity-docs/blob/master/Rendering.md)
+- [Handling the Skeleton](https://github.com/pharan/spine-unity-docs/blob/master/Handling-the-Skeleton.md)
 
 ## Specific Modules
 - [Spine-Unity YieldInstructions](https://github.com/pharan/spine-unity-docs/blob/master/Spine-Unity-YieldInstructions.md)

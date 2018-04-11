@@ -56,4 +56,6 @@ For **SkeletonGraphic**, steps are slightly different.
 ## Additional Notes
 In Unity, Slot colors are pushed to the Unity mesh via its vertex color buffer. UnityEngine's Mesh type doesn't allow arbitrary extra buffers, so the extra black tint color data is pushed via the UV0 and UV1 buffers.
 
-The effect is that meshes that use per-slot black tint also need more memory for the extra UV buffers, and also need to have those extra buffers be updated every frame. This may have a noticeable performance cost when applied to large, complex skeletons or large numbers of skeletons. 
+The effect is that meshes that use per-slot black tint also need more memory for the extra UV buffers, and also need to have those extra buffers be updated every frame. This may have a noticeable performance cost when applied to large, complex skeletons or large numbers of skeletons.
+
+When previewing Materials in the inspector that use the `Spine/Skeleton Tint Black` shader or similar shaders that use UV0, UV1 as an extra tint, they will show up as rainbow-colored. This is because Unity's built-in preview meshes (quad, sphere, box, cylinder) do not contain UV0, and UV1 data.
