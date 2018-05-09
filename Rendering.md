@@ -96,7 +96,7 @@ mpb.SetColor("_FillColor", Color.red); // "_FillColor" is a named property on a 
 GetComponent<MeshRenderer>().SetPropertyBlock(mpb);
 ```
 
-Keep in mind that even if a MaterialPropertyBlock is a class/reference type, **you will need to pass it to SetPropertyBlock every time you make changes to it** in order to see the changes applied to the renderer.
+When using MaterialPropertyBlock, keep in mind that while it is a class/reference type, **you will need to pass it to SetPropertyBlock every time you make changes to it** in order to see the changes applied to the renderer.
 
 **To remove the renderer's material property values**, you need to clear the MaterialPropertyBlock and then call SetPropertyBlock using the empty MaterialPropertyBlock.
 ```csharp
@@ -105,7 +105,23 @@ mpb.Clear(); // Clear the property values from the MaterialPropertyBlock
 GetComponent<Renderer>().SetPropertyBlock(mpb); // set the renderer property block using the empty MaterialPropertyBlock.
 ```
 
-//TODO: Describe CustomMaterialOverride and CustomSlotMaterial lists.
+#### CustomMaterialOverride and CustomSlotMaterial
+SkeletonRenderer allows you to override Materials on specific slots or override the resulting materials.
+
+To replace an an original material with your new material at runtime for that instance of SkeletonRenderer, you would use SkeletonRenderer.CustomMaterialOverride. For example:
+```
+skeletonAnimation.CustomMaterialOverride[originalMaterial] = newMaterial; // to enable the replacement.
+skeletonAnimation.CustomMaterialOverride.Remove(originalMaterial); // to disable that replacement.
+``` 
+With this code, when the SkeletonAnimation would have used originalMaterial, it would use newMaterial instead.
+
+
+To use a replacement Material just on a specific slot, you would use SkeletonRenderer.CustomSlotMaterial. For example:
+```
+skeletonAnimation.CustomSlotMaterial[slot] = newMaterial; // to enable the replacement.
+skeletonAnimation.CustomSlotMaterial.Remove(slot); // to disable that replacement.
+```
+
 
 > **Notes on optimization**
 > - using Renderer.SetPropertyBlock allows renderers with the same material to be batched correctly even if their material properties are changed by different MaterialPropertyBlocks.
