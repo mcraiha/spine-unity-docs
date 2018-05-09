@@ -76,7 +76,7 @@ public class SkeletonHandlingSample : MonoBehaviour {
 In the SkeletonAnimation component, AnimationState holds the state of all currently playing and queued animations.
 Every `Update`, the AnimationState is updated so that the animations progress forward in time. And then the new frame is applied to the Skeleton as a new pose.
 
-Your scripts may run before or after SkeletonAnimation's Update.  
+Your scripts may run before or after SkeletonAnimation's `Update`.  
 If your code takes Skeleton or bone values before SkeletonAnimation's Update, your code will read values from the previous frame instead of the current one.
 
 To make sure you get the current values, you can either change Script Execution Order to run AFTER SkeletonAnimation's Update or use one of SkeletonAnimation's various event callbacks.
