@@ -1,6 +1,7 @@
 # Spine Unity Documentation
 Documentation for Spine-Unity users.  
-Some of these documents may still be works in progress.
+
+Some of these documents may still be works in progress. Don't hesistate to leave a comment or open an issue if some information you are looking for is missing.
 
 ----------
 
