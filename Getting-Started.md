@@ -12,7 +12,7 @@ Adding Spine-Unity into your Unity project:
 1. Create an empty Unity project.
 1. Download the latest spine-unity.unitypackage: http://esotericsoftware.com/spine-unity-download
 1. Import the unitypackage (you can double-click on it and Unity will open it).
-1. Go to the `Examples\Getting Started` folder in the Project panel. Open and examine those Unity Scene files in order. Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
+1. Go to the `Spine Examples\Getting Started` folder in the Project panel. Open and examine those Unity Scene files in order. Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
 > The **Spine-Unity** runtime provides functionality to load, manipulate and render [Spine](http://esotericsoftware.com) skeletal animation data in [Unity](http://unity3d.com/) engine.
 >  
@@ -69,10 +69,11 @@ Specifically:
 		- a **_SkeletonData** asset that holds a reference to the **json** and the **_Atlas** asset.
 4. Drag the **_SkeletonData** asset into the Scene View or the Hierarchy panel and choose `Instantiate (SkeletonAnimation)`.  
 
-5. See the `Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
+5. See the `Spine Examples\Getting Started` sample scenes to learn more about Spine GameObjects.
 
 > - **MANUAL ASSET SETUP** For advanced cases, you can create these three files yourself. The arrangement is noted in the bullet points of Step 3.
-> - **CHANGING SHADERS** Using Spine-Unity's default shaders (`Spine/Skeleton` or `Spine/SkeletonLit`) requires textures that were saved with **Premultiplied Alpha**. This is the default setting in Spine's Texture Packer. Choosing other shaders may yield unexpected results and may require you to re-export the texture without premultiplied alpha. For more information on premultiply alpha, [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
+> - **CHANGING SHADERS** Since Spine-Unity for Spine 3.7: Spine-Unity's default shaders render skeleton's textures using premultiply alpha blending. By default, this shader expects a texture packed with Premultiply Alpha enabled. If your textures were not packed with premultiply alpha enabled, check the "Straight Alpha Texture" checkbox on your material settings. [check this forum topic](http://esotericsoftware.com/forum/Premultiply-Alpha-3132).
+>   - If you are using any other shader, make sure your texture packer settings match accordingly.
 > - Older versions of Spine-Unity did not do drag-and-drop instantiation. If you have an older version, right-click on the **_SkeletonData** asset and choose `Spine > Instantiate (SkeletonAnimation)`. This will instantiate a new Spine GameObject.
 > - Due to a limitation in Unity Editor APIs, dragging the asset into an empty hierarchy panel will not work. In this case, just drag the asset into Scene View.
 > - **TEXTURE SIZES.** Unity scales overly large images down by default. The Spine-Unity runtime automatically sets atlas maximum sizes to 2048x2048. If your textures are larger than this, it will cause atlas coordinates to be incorrect. Make sure the import settings are set appropriately, or decrease the maximum page width and height in your Spine Texture Packer settings.
@@ -93,7 +94,7 @@ If you want to use Skeleton Binary files, choose Binary instead of JSON on the u
 Major Spine editor updates require that you update your Spine-Unity runtime so it reads and interprets exported Spine data correctly.
 
 - As with Unity updates, it is always recommended that you back up your whole Unity project before performing an update.
-- Always check with your Lead Programmer and Technical Artist before updating your Spine runtime. Spine runtimes are source-available and designed to be user-modifiable based on varying project needs. Your project's spine runtime may have been modified by your programmer. In this case, updating to the latest runtime also requires reapplying those modifications to the new version of the runtime.
+- Always check with your Lead Programmer and Technical Artist, and art/animation team before updating your Spine runtime. Spine runtimes are source-available and designed to be user-modifiable based on varying project needs. Your project's spine runtime may have been modified by your programmer. In this case, updating to the latest runtime also requires reapplying those modifications to the new version of the runtime.
 - You have three options for updating your Spine-Unity runtime. An in-place update with Unity's `Import Package` dialog is the recommended option. In rare, complicated cases, you may have to delete your older version of spine-unity and then import the unitypackage.   
 
 ## In-place Update (.unitypackage)
@@ -119,19 +120,17 @@ Major Spine editor updates require that you update your Spine-Unity runtime so i
 1. Look for the correct folders and replace them in your project.
 	- These are the following folders you need
 		- `spine-csharp/src` (this is named "spine-csharp" in the unitypackage)
-		- `spine-unity/Assets/Gizmos`.
-		- `spine-unity/Assets/spine-unity`
-		- `spine-unity/Assets/Examples`(optional)
+		- `spine-unity/Assets/Spine`
+		- `spine-unity/Assets/Spine Examples`(optional)
+	- Place the contents of `spine-csharp/src` into `Assets/Spine/Runtime/spine-csharp`. You may delete the text file named "add spine-csharp here.txt".
 
-> - `Gizmos` is a [special folder](http://docs.unity3d.com/Manual/SpecialFolders.html) in Unity. It needs to be at the root of your assets folder to function correctly. (ie. `Assets/Gizmos`)
-> - `spine-csharp` and `spine-unity` can be placed in any subfolder you want.
 > - Sometimes, some files get moved around and you may get duplicate files. Unity will warn you when this happens. Make sure you delete the older versions whenever this happens.
 > - Some files may have been removed and merged since the last version you used. Just copying the whole folder will not delete them. Check here for announcements regarding that: http://esotericsoftware.com/spine-unity-download/
 
 ## Sample Code
 The basic animation-playing code will look like this:
 ```csharp
-// Sample written for for Spine 3.6
+// Sample written for for Spine 3.7
 void Start () {
 	var skeletonAnimation = GetComponent<SkeletonAnimation>();
 
@@ -143,7 +142,7 @@ void Start () {
 ```
 
 For more sample code, the Spine-Unity unitypackage comes with a set of sample scenes and scripts. 
-Once you have imported the latest unitypackage, find the `Examples\Getting Started` folder in the Project panel.
+Once you have imported the latest unitypackage, find the `Spine Examples\Getting Started` folder in the Project panel.
 
 Open and examine those Unity Scene files in order.
 Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
