@@ -1,8 +1,5 @@
 # Spine Unity Documentation
 Documentation for Spine-Unity users.  
-
-Some of these documents may still be works in progress. Don't hesistate to leave a comment or open an issue if some information you are looking for is missing.
-
 ----------
 
 ## For Beginners
@@ -26,3 +23,7 @@ Some of these documents may still be works in progress. Don't hesistate to leave
 
 ## Advanced Users
 See the [Official Spine Runtime Documentation](http://esotericsoftware.com/spine-using-runtimes)
+
+---
+
+Some of these documents may still be works in progress. Don't hesistate to leave a comment or open an issue if some information you are looking for is missing.
