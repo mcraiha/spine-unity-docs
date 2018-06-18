@@ -244,12 +244,39 @@ public class MixAndMatchExample : MonoBehaviour {
 > See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
 
 ### Runtime Repacking
-// TODO: Write this section.
+A Skin is a collection of Attachments, and the slots and names mapped to them. The Repacking utility creates a clone of the skin and all the attachments inside it that map to a new single repacked texture.
+
+A Material is required for the utility method to generate a new Material used to render the new attachments.
+
+The method will also output references to the new material and new texture it generated. 
+
+```
+Skin runtimeSkin = new Skin("runtime skin");
+// add some attachments to runtime skin here..
+Skin repackedSkin = runtimeSkin.GetRepackedSkin("Repacked skin", materialTemplate, out runtimeMaterial, out runtimeAtlas);
+
+```
+
+Repacking works as follows:
+- Collect all of the Attachments in a skin, getting their texture sources and coordinates.
+- Use Unity's runtime texture packer to repack those into a new single texture. We can call this the "repacked texture"
+- Make clones of all the original attachments and mapping them onto the new texture.
+- Return a new Skin populated by those clones that use the repacked texture.
 
 **Requirements**  
 If you plan to use these Sprites with Premultiply Alpha (PMA) shaders or with runtime repacking (see the next section), then you will need to use "Read/Write Enabled".  
 
 > See the **Mix and Match** example scene and the **MixAndMatch.cs** sample script that comes with the Spine-Unity unitypackage for implementation sample.
+
+**Caching behavior**
+The repacking process generates intermediary textures that are pulled from original textures, which are cached to prevent runaway texture allocations with multiple subsequent repack operations. At the point in your code's execution when you expect your execution to no longer be followed by multiple repack operations, you can clear the cache by calling AtlasTools.
+
+```csharp
+// multiple repacks.
+//...
+AtlasUtilities.ClearCache();
+``` 
+
 
 ## Miscellaneous
 

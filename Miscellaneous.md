@@ -2,7 +2,8 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 May 15)
+Documentation last updated for Spine-Unity for Spine 3.7.x
+
 If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 # Miscellaneous Topics and FAQ
@@ -171,5 +172,23 @@ SkeletonAnimation.CustomSlotMaterials is a dictionary where you can assign speci
 By giving it a slot reference and a material reference, it will use that material whenever it needs to render that slot.
 
 ```csharp
-GetComponent<SkeletonAnimation>().CustomSlotMaterials.Add((Slot)mySlot, (Material)myMaterial);
-``` 
+GetComponent<SkeletonAnimation>().CustomSlotMaterials[(Slot)mySlot] = (Material)myMaterial;
+```
+
+To remove this replacement, you can use the dictionary's Remove method.
+```csharp
+GetComponent<SkeletonAnimation>().CustomSlotMaterials.Remove((Slot)mySlot);
+```
+
+### I want to change the materials used to render this one Skeleton. But I don't want to affect other Skeletons.
+`SkeletonAnimation.CustomMaterialOverride` is a dictionary where you can allow your renderer to use a new Material instead of the original one that would normally be used.
+You give it both a reference to the original Material, and the Material that you want to replace it.
+
+```csharp
+GetComponent<SkeletonAnimation>().CustomMaterialOverride[originalMaterial] = newMaterial;
+```
+
+To remove this replacement, you can use the Remove method.
+```csharp
+GetComponent<SkeletonAnimation>().CustomMaterialOverride.Remove(originalMaterial);
+```
