@@ -3,7 +3,7 @@ The information here may change over time as the implementations within Spine-Un
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
 Documentation last updated for Spine-Unity for Spine 3.6.x
-If this documentation contains mistakes or doesn't cover some questions, please feel to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+If this documentation contains mistakes or doesn't cover some questions, please feel free to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 ![](/img/spine-runtimes-guide/spine-unity/equip_sample.gif) 
 
@@ -11,20 +11,21 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 Spine has a **Skins** feature, which allows you to create image variations of a certain skeleton or character.
 For example, Spine comes with an example skeleton with two skins. It allows you to use it as a female goblin or a male goblin. 
 
-However, sometimes, you need to vary the skeleton part by part, rather than the whole thing at the same time.
+However, sometimes, you need to customize the skeleton part by part, rather than the whole thing at once.
 This is what you would need for an *equip system*, or a *character customization system*. 
 
-While Skins in the editor don't allow you to preview this yet, this is doable with Skins in Spine-Unity.
+While Skins in the editor don't allow you to preview this yet (Spine 3.6), this is doable with Skins in Spine-Unity.
 
 ## Can Skins really help me?
 The things you put in slots, such as *images* and *meshes*, are called **Attachments**.
 A **Skin** is just a container for Attachments; and you can retrieve specific attachments by name & slot index (`string` and `int`).
 
 For example, this is a representation of a "Red character" skin.  
-```
+
+
 Skin name: Red character
 
-| SLOT#      NAME                ATTACHMENT OBJECT           |            
+| SLOT#  |   NAME            |   ATTACHMENT OBJECT           |            
 |--------|-------------------|-------------------------------|
 |  4     |   "left hand"     |   red left glove              |
 |  12    |   "right hand"    |   red right glove             |
@@ -32,8 +33,6 @@ Skin name: Red character
 |  1     |   "cape"          |   red cape mesh               |
 |  ...   |   ...             |   ...                         |
 |  ...   |   ...             |   ...                         |
- ------------------------------------------------------------
-```
 
 At runtime and during animations, Spine.Skeleton uses the active and base skins as the source for what Attachments to use.
 The values in the skin are used whenever an animation has attachment keys, or when you call `Skeleton.SetToSetupPose()`, `Slot.SetToSetupPose()` or `Skeleton.GetAttachment(...)`.
@@ -45,17 +44,15 @@ This Skin can then be used at runtime, is part of SkeletonData, and is shared ac
 ![](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png)  
 above: Setup in Spine
 
-```
 Skin name: goblin
-| SLOT#    NAME                ATTACHMENT OBJECT           |            
+
+| SLOT# |  NAME            |   ATTACHMENT OBJECT           |            
 |-------|------------------|-------------------------------|
 |  21   |  "left shoulder" |   goblin/left-shoulder        |
 |  20   |  "left arm"      |   goblin/left-arm             |
 |  19   |  "left hand"     |   goblin/left-hand            |
 |  ...  |  ...             |   ...                         |
-|  ...  |  ...             |   ...                         |
- ----------------------------------------------------------
-```  
+|  ...  |  ...             |   ...                         |  
 above: Data at runtime
 
 ### Runtime Skins
@@ -78,8 +75,6 @@ But where do you get Attachments to add to your custom skin?
 That's up to you, and depending on what works best for your game's setup.
 
 Runtime skins work best when your skeleton is animated with a template/dummy skin in Spine. This helps avoid problems with "empty" slots and sharing skins between different skeletons. In Spine, make a Skin called "template" and create Skin Placeholders for all the attachments that you want to be able to customize. Use those Skin Placeholders whenever you animate attachments and attachment swaps.   
-
-//TODO: Update sample code or sample project/unitypackage. 
 
 #### Option 1: Add variations in Spine (Prepacked variants)
 See the sample project named "MixAndMatch-ESS-Prepacked.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/MixAndMatch-ESS.zip).
