@@ -99,7 +99,7 @@ public class MySpineEventHandler : MonoBehaviour {
 
 	void HandleEvent (TrackEntry trackEntry, Spine.Event e) {
 		// Play some sound if the event named "footstep" fired.
-		if (e.Data.Name == footstepEventName) {			
+		if (e.Data.Name == footstepEventName) {
 			Debug.Log("Play a footstep sound!");
 		}
 	}

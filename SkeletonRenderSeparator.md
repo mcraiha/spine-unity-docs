@@ -1,29 +1,31 @@
-Documentation last updated for Spine-Unity for Spine 3.5.x
-If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+Documentation last updated for Spine-Unity for Spine 3.6.x
+If this documentation contains mistakes or doesn't cover some questions, please feel free to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 # SkeletonRenderSeparator
 a Spine-Unity Rendering Module (Modules\SkeletonRenderSeparator)
 
-Normally, Spine components that render a skeleton will use a single renderer. It uses one renderer to renders the whole mesh for its skeleton. This prevents you from inserting/sandwiching other UnityEngine.Renderers (SpriteRenderer, MeshRenderer, LineRenderer, ParticleSystem, etc...) between its parts arbitrarily.
+Normally, Spine components that render a skeleton will use a single renderer. It uses one renderer to render the whole mesh for its skeleton. This setup unfortunately prevents you from inserting/sandwiching other UnityEngine.Renderers (SpriteRenderer, MeshRenderer, LineRenderer, ParticleSystem, etc...) between its parts arbitrarily.
 
-**SkeletonRenderSeparator** allows you to split your SkeletonRenderer or SkeletonAnimation render into two or more MeshRenderers instead of only one.
+The **SkeletonRenderSeparator** component allows you to split your SkeletonRenderer or SkeletonAnimation render into two or more MeshRenderers instead of only one.
 
-This means you can individually set their sorting layers and sorting order, allowing you to render things in between parts of your skeleton. This can be particles, Unity SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort.
+This means you can individually set their sorting layers and sorting order, allowing you to render things in between parts of your skeleton. This can be particles, SpriteRenderers, parts of your level, other skeletons, anything that uses a UnityEngine.Renderer that you can sort.
 
 This can be useful for dynamically sorted special effects, if you need your character to ride a vehicle, or if just want them to hug a tree.
 
-You can find a sample scene in the unitypackage: `Examples/Other Examples/SkeletonRenderSeparator.unity` 
+You can find a sample scene in the unitypackage: `Spine Examples/Other Examples/SkeletonRenderSeparator.unity` 
 ![](/img/spine-runtimes-guide/spine-unity/skeletonrenderseparator_p1.png)
 
 ## How to Use
 ### Step 0
 Make sure you know your Skeleton's draw order. Find out which slot you want use to separate your Skeleton's render into parts. For convenience, label this slot clearly before exporting your Skeleton.
 
-![](/img/spine-runtimes-guide/spine-unity/skeletonrenderseparator_steps.gif)
+!["Fig 1. Steps 1 to 3"](/img/spine-runtimes-guide/spine-unity/skeletonrenderseparator_steps.gif)
 Fig 1. Steps 1 to 3
 
 ### Step 1: Add the SkeletonRenderSeparator component
-Select your Spine GameObject and right-click on your `SkeletonAnimation` or `SkeletonRenderer` and choose "Add Skeleton Render Separator". This will add the SkeletonRenderSeparator component to the same GameObject.
+Select your Spine GameObject.  
+Right-click on your `SkeletonAnimation` or `SkeletonRenderer` in the inspector.  
+Choose "Add Skeleton Render Separator". This will add the SkeletonRenderSeparator component to the same GameObject.
 
 ### Step 2: Assign Separators
 The inspector will warn you if you have no separators.
@@ -31,7 +33,8 @@ Set the separator slots by choosing the correct slot(s) under "Separator Slot Na
 - This field actually directly manipulates the field serialized in your SkeletonRenderer/SkeletonAnimation.
 
 ### Step 3: Make sure you have enough Parts Renderers 
-The inspector will warn you if you don't have enough renderers to render the parts. Click on the "Add the missing renderers (n)" button if this is the case. This will create GameObjects with SkeletonPartsRenderers on them, and add them to SkeletonRenderSeparator's partsRenderers list.
+The inspector will warn you if you don't have enough renderers to render the parts.  
+Click on the "Add the missing renderers (n)" button if this is the case. This will create GameObjects with SkeletonPartsRenderers on them, and add them to SkeletonRenderSeparator's partsRenderers list.
 
 > Note: The SkeletonRenderSeparator only detects the currently required number of parts renderers. If at any point at runtime during animations, the render requires more because you changed the draw order, you may need to add one or two extra manually by clicking on `Add Parts Renderer`.
 
@@ -54,16 +57,16 @@ The point of separation is not stored in SkeletonRenderSeparator.
 It is defined by the separator slots in SkeletonRenderer/SkeletonAnimation.  
 If you want to manipulate this at runtime, you can call `Add`, `Remove` or `Clear` on SkeletonRenderer's `List<Slot> separatorSlots`.
 ```csharp
-Spine.Slot mySlot = skeletonAnimation.skeleton.FindSlot("MY SPECIAL SLOT");
-skeletonAnimation.separatorSlots.Clear();
-skeletonAnimation.separatorSlots.Add(mySlot);
+Spine.Slot mySlot = skeletonAnimation.Skeleton.FindSlot("MY SPECIAL SLOT");
+skeletonAnimation.SeparatorSlots.Clear();
+skeletonAnimation.SeparatorSlots.Add(mySlot);
 ```
 
 ### Adding a SkeletonRenderSeparator at runtime
 You can use the `SkeletonRenderSeparator.AddToSkeletonRenderer` static method to add and initialize your SkeletonRenderSeparator.
 ```csharp
 SkeletonAnimation skeletonAnimation = GetComponent<SkeletonAnimation>();
-skeletonAnimation.separatorSlots.Add(mySlot); // see above
+skeletonAnimation.SeparatorSlots.Add(mySlot); // see above
 
 // Add the SkeletonRenderSeparator.
 SkeletonRenderSeparator skeletonRenderSeparator = SkeletonRenderSeparator.AddToSkeletonRenderer(skeletonAnimation);
