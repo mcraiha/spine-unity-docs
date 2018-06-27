@@ -2,31 +2,45 @@
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
 
-Documentation last updated for Spine-Unity for Spine 3.6.x
-If this documentation contains mistakes or doesn't cover some questions, please feel to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+Documentation last updated for Spine-Unity for Spine 3.6.x and 3.7.x
+If this documentation contains mistakes or doesn't cover some questions, please feel free to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
-# Attachments and Spine-Unity AttachmentTools
-// TODO: Q: What are attachments? How do they work?
-// TODO: Q: What do I need to understand so I can understand mix-and-match and use AttachmentTools with confidence?
+> Document goals:
+> Q: What are attachments? How do they work?
+> Q: What do I need to understand so I can understand and manipulate Skins and Attachments (using Mix and Match workflow and AttachmentTools) with confidence?
+
+# Attachments and Spine-Unity AttachmentTools  
 
 ### What are attachments?
-In the Spine runtimes, **Attachments** are objects that can be placed in a slot to follow a bone; they generally follow a bone's transform (rotation, position, scale).
+// TODO: Image that shows the different kinds of attachments.
 
-For the visible parts of a skeleton, there are 2 renderable attachment types:
+In Spine, Attachments are primarily the visible parts of your skeleton: images and meshes. But they also include things like bounding boxes, paths and points. They are the things that you "attach" to bones by putting them in slots. This allows the visible parts of your skeleton to move according to bones.
+
+//
+// TODO:
+// Image that shows attachments in a slot on a bone.
+// Also show: multiple attachments in a slot, with one active.
+// Also show: multiple slots on a bone.
+//
+
+In the Spine runtimes, **Attachments** are objects that can be placed in a Slot to follow a Bone; They follow a Bone's transform (rotation, position, scale).
+
+There are two renderable attachment types:
 1. **RegionAttachments**, rectangular image attachments that map to a rectangular region in an atlas, or any backing texture.
-2. **MeshAttachments**, attachments that map their image/texture area to a deformable mesh.
+2. **MeshAttachments**, attachments that map their texture area to a deformable mesh.
 
-> - Other non-rendered Attachment types exist such as **BoundingBoxAttachment**, **PathAttachment** and **PointAttachment**. They will be documented separately.
-> - While **Skin Placeholders** exist in the Spine Editor, they are not actually Attachment objects at runtime. Skin Placeholders actually only correspond in the runtime to the key strings stored in Skin dictionaries. See the [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Skins documentation](http://esotericsoftware.com/spine-runtime-skins) for more information.
+> - Other Attachment types exist such as **BoundingBoxAttachment**, **PathAttachment** and **PointAttachment**. These are typically not rendered in-game. They will be documented separately.
 
 ### Where do I find Attachments?
-Attachments loaded from a skeleton data file are deserialized and stored into Skin objects.
-You can find these loaded skins and loaded Attachments in the SkeletonData. `Skeleton.Data.FindSkin(string)`
+In the process of loading skeleton data from skeleton json or binary, all Attachments are stored in Skin objects.  
+At runtime, you can find these loaded skins and Attachments in the SkeletonData: `Skeleton.Data.FindSkin(string)`
 
-Even if you don't overtly define a Skin in Spine Editor, each skeleton data has a skin named "default". If you didn't put attachments in Skin Placeholders, they go into the **default skin**. `Skeleton.Data.DefaultSkin`
+In Spine, every skeleton has a "default skin". The default skin is where all the the attachments that weren't explicitly assigned to a skin are stored. These are the attachments that were not placed in Skin Placeholders in Spine.
+At runtime, you can find the default skin in the skeleton data. `Skeleton.Data.DefaultSkin`
 
+Attachments in a Skin are stored and mapped to a Skin key: comprised of  an `int` slot index, and a `string` (the Skin Placeholder name).
 To get an Attachment from a skin, you need to know its skin key name and the index of the slot it belongs to.
-```
+```csharp
 SkeletonData skeletonData = skeleton.Data;
 //Skin defaultSkin = skeletonData.DefaultSkin;
 Skin foundSkin = skeletonData.FindSkin("goblin");
@@ -35,17 +49,44 @@ string keyName = "closed hand";
 Attachment closedHandAttachment = foundSkin.GetAttachment(slotIndex, keyName);
 ```
 
+// TODO: Image pointing to skin placeholders, and attachment names as the skin key.
 For attachments you placed in Skin Placeholders, the name of the Skin Placeholder is the skin key name.
 But for the default skin, the skin key name is the name of the attachment itself.
 
-See the [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Skins documentation](http://esotericsoftware.com/spine-runtime-skins) for more information.
-   
+See also [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Skins documentation](http://esotericsoftware.com/spine-runtime-skins) for more information.
 
-// TODO: RegionAttachment and MeshAttachment
-// TODO: Link to article about PMA. For now: http://esotericsoftware.com/forum/Premultiply-Alpha-3132
+### Skins and Attachments are shared by default
+// TODO: Image showing a central SkeletonData, with Attachment and Skin, with several skeleton instances connected to it. Probably goblin and goblin girl.
+Skins and Attachments are loaded as SkeletonData-level objects: They are stored as part of the SkeletonData, which are shared across all skeletons that use them. Multiple of the same skeleton can have independent states: poses, active attachments, mesh deform states and chosen skins; but they will use the same SkeletonData, Skin and Attachment objects by default.
+
+Because of this, modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
+
+### RegionAttachment
+// TODO: RegionAttachment icon.
+A `RegionAttachment` is a basic, rectangular renderable attachment mapped to a texture region.
+
+In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject") property.
+It also contains information about the region of the texture it's supposed to render through various properties.
+
+You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
+
+### MeshAttachment
+// TODO: MeshAttachment icon.
+A `MeshAttachment` is as a renderable attachment with a deformable set of vertices (see VertexAttachment), as well as triangle indices to define a renderable mesh, mapped to a texture region.
+
+// TODO: A note about MeshAttachment being weighted or unweighted, and how the interpretation of the data differs accordingly.
+
+In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject") property.
+
+You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
+
+### RendererObject
+Attachment.RendererObject in Spine-Unity.
+
+// TODO: Explain how Spine-Unity's system uses RendererObject is an eventual map to UnityEngine.Material.
+
 
 # AttachmentTools
-
 AttachmentTools is a collection of utility methods and static classes that help manipulate Spine Attachment objects for Spine-Unity.
 
 These are contained in the namespace:
@@ -135,3 +176,5 @@ If the attachment is not renderable, the method will return null.
 
 ### renderableAttachment.SetRegion
 Sets the AtlasRegion of a renderable attachment. This is useful when pulling AtlasRegions from other atlases, or creating new AtlasRegions from other sources.
+
+// TODO: Link to article about PMA. For now: http://esotericsoftware.com/forum/Premultiply-Alpha-3132
