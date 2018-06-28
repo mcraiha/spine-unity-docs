@@ -64,7 +64,7 @@ Because of this, modifying the skins and attachments in the SkeletonData directl
 ![](/img/spine-runtimes-guide/spine-unity/attachmentregion-whitebg.png)  
 A `RegionAttachment` is a basic, rectangular renderable attachment mapped to a texture region.
 
-In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject") property.
+In Spine-Unity, it maps to a Material, via its [RendererObject](#RendererObject) property.
 It also contains information about the region of the texture it's supposed to render through various properties.
 
 You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
@@ -73,9 +73,14 @@ You can change its color via its `R`, `G`, `B` and `A` properties, or through th
 ![](/img/spine-runtimes-guide/spine-unity/attachmentmesh-whitebg.png)  
 A `MeshAttachment` is as a renderable attachment with a deformable set of vertices (see VertexAttachment), as well as triangle indices to define a renderable mesh, mapped to a texture region.
 
-// TODO: A note about MeshAttachment being weighted or unweighted, and how the interpretation of the data differs accordingly.
+Some MeshAttachments have bone weights applied to its vertices. The interpretation of its internal data can change based on whether it is weighted or not. Spine-Unity provides an extension method to determine if it is weighted.
 
-In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject") property.
+```csharp
+bool isWeighted = meshAttachment.IsWeighted();
+```
+
+In Spine-Unity, it maps to a Material, via its [RendererObject](#RendererObject) property.
+It also contains information about the region of the texture it's supposed to render through various properties.
 
 You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
 
