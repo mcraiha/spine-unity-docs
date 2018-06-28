@@ -61,7 +61,7 @@ Skins and Attachments are loaded as SkeletonData-level objects: They are stored 
 Because of this, modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
 
 ### RegionAttachment
-// TODO: RegionAttachment icon.
+![](/img/spine-runtimes-guide/spine-unity/attachmentregion-whitebg.png)  
 A `RegionAttachment` is a basic, rectangular renderable attachment mapped to a texture region.
 
 In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject") property.
@@ -70,7 +70,7 @@ It also contains information about the region of the texture it's supposed to re
 You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
 
 ### MeshAttachment
-// TODO: MeshAttachment icon.
+![](/img/spine-runtimes-guide/spine-unity/attachmentmesh-whitebg.png)  
 A `MeshAttachment` is as a renderable attachment with a deformable set of vertices (see VertexAttachment), as well as triangle indices to define a renderable mesh, mapped to a texture region.
 
 // TODO: A note about MeshAttachment being weighted or unweighted, and how the interpretation of the data differs accordingly.
