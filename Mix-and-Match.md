@@ -44,8 +44,8 @@ This Skin can then be used at runtime, is part of SkeletonData, and is shared ac
 ![](/img/spine-runtimes-guide/spine-unity/mixandmatch-spinetree.png)  
 above: Setup in Spine
 
-Skin name: goblin
-
+`Skin name: goblin`
+               
 | SLOT# |  NAME            |   ATTACHMENT OBJECT           |            
 |-------|------------------|-------------------------------|
 |  21   |  "left shoulder" |   goblin/left-shoulder        |
@@ -273,13 +273,8 @@ AtlasUtilities.ClearCache();
 ``` 
 
 
-## Miscellaneous
-
-// TODO: Break down GetRemappedClone and all the other stuff from AttachmentTools.
-// TODO: Link to the seprarate AttachmentTools doc instead.
-// - summary of how attachments relate to backing textures in Unity.
-// - how you can create new attachments from Sprites.
-
+## See Also
+- [Attachments and AttachmentTools](/Attachments-and-AttachmentTools.md)
 
 
 
