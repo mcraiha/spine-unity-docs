@@ -42,14 +42,16 @@ To get an Attachment from a skin, you need to know its skin key name and the ind
 ```csharp
 SkeletonData skeletonData = skeleton.Data;
 //Skin defaultSkin = skeletonData.DefaultSkin;
-Skin foundSkin = skeletonData.FindSkin("goblin");
+Skin foundSkin = skeletonData.FindSkin("robot");
 int slotIndex = skeletonData.FindSlotIndex("hand");
-string keyName = "closed hand";
-Attachment closedHandAttachment = foundSkin.GetAttachment(slotIndex, keyName);
+string placeholderName = "closed-hand";
+Attachment closedHandAttachment = foundSkin.GetAttachment(slotIndex, placeholderName);
 ```
 
 ![](/img/spine-runtimes-guide/spine-unity/skins-editor-and-runtime.png)  
 For attachments you placed in Skin Placeholders, the name of the Skin Placeholder is the skin key name.
+
+![](/img/spine-runtimes-guide/spine-unity/skins-editor-and-runtime-defaultskin.png)  
 But for the default skin, the skin key name is the name of the attachment itself.
 
 See also [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Skins documentation](http://esotericsoftware.com/spine-runtime-skins) for more information.
