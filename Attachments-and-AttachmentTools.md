@@ -81,10 +81,22 @@ In Spine-Unity, it maps to a Material, via its [RendererObject]("#RendererObject
 You can change its color via its `R`, `G`, `B` and `A` properties, or through the Spine-Unity extension method. `attachment.SetColor(UnityEngine.Color)`.
 
 ### RendererObject
-Attachment.RendererObject in Spine-Unity.
+In spine-csharp, each renderable Attachment type has an `object RendererObject` property, which is a reference to the runtime-dependent object necessary for rendering that attachment.
 
-// TODO: Explain how Spine-Unity's system uses RendererObject is an eventual map to UnityEngine.Material.
+In Spine-Unity, RendererObject is a reference to an `Spine.AtlasRegion`, which has a reference to a `Spine.AtlasPage`, which has a reference to a `UnityEngine.Material`.
 
+Spine-Unity provides an extension method to retrieve the Material more easily. 
+
+The code to retrieve the Material looks like this:
+```csharp
+Material m = meshOrRegionAttachment.GetMaterial();
+
+// Internally, this extension method does this, and some type checks.
+//object rendererObject = ((IHasRendererObject)attachment).RendererObject;
+//Material m = (Material)((AtlasRegion)rendererObject).page.rendererObject;
+```
+
+All renderable Attachment types implement the `IHasRendererObject` interface, which has the `object RendererObject` property.
 
 # AttachmentTools
 AttachmentTools is a collection of utility methods and static classes that help manipulate Spine Attachment objects for Spine-Unity.
