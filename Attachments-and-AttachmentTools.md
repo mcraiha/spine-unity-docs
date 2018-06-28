@@ -56,7 +56,7 @@ But for the default skin, the skin key name is the name of the attachment itself
 See also [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Skins documentation](http://esotericsoftware.com/spine-runtime-skins) for more information.
 
 ### Skins and Attachments are shared by default
-// TODO: Image showing a central SkeletonData, with Attachment and Skin, with several skeleton instances connected to it. Probably goblin and goblin girl.
+![](/img/spine-runtimes-guide/spine-unity/shared-skeleton-data.png)
 Skins and Attachments are loaded as SkeletonData-level objects: They are stored as part of the SkeletonData, which are shared across all skeletons that use them. Multiple of the same skeleton can have independent states: poses, active attachments, mesh deform states and chosen skins; but they will use the same SkeletonData, Skin and Attachment objects by default.
 
 Because of this, modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
