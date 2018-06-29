@@ -22,7 +22,7 @@ In Spine, Attachments are primarily the visible parts of your skeleton: images a
 // Also show: multiple slots on a bone.  
 //
 
-In the Spine runtimes, **Attachments** are objects that can be placed in a Slot to follow a Bone; They follow a Bone's transform (rotation, position, scale).
+In the Spine runtimes, **Attachments** are objects that can be placed in a Slot to follow a Bone; They move according to a Bone's transform (rotation, position, scale).
 
 There are two renderable attachment types:
 1. **RegionAttachments**, rectangular image attachments that map to a rectangular region in an atlas, or any backing texture.
@@ -31,11 +31,17 @@ There are two renderable attachment types:
 > - Other Attachment types exist such as **BoundingBoxAttachment**, **PathAttachment** and **PointAttachment**. These are typically not rendered in-game. They will be documented separately.
 
 ### Where do I find Attachments?
-In the process of loading skeleton data from skeleton json or binary, all Attachments are stored in Skin objects.  
-At runtime, you can find these loaded skins and Attachments in the SkeletonData: `Skeleton.Data.FindSkin(string)`
+In the process of loading skeleton data from skeleton json or binary at runtime, all Attachments are stored in Skin objects.  
+You can find these loaded skins and Attachments in the SkeletonData: `
+```csharp
+Skeleton.Data.FindSkin(string)
+```
 
-In Spine, every skeleton has a "default skin". The default skin is where all the the attachments that weren't explicitly assigned to a skin are stored. These are the attachments that were not placed in Skin Placeholders in Spine.
-At runtime, you can find the default skin in the skeleton data. `Skeleton.Data.DefaultSkin`
+Attachments that weren't explicitly placed in a skin and skin placeholders in Spine are included in the skeleton data's "default skin". For skeletons that you did not add skins to, all attachments can be found in the default skin.  
+At runtime, you can find the default skin in the skeleton data.  
+```csharp
+Skeleton.Data.DefaultSkin
+```
 
 Attachments in a Skin are stored and mapped to a Skin key: comprised of  an `int` slot index, and a `string` (the Skin Placeholder name).
 To get an Attachment from a skin, you need to know its skin key name and the index of the slot it belongs to.
@@ -60,11 +66,11 @@ See also [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Sk
 ![](/img/spine-runtimes-guide/spine-unity/shared-skeleton-data.png)  
 Skins and Attachments are loaded as SkeletonData-level objects: They are stored as part of the SkeletonData, which are shared across all skeletons that use them. Multiple of the same skeleton can have independent states: poses, active attachments, mesh deform states and chosen skins; but they will use the same SkeletonData, Skin and Attachment objects by default.
 
-Because of this, modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
+Because of this, any changes you make to skins and attachments in SkeletonData will affect all instances using that same data. So modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
 
 ### RegionAttachment
 ![](/img/spine-runtimes-guide/spine-unity/attachmentregion-whitebg.png)  
-A `RegionAttachment` is a basic, rectangular renderable attachment mapped to a texture region.
+A `RegionAttachment` is a basic, rectangular, renderable attachment mapped to a texture region.
 
 In Spine-Unity, it maps to a Material, via its [RendererObject](#RendererObject) property.
 It also contains information about the region of the texture it's supposed to render through various properties.
@@ -73,9 +79,9 @@ You can change its color via its `R`, `G`, `B` and `A` properties, or through th
 
 ### MeshAttachment
 ![](/img/spine-runtimes-guide/spine-unity/attachmentmesh-whitebg.png)  
-A `MeshAttachment` is as a renderable attachment with a deformable set of vertices (see VertexAttachment), as well as triangle indices to define a renderable mesh, mapped to a texture region.
+A `MeshAttachment` is as a renderable attachment with a deformable set of vertices (see VertexAttachment), as well as triangles, to define a renderable mesh, mapped to a texture region.
 
-Some MeshAttachments have bone weights applied to its vertices. The interpretation of its internal data can change based on whether it is weighted or not. Spine-Unity provides an extension method to determine if it is weighted.
+Some MeshAttachments have bone weights added to its vertices so that bone positions and movements can drive the shape of the mesh. The interpretation of the MeshAttachment's internal data can change based on whether it is weighted or not. Spine-Unity provides an extension method to determine if it is weighted.
 
 ```csharp
 bool isWeighted = meshAttachment.IsWeighted();
@@ -102,7 +108,9 @@ Material m = meshOrRegionAttachment.GetMaterial();
 //Material m = (Material)((AtlasRegion)rendererObject).page.rendererObject;
 ```
 
-All renderable Attachment types implement the `IHasRendererObject` interface, which has the `object RendererObject` property.
+All renderable attachment types implement the `IHasRendererObject` interface, which has the `object RendererObject` property.
+
+// TODO: Describe how to replace the backing texture using an AtlasRegion in Spine-Unity. And how to create a new AtlasRegion using UnityEngine.Sprite and a bare UnityEngine.Texture2D.
 
 # AttachmentTools
 AttachmentTools is a collection of utility methods and static classes that help manipulate Spine Attachment objects for Spine-Unity.
