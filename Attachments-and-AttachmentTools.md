@@ -12,17 +12,12 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 # Attachments and Spine-Unity AttachmentTools  
 
 ### What are attachments?
-![](/img/spine-runtimes-guide/spine-unity/what-are-attachments.png)  
+![](/img/spine-runtimes-guide/spine-unity/bones-slots-attachments-spineboyhead.png)    
 In Spine, Attachments are primarily the visible parts of your skeleton: images and meshes. But they also include things like bounding boxes, paths and points. They are the things that you "attach" to bones by putting them in slots. This allows the visible parts of your skeleton to move according to bones.
 
-//
-// TODO:  
-// Image that shows attachments in a slot on a bone.  
-// Also show: multiple attachments in a slot, with one active.  
-// Also show: multiple slots on a bone.  
-//
-
 In the Spine runtimes, **Attachments** are objects that can be placed in a Slot to follow a Bone; They move according to a Bone's transform (rotation, position, scale).
+
+![](/img/spine-runtimes-guide/spine-unity/what-are-attachments.png)  
 
 There are two renderable attachment types:
 1. **RegionAttachments**, rectangular image attachments that map to a rectangular region in an atlas, or any backing texture.
