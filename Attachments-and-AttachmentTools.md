@@ -26,18 +26,21 @@ There are two renderable attachment types:
 > - Other Attachment types exist such as **BoundingBoxAttachment**, **PathAttachment** and **PointAttachment**. These are typically not rendered in-game. They will be documented separately.
 
 ### Where do I find Attachments?
+#### FindSkin
 In the process of loading skeleton data from skeleton json or binary at runtime, all Attachments are stored in Skin objects.  
 You can find these loaded skins and Attachments in the SkeletonData: `
 ```csharp
 Skeleton.Data.FindSkin(string)
 ```
 
+#### DefaultSkin
 Attachments that weren't explicitly placed in a skin and skin placeholders in Spine are included in the skeleton data's "default skin". For skeletons that you did not add skins to, all attachments can be found in the default skin.  
 At runtime, you can find the default skin in the skeleton data.  
 ```csharp
 Skeleton.Data.DefaultSkin
 ```
 
+#### Skin.GetAttachment
 Attachments in a Skin are stored and mapped to a Skin key: comprised of  an `int` slot index, and a `string` (the Skin Placeholder name).
 To get an Attachment from a skin, you need to know its skin key name and the index of the slot it belongs to.
 ```csharp
