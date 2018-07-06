@@ -17,7 +17,7 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 >  
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
-![](/img/spine-runtimes-guide/spine-unity/callbackchart.png) 
+![](/img/spine-runtimes-guide/spine-unity/callbackchart.png)  
 Fig 1. Chart of Events raised without mixing/crossfading.
 
 
@@ -53,15 +53,20 @@ At the junction where an animation completes playback, and a queued animation wi
 
 ### Events During Mixing
 
-//TODO: ILLUSTRATION OF EVENTS RAISED WITHIN A MIX/CROSSFADE GOES HERE
-
-The standard AnimationState implementation treats events differently when it does mixing.
+![](/img/spine-runtimes-guide/spine-unity/callbackchart-mix.png)  
 
 When you have a mix time set (or `Default Mix` on your Skeleton Data Asset), there is a span of time where the next animation starts being mixed with an increasing alpha, and the previous animation is still being applied to the skeleton.
 
 We can call this span of time, the "crossfade" or "mix".
 
-By default, a TrackEntry stops raising user events right when TrackEntry starts fading out, with the default EventThreshold value of `0`. If you set it to `0.5`, user events stop being raised halfway through the crossfade/mix. If you set it to `1`, events will continue to be raised up until the very last frame of the crossfade/mix. Setting this or the default value to the appropriate value for your animations is important, as you may have overlapping animations that have the same animations and shouldn't raise the same ones, or want events to still be raised even if the animation has been interrupted. 
+#### User events during mixing
+A TrackEntry's **EventThreshold** controls how user events are treated during the mix duration. 
+
+- With the default value `0`, user events stop being raised immediately when the next animation starts playing.
+- If you set it to `0.5`, user events stop being raised halfway through the crossfade/mix.
+- If you set it to `1`, events will continue to be raised up until the very last frame of the crossfade/mix.
+
+Setting this or the default value to the appropriate value for your animations is important, as you may have overlapping animations that have the same animations and shouldn't raise the same ones, or want events to still be raised even if the animation has been interrupted. 
 
 ## Sample Code
 
