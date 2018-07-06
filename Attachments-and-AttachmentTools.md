@@ -62,9 +62,11 @@ See also [Mix and Match documentation](/Mix-and-Match.md) or generic [Runtime Sk
 
 ### Skins and Attachments are shared by default
 ![](/img/spine-runtimes-guide/spine-unity/shared-skeleton-data.png)  
-Skins and Attachments are loaded as SkeletonData-level objects: They are stored as part of the SkeletonData, which are shared across all skeletons that use them. Multiple of the same skeleton can have independent states: poses, active attachments, mesh deform states and chosen skins; but they will use the same SkeletonData, Skin and Attachment objects by default.
+Any changes you make to skins and attachments in SkeletonData will affect all instances using that same data. 
 
-Because of this, any changes you make to skins and attachments in SkeletonData will affect all instances using that same data. So modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
+This is because Skins and Attachments are loaded as SkeletonData-level objects: They are stored as part of the SkeletonData, and shared— but not copied— across all skeletons that use them. Multiple of the same skeleton can have independent states: like different poses, active attachments, mesh deform states and chosen skins; but they will use the same SkeletonData, Skin and Attachment objects by default.
+
+So modifying the skins and attachments in the SkeletonData directly is only advisable if (1) you are instantiate only one of that skeleton or only skeleton per skin, and (2) you store the original state of the modified skin or attachment if you need to return to its original state.
 
 ### RegionAttachment
 ![](/img/spine-runtimes-guide/spine-unity/attachmentregion-whitebg.png)  
