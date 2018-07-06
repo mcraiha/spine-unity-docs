@@ -1,7 +1,7 @@
 #### spine-unity
 The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
+Documentation last updated for Spine-Unity for Spine 3.7.x
 If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
 
 ----------
@@ -67,7 +67,7 @@ By default, a TrackEntry stops raising user events right when TrackEntry starts 
 
 Here is a sample `MonoBehaviour` that subscribes to `AnimationState`'s events. Read the comments to see what's going on.
 ```csharp
-// Sample written for for Spine 3.5
+// Sample written for for Spine 3.7
 using UnityEngine;
 using Spine;
 using Spine.Unity;
@@ -106,7 +106,76 @@ public class MySpineEventHandler : MonoBehaviour {
 }
 ```
 
-## Advanced
+### HandleEventWithAudioExample
+Here is a sample sound event handler MonoBehaviour that comes with the sample scenes.
+
+```csharp
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+namespace Spine.Unity.Examples {
+	public class HandleEventWithAudioExample : MonoBehaviour {
+
+		public SkeletonAnimation skeletonAnimation;
+		[SpineEvent(dataField: "skeletonAnimation", fallbackToTextField: true)]
+		public string eventName;
+
+		[Space]
+		public AudioSource audioSource;
+		public AudioClip audioClip;
+		public float basePitch = 1f;
+		public float randomPitchOffset = 0.1f;
+
+		[Space]
+		public bool logDebugMessage = false;
+
+		Spine.EventData eventData;
+
+		void OnValidate () {
+			if (skeletonAnimation == null) GetComponent<SkeletonAnimation>();
+			if (audioSource == null) GetComponent<AudioSource>();
+		}
+
+		void Start () {
+			if (audioSource == null) return;
+			if (skeletonAnimation == null) return;
+			skeletonAnimation.Initialize(false);
+			if (!skeletonAnimation.valid) return;
+
+			eventData = skeletonAnimation.Skeleton.Data.FindEvent(eventName);
+			skeletonAnimation.AnimationState.Event += HandleAnimationStateEvent;
+		}
+
+		private void HandleAnimationStateEvent (TrackEntry trackEntry, Event e) {
+			if (logDebugMessage) Debug.Log("Event fired! " + e.Data.Name);
+			//bool eventMatch = string.Equals(e.Data.Name, eventName, System.StringComparison.Ordinal); // Testing recommendation: String compare.
+			bool eventMatch = (eventData == e.Data); // Performance recommendation: Match cached reference instead of string.
+			if (eventMatch) {
+				Play();
+			}
+		}
+
+		public void Play () {
+			audioSource.pitch = basePitch + Random.Range(-randomPitchOffset, randomPitchOffset);
+			audioSource.clip = audioClip;
+			audioSource.Play();
+		}
+	}
+
+}
+
+```
+
+
+# SkeletonMecanim Events
+When using SkeletonMecanim, which rides on Unity's Animator component, events are stored in the dummy AnimationClips as Unity Animation Events. They are therefore used just like other Unity Animation events.
+
+For example, if you named your event "Footstep" in Spine, you would have a MonoBehaviour on your SkeletonMecanim GameObject which has a method with the name `Footstep()`
+
+For more information, see [Unity's Documentation on Animation Events](https://docs.unity3d.com/Manual/animeditor-AnimationEvents.html).
+
+# Advanced
 
 Since the Spine runtimes are source-available and fully modifiable in your project, you can of-course define and raise your own events in AnimationState or in whatever version of it you make. See the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3) for more information.
 
