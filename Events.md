@@ -24,8 +24,8 @@ Spine.AnimationState raises the following events:
 
  - **Start** is raised when an animation starts playing,
 	 - This applies to right when you call `SetAnimation`.
-	 - I can also be raised when a queued animation starts playing.
- - **End** is raised an animation is cleared (or interrupted),
+	 - It can also be raised when a queued animation starts playing.
+ - **End** is raised when an animation will be removed from the track,
 	 - This applies to when you call `SetAnimation` before the current animation has a chance to finish.
 	 - This is also raised when you clear the track using `ClearTrack` or `ClearTracks`.
 	 - During a mix/crossfade, end is raised after a mix is completed.
@@ -34,6 +34,7 @@ Spine.AnimationState raises the following events:
  - **Dispose** is raised for TrackEntries when AnimationState disposes of a TrackEntry (at the end of its life cycle).
 	 - Runtimes like spine-libgdx and spine-csharp pool TrackEntry objects to avoid unnecessary GC pressure. This is particularly important in Unity which has an old and less efficient garbage collection implementation.
 	 - It is important to clear all your references to TrackEntries when they are disposed since they could later contain data or raise events that you did not intend to read or observe.
+	 - Dispose in raised immediately after End.
  - **Interrupt** is raised when a new animation is set and a current animation is still playing.
 	 - This is raised when an animation starts mixing/crossfading into another animation.
  - **Complete** is raised an animation completes its full duration,
