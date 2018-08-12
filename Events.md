@@ -11,17 +11,17 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 
 **Spine.AnimationState** provides functionality for animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback.
 
-> **For the novice programmer**: [Callbacks](https://en.wikipedia.org/wiki/Callback_%28computer_programming%29) mean you can tell the system to inform you when *something* specific happens by giving it a method to call when that something happens. [Events](https://en.wikipedia.org/wiki/Event_%28computing%29) are the meaningful points in program execution— in this case, that you can subscribe to/handle with your own code by providing a function/method for the event system to call.
-> 
-> When the event happens, the process of calling the function/method you provided is called "raising" or "firing" the event. Most C# documentation will call it "raising". But Spine documentation will call it "firing". Those mean the same thing. 
->  
+> **For the novice programmer**: [Callbacks](https://en.wikipedia.org/wiki/Callback_%28computer_programming%29) mean you can tell a system to "inform" you when *something* specific happens by giving it a method to call when that something happens. [Events](https://en.wikipedia.org/wiki/Event_%28computing%29) are the meaningful points in program execution— in this case, ones that you can subscribe to or handle with your own code by providing a function/method for the event system to call.
+>
+> When the event happens, the process of calling the function/method you provided is called "raising" or "firing" the event. Most C# documentation will call it "raising". Some Spine documentation will call it "firing". Those mean the same thing. 
+>
 > The structure and syntax for callback functionality varies from language to language. See the sample code at the bottom for examples of C# syntax.
 
 ![](/img/spine-runtimes-guide/spine-unity/callbackchart.png)  
 Fig 1. Chart of Events raised without mixing/crossfading.
 
-
 Spine.AnimationState raises the following events:
+
  - **Start** is raised when an animation starts playing,
 	 - This applies to right when you call `SetAnimation`.
 	 - It can also be raised when a queued animation starts playing.
@@ -51,6 +51,16 @@ At the junction where an animation completes playback, and a queued animation wi
 
 > **WARNING:**
 > NEVER subscribe to `End` with a method that calls `SetAnimation`. Since `End` is raised when an animation is interrupted, and `SetAnimation` interrupts any existing animation, this will cause an infinite recursion of End->Handle>SetAnimation->End->Handle->SetAnimation, causing Unity to freeze until a stack overflow happens.
+
+### AnimationState vs TrackEntry events
+
+Both AnimationState, and individual TrackEntry objects, raise Spine animation events listed above.
+
+Subscribing to events on AnimationState itself will give you a callback from all animations that are played on it.
+
+In contrast, when subscribing to TrackEntry events, you will only be subscribed to that particular instance of animation playback. After that TrackEntry ends, it will be disposed and no further events will come from it.
+
+TrackEntry events are raised before the corresponding AnimationState events.
 
 ### Events During Mixing
 
@@ -87,9 +97,10 @@ public class MySpineEventHandler : MonoBehaviour {
 
 	void Start () {
 		var skeletonAnimation = GetComponent<SkeletonAnimation>();
-		if (skeletonAnimation == null) return;	// told you to add this to SkeletonAnimation's GameObject.
+		if (skeletonAnimation == null) return;
 
-		// This is how you subscribe via a declared method. The method needs the correct signature.
+		// This is how you subscribe via a declared method.
+		// The method needs the correct signature.
 		skeletonAnimation.AnimationState.Event += HandleEvent;
 
 		skeletonAnimation.AnimationState.Start += delegate (TrackEntry trackEntry) {
