@@ -44,7 +44,6 @@ If you plan to implement custom shaders, using Straight Alpha (Premultiply Alpha
 For more information on export settings and Shader compatibility, see the [Shaders documentation](Shaders.md).
 
 For more info, check this thread: http://esotericsoftware.com/forum/Premultiply-Alpha-3132
-//TODO: Move Premultiply Alpha information into this doc.
 
 **Options**
 Unity does not recognize custom file types even if they are plain text, so we recommend setting the extension to `.atlas.txt`.

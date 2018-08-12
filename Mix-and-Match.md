@@ -25,7 +25,7 @@ For example, this is a representation of a "Red character" skin.
 
 Skin name: Red character
 
-| SLOT#  |   NAME            |   ATTACHMENT OBJECT           |            
+| SLOT#  |   NAME            |   ATTACHMENT OBJECT           |
 |--------|-------------------|-------------------------------|
 |  4     |   "left hand"     |   red left glove              |
 |  12    |   "right hand"    |   red right glove             |
@@ -46,13 +46,13 @@ above: Setup in Spine
 
 `Skin name: goblin`
                
-| SLOT# |  NAME            |   ATTACHMENT OBJECT           |            
+| SLOT# |  NAME            |   ATTACHMENT OBJECT           |
 |-------|------------------|-------------------------------|
 |  21   |  "left shoulder" |   goblin/left-shoulder        |
 |  20   |  "left arm"      |   goblin/left-arm             |
 |  19   |  "left hand"     |   goblin/left-hand            |
 |  ...  |  ...             |   ...                         |
-|  ...  |  ...             |   ...                         |  
+|  ...  |  ...             |   ...                         |
 above: Data at runtime
 
 ### Runtime Skins
@@ -68,17 +68,17 @@ void UseRuntimeSkin () {
 	skeleton.SetSkin(newSkin);
 	skeleton.SetSlotsToSetupPose();
 }
-```  
+```
 With the above example, as long as you have "armor" and "hair" active, your skeleton will start using the Gold Armor and the Diamond Hair.
 
-But where do you get Attachments to add to your custom skin?
+But where do you get Attachments to add to your custom skin?  
 That's up to you, and depending on what works best for your game's setup.
 
 Runtime skins work best when your skeleton is animated with a template/dummy skin in Spine. This helps avoid problems with "empty" slots and sharing skins between different skeletons. In Spine, make a Skin called "template" and create Skin Placeholders for all the attachments that you want to be able to customize. Use those Skin Placeholders whenever you animate attachments and attachment swaps.   
 
 #### Option 1: Add variations in Spine (Prepacked variants)
 See the sample project named "MixAndMatch-ESS-Prepacked.spine". You can download the zip [here](/img/spine-runtimes-guide/spine-unity/MixAndMatch-ESS.zip).
-You'll notice that the slots with customizable attachments have the customization/attachment options added to the slot too.
+You'll notice that the slots with customizable attachments have the customization/attachment options added to the slot too.  
 These attachments will be stored with the Skeleton and the images will be packed with the atlas.
 
 Adding variations in Spine and having the variations live inside the atlas is best for when you have a limited number of customizations. It will save you the potential repacking step or issues with using multiple texture atlases. 
@@ -128,6 +128,7 @@ public class MixAndMatchExample : MonoBehaviour {
 
 **You can put them in Skins and Skin Placeholders.**
 This can be helpful if you have a finite number of equips, and want to combine attachments in reasonable sets.
+
 For example, you want to create skins for the boots: "leather boots", "iron boots", "power boots" so they can store both the left and right boots together.
 
 If you group your equips or customization items into skins, you can create new skins by combining existing ones. 
@@ -172,9 +173,9 @@ You'll notice that the skeleton only has the template skin. All the customizatio
 
 This can be handy if you have an arbitrarily large number of equips and customization, or ones that can come from anywhere- DLC, game updates, etc...
 
-1. The first step is to **create a skeleton in Spine and use a set of images that are supposed to be templates for your eventual equips**.
-Those template images will need to be the right height and width because they will form the bases of your actual equips.
-If they can't all fit into one size, you may want to use more than one template. (eg. instead of just one "sword" template, you can have templates for "short sword", "wide sword", "dagger", "long sword", etc...)
+1. The first step is to **create a skeleton in Spine and use a set of images that are supposed to be templates for your eventual equips**.  
+Those template images will need to be the right height and width because they will form the bases of your actual equips.  
+If they can't all fit into one size, you may want to use more than one template. (eg. instead of just one "sword" template, you can have templates for "short sword", "wide sword", "dagger", "long sword", etc...)  
 For best results, you should animate with those template images in Spine. Create a skin called "template" and add your template swords and armor and whatever images into Skin Placeholders. (see: [Spine User Guide - Skins](http://esotericsoftware.com/spine-skins)). 
 
 2. The next step is to **create those actual equip/customization images with the same height and width as your template images**.  
@@ -270,7 +271,7 @@ The repacking process generates intermediary textures that are pulled from origi
 // multiple repacks.
 //...
 AtlasUtilities.ClearCache();
-``` 
+```
 
 
 ## See Also
@@ -281,5 +282,5 @@ AtlasUtilities.ClearCache();
  
 
 
- 
+
 
