@@ -6,6 +6,7 @@ http://esotericsoftware.com/spine-unity-docs
 
 # Spine Unity Documentation
 Documentation for Spine-Unity users.  
+
 ----------
 
 ## For Beginners
