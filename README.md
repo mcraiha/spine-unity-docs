@@ -3,22 +3,22 @@ Documentation for Spine-Unity users.
 ----------
 
 ## For Beginners
-- [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/Getting-Started.md)
-- [Export Settings](https://github.com/pharan/spine-unity-docs/blob/master/Export-Settings.md)
+- [Getting Started](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-gettingstarted.md)
+- [Export Settings](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-exportsettings.md)
 
 ## Intermediate Users
-- [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/Structure-Overview.md)
-- [Animation](https://github.com/pharan/spine-unity-docs/blob/master/Animation.md)
-- [Events and AnimationState Callbacks](https://github.com/pharan/spine-unity-docs/blob/master/Events.md)
-- [Rendering](https://github.com/pharan/spine-unity-docs/blob/master/Rendering.md)
-- [Handling the Skeleton](https://github.com/pharan/spine-unity-docs/blob/master/Handling-the-Skeleton.md)
+- [Structure Overview](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-structureoverview.md)
+- [Animation](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-animation.md)
+- [Events and AnimationState Callbacks](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-events.md)
+- [Rendering](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-rendering.md)
+- [Handling the Skeleton](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-handlingtheskeleton.md)
 
 ## Specific Modules
-- [Spine-Unity YieldInstructions](https://github.com/pharan/spine-unity-docs/blob/master/Spine-Unity-YieldInstructions.md)
-- [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/SkeletonRenderSeparator.md)
+- [Spine-Unity YieldInstructions](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-yieldinstructions.md)
+- [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-skeletonrenderseparator.md)
 
 ## See Also
-- [Tint Black](https://github.com/pharan/spine-unity-docs/blob/master/Tint-Black.md)
+- [Tint Black](https://github.com/pharan/spine-unity-docs/blob/master/spine-unity-tintblack.md)
 - [Miscellaneous/FAQ](https://github.com/pharan/spine-unity-docs/blob/master/Miscellaneous.md)
 
 ## Advanced Users

@@ -8,7 +8,10 @@ If this documentation contains mistakes or doesn't cover some questions, please 
 
 # Miscellaneous Topics and FAQ
 
+This document is for miscellaneous questions and answers that haven't found a place in an independent page yet.
+
 ### Unity says SkeletonAnimation (or another Spine class) doesn't exist.
+
 The console will usually give you an error that looks like this if you have missing using directive on top of your code.
 ```
 Assets/MyFirstSpineScript.cs(12,9): error CS0246: The type or namespace name `SkeletonAnimation' could not be found. Are you missing `Spine.Unity' using directive?
@@ -35,7 +38,7 @@ public class MyFirstSpineScript : MonoBehaviour {
 To learn the basics of Unity scripting, see the official Unity Tutorials Scripting Section: https://unity3d.com/learn/tutorials/s/scripting
 
 For more in-depth information on using namespaces in C#, see the official Microsoft documentation: https://docs.microsoft.com/en-us/dotnet/articles/csharp/programming-guide/namespaces/using-namespaces 
- 
+
 
 ### How do I create a Spine GameObject from code?
 Sometimes, it may make sense to create Spine GameObjects from code instead of creating prefabs.

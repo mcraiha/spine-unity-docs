@@ -1,5 +1,7 @@
+http://esotericsoftware.com/spine-unity-yieldinstructions
+
 Documentation last updated for Spine-Unity for Spine 3.6.x
-If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+If this documentation contains mistakes or doesn't cover some questions, please feel free to [open an issue](https://github.com/pharan/spine-unity-docs/issues) or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
 
 # Spine-Unity Coroutine Yield Instructions
 This module is a set of Coroutine yield instructions you can use to make your coroutines wait according to Spine-Unity states such as when an event fires or when an Animation completes.
@@ -56,4 +58,3 @@ This code requires Unity 5.3 or higher.
 
 They use the `IEnumerator` interface and not the [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html) class from 5.3.
 Despite this, the changes to allow this functionality were only introduced in Unity's Coroutine system in 5.3. So it is incompatible with older Unity versions.
- 

@@ -2,27 +2,24 @@ http://esotericsoftware.com/spine-unity-download
 
 # Spine-Unity #
 
-**[Forums](http://esotericsoftware.com/forum/viewforum.php?f=12)** | **[Documentation](http://esotericsoftware.com/spine-unity-documentation)** | **[GitHub](http://esotericsoftware.com/git/spine-runtimes/tree/spine-unity)**
+**[Forums](http://esotericsoftware.com/forum/viewforum.php?f=12)** | **[Documentation](http://esotericsoftware.com/spine-unity-docs)** | **[GitHub](http://esotericsoftware.com/git/spine-runtimes/tree/spine-unity)**
 
 ----------
 
 ## Getting Started ##
-[Getting Started Documentation in github](https://github.com/pharan/spine-unity-docs/blob/master/Getting-Started.md)
+[Getting Started Documentation](http://esotericsoftware.com/spine-unity-gettingstarted)
 
 ## Download ##
-**THE LATEST SPINE-UNITY RUNTIME UNITYPACKAGE:**<br>
-**Spine-Unity 3.6 runtime unitypackage:**<br>
-DOWNLOAD : http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_6-2018-07-19.unitypackage
-<br>Compatible with Spine 3.6.x and Unity 5.6-2018.2 (Last updated: UTC - 2018 Jul 19)
-<br>
+**THE LATEST SPINE-UNITY RUNTIME UNITYPACKAGE:**  
+**Spine-Unity 3.6 runtime unitypackage:**  
+DOWNLOAD : http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_6-2018-07-19.unitypackage  
+Compatible with Spine 3.6.x and Unity 5.6-2018.2 (Last updated: UTC - 2018 Jul 19)  
 For the changelog, see [3.6/CHANGELOG.md](https://github.com/EsotericSoftware/spine-runtimes/blob/3.6/CHANGELOG.md#c-1)
 
-**Spine-Unity 3.7-beta runtime unitypackage:**<br>
-DOWNLOAD : http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_7-2018-07-19-beta.unitypackage
-<br>Compatible with Spine 3.7.x and Unity 5.6-2018.2 (Last updated: UTC - 2018 Jul 19)
-<br>
+**Spine-Unity 3.7-beta runtime unitypackage:**  
+DOWNLOAD : http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_7-2018-07-19-beta.unitypackage  
+Compatible with Spine 3.7.x and Unity 5.6-2018.2 (Last updated: UTC - 2018 Jul 19)  
 For the changelog, see [3.7-beta/CHANGELOG.md](https://github.com/EsotericSoftware/spine-runtimes/blob/3.7-beta/CHANGELOG.md#c-1)
-
 
 ----------
 ## Installing in a new project
@@ -122,14 +119,14 @@ For more information, see [this forum topic](http://esotericsoftware.com/forum/S
 
 ----------
 ## Older Versions
-**Spine-Unity 3.0 for Unity 4.6:**<br>
-http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_0_Unity-4_6.unitypackage
-<br>(Last updated: UTC - 2017 May 9)
+**Spine-Unity 3.0 for Unity 4.6:**  
+http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_0_Unity-4_6.unitypackage  
+(Last updated: UTC - 2017 May 9)
 
-**Spine-Unity 3.5 for Unity 5.4-2017.1:**<br>
-http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_5_Unity-5_4.unitypackage
-<br>(Last updated: UTC - 2017 June 18)
+**Spine-Unity 3.5 for Unity 5.4-2017.1:**  
+http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_5_Unity-5_4.unitypackage  
+(Last updated: UTC - 2017 June 18)
 
-**Spine-Unity 3.6 for Unity 5.4:**<br>
-http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_6_Unity-5_4-2017-06-20.unitypackage
-<br>(Last updated: UTC - 2017 June 20)
+**Spine-Unity 3.6 for Unity 5.4:**  
+http://esotericsoftware.com/files/runtimes/unity/spine-unity-3_6_Unity-5_4-2017-06-20.unitypackage  
+(Last updated: UTC - 2017 June 20)

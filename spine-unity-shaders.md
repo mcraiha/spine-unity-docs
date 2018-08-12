@@ -1,9 +1,9 @@
-#### spine-unity
-The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
+http://esotericsoftware.com/spine-unity-shaders
 
-Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 14)
-If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](http://esotericsoftware.com/spine-unity-gettingstarted) document.
+
+Documentation last updated for Spine-Unity for Spine 3.5.x
+If this documentation contains mistakes or doesn't cover some questions, please feel free to [open an issue](https://github.com/pharan/spine-unity-docs/issues) or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
 
 
 # Unity Shaders
@@ -170,7 +170,7 @@ Shader "Spine/Skeleton Plain" {
 	FallBack "Diffuse"
 }
 ```
- 
+
 Now here's the same shader, but with the ability to add a color overlay.
 ```ShaderLab
 // - Requires PMA texture.

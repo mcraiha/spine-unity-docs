@@ -1,9 +1,7 @@
-#### spine-unity
-The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This may contain intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
+http://esotericsoftware.com/spine-unity-skeletongraphic-and-ui
 
 Documentation last updated for Spine-Unity for Spine 3.6.x
-If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+If this documentation contains mistakes or doesn't cover some questions, please feel free to [open an issue](https://github.com/pharan/spine-unity-docs/issues) or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
 
 # SkeletonGraphic and Unity UI
 

@@ -1,5 +1,7 @@
+http://esotericsoftware.com/spine-unity-gettingstarted
+
 > **Licensing**
-> 
+>
 > Integrating an official Spine Runtime into your applications requires a valid [Spine license](https://esotericsoftware.com/spine-purchase), though you are welcome to use the Spine Runtimes for evaluation purposes.
 
 # Getting Started with Spine-Unity
@@ -14,7 +16,7 @@ Adding Spine-Unity into your Unity project:
 1. Go to the `Spine Examples\Getting Started` folder in the Project panel. Open and examine those Unity Scene files in order. Make sure you read the text in the scene, check out the inspector and open the relevant sample scripts.
 
 > The **Spine-Unity** runtime provides functionality to load, manipulate and render [Spine](http://esotericsoftware.com) skeletal animation data in [Unity](http://unity3d.com/) engine.
->  
+> 
 > Spine-Unity works in Unity without the need for any other plugins. But it also works with [2D Toolkit](http://www.unikronsoftware.com/2dtoolkit/) and can render skeletons using TK2D's texture atlas system. To enable this, open Unity's `Preferences...` and under the `Spine` tab, you can enable TK2D.
 >
 > If you are not familiar with programming in C# and using Unity in general, we recommend watching the [official Unity Tutorials](http://unity3d.com/learn/tutorials) first. The [Interface Essentials](http://unity3d.com/learn/tutorials/topics/interface-essentials) and then [Scripting](http://unity3d.com/learn/tutorials/topics/interface-essentials) topics are a good place to start. Their Animation topic is not directly applicable to Spine-Unity so there's no need to learn that to know how to use Spine-Unity.
@@ -28,7 +30,7 @@ Adding Spine-Unity into your Unity project:
 1. After you have created your skeleton and animations, click on `Spine Menu`>`Export...` (`CTRL`+`E`). This opens the **Export window**.  
 	![](/img/spine-runtimes-guide/spine-unity/spinemenu-export-s.png)    
 1. Choose `JSON` on the upper-left of the Export window.  
- 	![](/img/spine-runtimes-guide/spine-unity/exportwindow-json-s.png)  
+		![](/img/spine-runtimes-guide/spine-unity/exportwindow-json-s.png)  
 1. Check the `Create atlas` checkbox. (Checking `Nonessential data`, `Pretty print` are also recommended for beginners).  
 	![](/img/spine-runtimes-guide/spine-unity/exportwindow-createatlas-s.png)    
 	1. Click on `Settings` beside the `Create atlas` checkbox. This opens the **Texture Packer Settings** window.
@@ -85,7 +87,6 @@ If you want to use Skeleton Binary files, choose Binary instead of JSON on the u
 - **EXTENSION:** Make sure the Extension is set to `.skel.bytes`. Otherwise, Unity will not recognize it as a binary file and Spine-Unity can't read it.
 - All the steps mentioned above that apply to `.json` also apply to `.skel.bytes`. Spine-Unity will automatically recognize it and ingest it into "_SkeletonData".
 - While the Spine Skeleton Binary format offers loading time improvements, the format is less stable across feature-update versions of the runtime. It's best to have a batch setup ready if you intend to update your runtime. For more info on command line exports, see: http://esotericsoftware.com/spine-export#Command-line
-
 
 -----------------------------------------------------
 

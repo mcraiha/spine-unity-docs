@@ -1,13 +1,9 @@
-#### spine-unity
-The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
+http://esotericsoftware.com/spine-unity-attachments-and-attachmenttools
+
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](http://esotericsoftware.com/spine-unity-gettingstarted) document.
 
 Documentation last updated for Spine-Unity for Spine 3.6.x and 3.7.x  
-If this documentation contains mistakes or doesn't cover some questions, please feel free to comment below, open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
-
-> Document goals:  
-> Q: What are attachments? How do they work?  
-> Q: What do I need to understand so I can understand and manipulate Skins and Attachments (using Mix and Match workflow and AttachmentTools) with confidence?  
+If this documentation contains mistakes or doesn't cover some questions, please feel free to [open an issue](https://github.com/pharan/spine-unity-docs/issues) or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
 
 # Attachments and Spine-Unity AttachmentTools  
 
@@ -175,7 +171,7 @@ Passing a cached AtlasPage from `material.ToSpineAtlasPage` is recommended.
 
 **sprite.ToAtlasRegionPMAClone**  
 Creates a clone of the sprite as a new premultiplied alpha texture, then creates an AtlasRegion that uses that texture.
-  
+
 ### Runtime Repacking ###
 **AtlasUtilities.GetRepackedAttachments**  
 Fills an outputAttachments list with new attachment objects based on the attachments in sourceAttachments, but mapped to a new single texture using the same material.  

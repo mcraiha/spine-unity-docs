@@ -1,9 +1,9 @@
-#### spine-unity
-The information here may change over time as the implementations within Spine-Unity get updated, improved or fixed.
-This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](/Getting-Started.md) document.
+http://esotericsoftware.com/spine-unity-structureoverview
+
+This contains intermediate-level documentation. If you're just starting out, try the [Getting Started](http://esotericsoftware.com/spine-unity-gettingstarted) document.
 
 Documentation last updated for Spine-Unity for Spine 3.5.x (2017 April 11)
-If this documentation contains mistakes or doesn't cover some questions, please feel to open an issue or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3). 
+If this documentation contains mistakes or doesn't cover some questions, please feel free to [open an issue](https://github.com/pharan/spine-unity-docs/issues) or post in the official [Spine-Unity forums](http://esotericsoftware.com/forum/viewforum.php?f=3).
 
 # Overall Structure
 How is Spine-Unity Put together?
@@ -99,7 +99,7 @@ skeletonAnimation.AnimationState.SetAnimation(0, “stand”, false);
 // Queues the animation named “run” to loop on Track 0 after the last animation is done.
 skeletonAnimation.AnimationState.AddAnimation(0, “run”, true, 0f);
 
-```  
+```
 
 `SkeletonAnimation` both manages the timing of the updates (through `Update`) and generates the Mesh object since it derives from the `SkeletonRenderer` class. This is the main component that's added to the `GameObject` when you Instantiate a SkeletonDataAsset into a "Spine GameObject". You could say that SkeletonAnimation is *the* Spine component.
 
