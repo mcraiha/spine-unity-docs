@@ -403,5 +403,3 @@ Shader "Spine/Effects/Skeleton Cloak" {
 ```
 
 # Related Links
-- [Rendering](https://github.com/pharan/spine-unity-docs/blob/master/Rendering.md)
-  - 

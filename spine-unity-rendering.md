@@ -49,7 +49,6 @@ If all attachments share one material, SkeletonRenderer only puts one Material i
 
 If some attachments require material A and some material B, a Material array is laid out according to the order the materials are needed. This is based on the order the attachments are drawn and which attachments can be found in which Material's texture.
 
-// TODO: Make illustrate this in an image.
 If the order goes:
 > Attachment from A
 > 
@@ -179,9 +178,9 @@ Sometimes, you need your character to ride a bicycle, or lift a rock hug an Ioni
 
 In Unity, meshes are rendered as a whole. So how do you get one to render behind and in front?
 
-Please see [SkeletonRenderSeparator](https://github.com/pharan/spine-unity-docs/blob/master/SkeletonRenderSeparator.md)
+Please see [SkeletonRenderSeparator](http://esotericsoftware.com/spine-unity-skeletonrenderseparator)
 
-// TODO: Short Section on [Sorting Groups](https://docs.unity3d.com/560/Documentation/Manual/SortingGroup.html) (Unity 5.6)
+Short Section on [Sorting Groups](https://docs.unity3d.com/Manual/SortingGroup.html)
 
 ### I lowered the alpha to fade out my skeleton. Why are the overlaps showing?
 This is how realtime mesh rendering works anywhere. The opacity is applied right when the triangles are drawn, not after.

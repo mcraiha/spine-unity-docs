@@ -199,4 +199,6 @@ If the attachment is not renderable, the method will return null.
 ### renderableAttachment.SetRegion
 Sets the AtlasRegion of a renderable attachment. This is useful when pulling AtlasRegions from other atlases, or creating new AtlasRegions from other sources.
 
-// TODO: Link to article about PMA. For now: http://esotericsoftware.com/forum/Premultiply-Alpha-3132
+# Related Links
+
+Premultiply Alpha: http://esotericsoftware.com/forum/Premultiply-Alpha-3132

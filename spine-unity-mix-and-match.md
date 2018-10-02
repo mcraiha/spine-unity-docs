@@ -156,8 +156,8 @@ public class MixAndMatchExample : MonoBehaviour {
 
 		// Create a new skin, and append those skins to it.
 		Skin myEquipsSkin = new Skin("my new skin");
-		myEquipsSkin.Append(goldArmorSkin);
-		myEquipsSkin.Append(redGlovesSkin);
+		goldArmorSkin.CopyTo(myEquipsSkin);
+		redGlovesSkin.CopyTo(myEquipsSkin);
 
 		// Set and apply the Skin to the skeleton.
 		skeleton.SetSkin(myEquipsSkin);

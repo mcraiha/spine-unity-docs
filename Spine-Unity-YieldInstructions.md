@@ -53,7 +53,7 @@ This will cause the mesh to reflect the state of the skeleton right before the c
 
 One solution for this may be to call `SkeletonAnimation.LateUpdate` after you make any changes within a coroutine whenever the Coroutine needs to yield on a frame where the GameObject is disabled.
 
-## Additional API Notes
+## Legacy Compatibility
 This code requires Unity 5.3 or higher.
 
 They use the `IEnumerator` interface and not the [CustomYieldInstruction](https://docs.unity3d.com/ScriptReference/CustomYieldInstruction.html) class from 5.3.
