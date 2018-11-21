@@ -149,6 +149,6 @@ Make sure you read the text in the scene, check out the inspector and open the r
 
 Those will cover the basics of playing animations and posing characters.
 
-For more detailed information on how to control animations, see the [Controlling Animation](Animation.md) documentation.
+For more detailed information on how to control animations, see the [Controlling Animation](spine-unity-animation.md) documentation.
 
 Visit the [Spine-Unity forum](http://esotericsoftware.com/forum/viewforum.php?f=12) for more information.
