@@ -142,7 +142,7 @@ static public Spine.TrackEntry JumpToTime (Spine.TrackEntry trackEntry, float ti
 ```
 
 ###### TrackEntry-specific events.
-You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](/Events.md).
+You can subscribe to events just for that specific animation playback instance. See the list of events here: [Events Documentation](/spine-unity-animations).
 
 ## Spine.Animation
 
@@ -166,7 +166,7 @@ One of the parameters is always time. This is time in seconds. If you want to po
 ## Animation Callbacks + Spine Events
 Sometimes, you need your game to execute a piece of code based on events in and around animations, such as sounds and effects. **Spine.AnimationState** provides animation callbacks in the form of [C# events](https://msdn.microsoft.com/en-us/library/awbftdfh.aspx). You can use these to handle some basic points of animation playback such as the start of an animation, when it ends or is interrupted, when it completes or loops, or event that were user-created in Spine.
 
-To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](Events.md).
+To learn more about Spine Events and AnimationState callbacks, see the [Events documentation](/spine-unity-animations).
 
 ### Advanced Animation Control
 Tracks and TrackEntry are just part of `Spine.AnimationState`, and `AnimationState` is included with the Spine runtimes just to get you going immediately. It's usable in most cases and performant for production.
